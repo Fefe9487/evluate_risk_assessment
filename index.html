@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>專業數據標註與對比系統</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
     <style>
         :root {
             --primary: #2980b9;
@@ -53,7 +54,40 @@
         .pagination-bar {
             display: flex; justify-content: space-between; align-items: center;
             background: #e8f4f8; padding: 10px 20px; border-radius: 8px; font-weight: bold;
+            margin-bottom: 15px;
         }
+
+        /* GroupName 標籤面板樣式 */
+        .group-name-panel {
+            background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px;
+            padding: 15px 20px; margin-bottom: 15px;
+        }
+        .group-panel-title {
+            font-weight: bold; color: var(--secondary); font-size: 15px; margin-bottom: 10px;
+            border-bottom: 1px solid #e9ecef; padding-bottom: 5px; text-align: center;
+        }
+        .group-columns-container {
+            display: flex; gap: 20px; width: 100%;
+        }
+        .group-column {
+            flex: 1; display: flex; align-items: flex-start; gap: 10px; background: white; 
+            padding: 10px 15px; border-radius: 6px; border: 1px solid #e2e8f0;
+        }
+        .group-column-label {
+            font-weight: bold; font-size: 14px; white-space: nowrap; margin-top: 3px;
+        }
+        .group-column-label.m1 { color: var(--primary); }
+        .group-column-label.m2 { color: #c0392b; }
+        
+        .group-badge {
+            background-color: #e1f5fe; color: #0288d1; border: 1px solid #b3e5fc;
+            padding: 3px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .group-badge.m2-badge {
+            background-color: #fce4ec; color: #c2185b; border: 1px solid #f8bbd0;
+        }
+        .group-badge-empty { color: #95a5a6; font-style: italic; font-size: 13px; margin-top: 3px;}
 
         /* 任務切換下拉選單樣式 */
         .task-select-container {
@@ -186,6 +220,24 @@
                 <button class="btn" id="btn-next" onclick="changePage(1)" disabled>下一筆 ▶</button>
             </div>
         </div>
+
+        <div class="group-name-panel" id="group-name-display-panel" style="display: none;">
+            <div class="group-panel-title">🔍 本筆識別到的 groupName 對比</div>
+            <div class="group-columns-container">
+                <div class="group-column">
+                    <span class="group-column-label m1" id="badge-title-m1">模式一：</span>
+                    <div id="group-badges-m1" style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <span class="group-badge-empty">尚未載入</span>
+                    </div>
+                </div>
+                <div class="group-column">
+                    <span class="group-column-label m2" id="badge-title-m2">模式二：</span>
+                    <div id="group-badges-m2" style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <span class="group-badge-empty">尚未載入</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="floating-action">
@@ -219,6 +271,7 @@
         <div style="margin-top: 20px; text-align: right; border-top: 1px solid #eee; padding-top: 15px;">
             <span id="auto-save-status" class="status-text"></span>
             <button class="btn btn-success" onclick="exportProgress()">💾 存檔 / 下載當前進度</button>
+            <button class="btn btn-danger" onclick="clearSystemCache()">🗑️ 清除本機所有暫存</button>
         </div>
     </div>
 </div>
@@ -233,31 +286,54 @@
     };
     let currentIndex = 0;
 
+    // 🌟 核心優化：設定 localForage 使用本機 IndexedDB 資料庫驅動
+    localforage.config({
+        driver: localforage.INDEXEDDB,
+        name: 'LLM_Annotation_System',
+        storeName: 'annotation_progress'
+    });
+
     // 監聽上傳事件
     document.getElementById('file1').addEventListener('change', (e) => loadRawData(e, 1));
     document.getElementById('file2').addEventListener('change', (e) => loadRawData(e, 2));
     document.getElementById('fileProgress').addEventListener('change', loadProgressFile);
 
-    window.onload = function() {
-        const saved = localStorage.getItem('llm_annotation_progress');
-        if (saved) {
-            if (confirm("發現上次未完成的暫存進度，是否要恢復？")) {
-                projectData = JSON.parse(saved);
-                currentIndex = projectData.lastIndex || 0;
-                
-                // 恢復命名牌
-                document.getElementById('name1').value = projectData.model1Name || "LLM 1";
-                document.getElementById('name2').value = projectData.model2Name || "LLM 2";
-                updateNamesUI();
-                
-                initPagination();
-            } else {
-                localStorage.removeItem('llm_annotation_progress');
+    // 🌟 核心優化：改為異步從 IndexedDB 載入超大資料
+    window.onload = async function() {
+        try {
+            // 從 IndexedDB 讀取，不再使用 localStorage.getItem
+            const saved = await localforage.getItem('llm_annotation_progress');
+            if (saved) {
+                if (confirm("發現上次未完成的暫存進度（存在本機資料庫），是否要恢復？")) {
+                    projectData = saved;
+                    currentIndex = projectData.lastIndex || 0;
+                    
+                    document.getElementById('name1').value = projectData.model1Name || "LLM 1";
+                    document.getElementById('name2').value = projectData.model2Name || "LLM 2";
+                    updateNamesUI();
+                    
+                    initPagination();
+                } else {
+                    await localforage.removeItem('llm_annotation_progress');
+                }
             }
+        } catch (e) {
+            console.error("讀取本機資料庫失敗：", e);
         }
     };
-
-    // 全域更新模型名稱 UI 函數
+    async function clearSystemCache() {
+    if (confirm("⚠️ 確定要清除本機資料庫的所有暫存進度嗎？\n清除後若未手動匯出 JSON 檔，資料將無法找回！")) {
+        try {
+            // 清除 localForage 控制的整個本機資料庫
+            await localforage.clear();
+            alert("本機資料庫已成功清空！網頁即將重新整理。");
+            window.location.reload();
+        } catch (e) {
+            console.error("清除失敗：", e);
+            alert("清除失敗，請手動透過瀏覽器清理。");
+        }
+        }
+    }
     function updateNamesUI() {
         const n1 = document.getElementById('name1').value.trim() || 'LLM 1';
         const n2 = document.getElementById('name2').value.trim() || 'LLM 2';
@@ -269,9 +345,12 @@
         document.getElementById('header2').innerText = `${n2} 輸出內容`;
         document.getElementById('radio-label1').innerText = n1;
         document.getElementById('radio-label2').innerText = n2;
+        
+        document.getElementById('badge-title-m1').innerText = `${n1}：`;
+        document.getElementById('badge-title-m2').innerText = `${n2}：`;
 
         if (document.getElementById('eval-section').style.display !== 'none') {
-            renderAnnotationsList(); // 重新渲染批註清單
+            renderAnnotationsList();
         }
         saveToLocal();
     }
@@ -320,7 +399,6 @@
             
             const tName = item1.taskName || item2.taskName || item1.title || item2.title || item1.id || item2.id || `任務 ${i + 1}`;
 
-            // 🌟 核心修正：取得所有鍵值的聯集後，直接把 "Annotation" 過濾掉，使其不參與任何對比排版
             const allKeys = Array.from(new Set([...Object.keys(item1), ...Object.keys(item2)]))
                                  .filter(key => key !== 'Annotation');
 
@@ -340,7 +418,6 @@
         initPagination();
     }
 
-    // 欄位對齊渲染函數
     function formatJSONToHTMLAligned(data, keys) {
         if (data === null || data === undefined) return "<span style='color:#bdc3c7;'>無資料</span>";
         
@@ -359,7 +436,6 @@
         return html + '</div>';
     }
 
-    // 遞迴解析子層資料
     function formatRawValueToHTML(data) {
         if (data === null || data === undefined) return "<span style='color:#bdc3c7;'>無資料</span>";
         if (Array.isArray(data)) {
@@ -380,11 +456,11 @@
 
     function initPagination() {
         document.getElementById('eval-section').style.display = 'block';
-        buildTaskDropdown(); // 初始化快速選單
+        document.getElementById('group-name-display-panel').style.display = 'block'; 
+        buildTaskDropdown(); 
         renderCurrentPage();
     }
 
-    // 建立快切下拉選單內容
     function buildTaskDropdown() {
         const select = document.getElementById('task-select');
         select.innerHTML = '';
@@ -397,7 +473,6 @@
         });
     }
 
-    // 下拉選單跳轉事件
     function jumpToPage(index) {
         if (index === "" || projectData.pages.length === 0) return;
         saveCurrentPageState();
@@ -411,6 +486,72 @@
         if (currentIndex < 0) currentIndex = 0;
         if (currentIndex >= projectData.totalPages) currentIndex = projectData.totalPages - 1;
         renderCurrentPage();
+    }
+
+    function extractGroupNamesFromSingleObject(obj) {
+        const groupNames = new Set();
+        
+        function scanObject(target) {
+            if (!target || typeof target !== 'object') return;
+            
+            const groups = target.hazardGroups || target.HazardGroups;
+            if (groups && Array.isArray(groups)) {
+                groups.forEach(group => {
+                    if (group) {
+                        const nameField = group.groupName || group.GroupName;
+                        if (nameField) {
+                            if (Array.isArray(nameField)) {
+                                nameField.forEach(n => { if (n) groupNames.add(String(n).trim()); });
+                            } else {
+                                groupNames.add(String(nameField).trim());
+                            }
+                        }
+                    }
+                });
+            }
+            
+            for (let key in target) {
+                if (target.hasOwnProperty(key) && typeof target[key] === 'object') {
+                    scanObject(target[key]);
+                }
+            }
+        }
+
+        scanObject(obj);
+        return Array.from(groupNames);
+    }
+
+    function updateGroupBadgesUI(page) {
+        const containerM1 = document.getElementById('group-badges-m1');
+        const containerM2 = document.getElementById('group-badges-m2');
+        
+        containerM1.innerHTML = '';
+        containerM2.innerHTML = '';
+        
+        const namesM1 = extractGroupNamesFromSingleObject(page.rawData1);
+        const namesM2 = extractGroupNamesFromSingleObject(page.rawData2);
+        
+        if (namesM1.length === 0) {
+            containerM1.innerHTML = '<span class="group-badge-empty">無</span>';
+        } else {
+            namesM1.forEach(name => {
+                const badge = document.createElement('span');
+                badge.className = 'group-badge';
+                badge.textContent = name;
+                containerM1.appendChild(badge);
+            });
+        }
+        
+        if (namesM2.length === 0) {
+            containerM2.innerHTML = '<span class="group-badge-empty">無</span>';
+        } else {
+            namesM2.forEach(name => {
+                const badge = document.createElement('span');
+                badge.className = 'group-badge m2-badge';
+                badge.textContent = name;
+                containerM2.appendChild(badge);
+            });
+        }
     }
 
     function renderCurrentPage() {
@@ -437,10 +578,11 @@
         document.getElementById('btn-prev').disabled = (currentIndex === 0);
         document.getElementById('btn-next').disabled = (currentIndex === projectData.totalPages - 1);
 
-        // 同步更新選單值
         document.getElementById('task-select').value = currentIndex;
 
         projectData.lastIndex = currentIndex;
+        
+        updateGroupBadgesUI(page);
         renderAnnotationsList();
         saveToLocal();
     }
@@ -459,11 +601,24 @@
         saveToLocal();
     }
 
-    function saveToLocal() {
-        localStorage.setItem('llm_annotation_progress', JSON.stringify(projectData));
+    // 🌟 核心優化：改為非同步寫入 IndexedDB，完美儲存 7MB 以上大檔案，不再報錯
+    async function saveToLocal() {
         const status = document.getElementById('auto-save-status');
-        status.innerText = `✔️ 已自動暫存 (${new Date().toLocaleTimeString()})`;
-        setTimeout(() => status.innerText = '', 2000);
+        try {
+            // 使用 localforage 異步寫入 IndexedDB 資料庫（不限制 5MB，不需要 JSON.stringify 轉字串）
+            await localforage.setItem('llm_annotation_progress', projectData);
+            
+            status.innerText = `✔️ 已自動暫存至本機資料庫 (${new Date().toLocaleTimeString()})`;
+            status.style.color = '#27ae60';
+            status.style.fontWeight = 'normal';
+            setTimeout(() => {
+                if(status.innerText.includes('已自動暫存')) status.innerText = '';
+            }, 2000);
+        } catch (e) {
+            console.error("IndexedDB 儲存失敗：", e);
+            status.innerText = `⚠️ 暫存因不明原因失敗，請手動下載。`;
+            status.style.color = '#e74c3c';
+        }
     }
 
     // ===== 局部批註相關功能 =====
@@ -589,7 +744,7 @@
         const file = event.target.files[0];
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = async function(e) {
             try {
                 const data = JSON.parse(e.target.result);
                 if (!data.pages || !data.totalPages) throw new Error("檔案格式不符，請上傳本系統產生的進度檔");
@@ -597,7 +752,6 @@
                 projectData = data;
                 currentIndex = projectData.lastIndex || 0;
                 
-                // 相容性處理：確保舊檔被讀取時也會自動補上並過濾欄位
                 projectData.pages.forEach((page, i) => {
                     const item1 = page.rawData1 || {};
                     const item2 = page.rawData2 || {};
@@ -615,7 +769,7 @@
                 updateNamesUI();
                 
                 initPagination();
-                alert("進度檔讀取成功！");
+                alert("進度檔讀取成功！已自動重置快取。");
             } catch (err) {
                 alert(`讀取失敗: ${err.message}`);
             }
