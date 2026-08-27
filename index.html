@@ -783,7 +783,7 @@
 
   async function boot() {
     wire();
-    const res = await fetch("data/library.json");
+    const res = await fetch("data/library.json?v=20260827c");
     if (!res.ok) throw new Error("無法載入 data/library.json");
     const doc = await res.json();
     library = doc.tasks || [];

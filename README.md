@@ -61,5 +61,5 @@
 
 ## 維護者
 
-- 作業正文：`data/library.json`（由現用庫階段一 packs 組出，僅 `inLibrary` 166 筆）
+- 作業正文：`data/library.json`（與 TOIRA 公開庫同步，僅 `inLibrary` 166 筆；`核心重點_existing` 是庫內旗，專家不要照抄）
 - 比對腳本在主專案：`judge_draft/_compare_expert_phase1.py`
