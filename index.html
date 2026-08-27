@@ -1,655 +1,803 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>安全數據審查與標註系統</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #2980b9;
-            --bg: #f5f7fa;
-            --border: #dcdde1;
-            --text: #2f3640;
-            --good: #2ecc71;
-            --bad: #e74c3c;
-            --highlight: #ffeaa7;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg); color: var(--text);
-            margin: 0; padding: 20px; line-height: 1.6;
-        }
-        .container { max-width: 1500px; margin: 0 auto; }
-        h1 { text-align: center; color: var(--primary); margin-top: 0; margin-bottom: 20px;}
-        
-        /* 頂部控制區 */
-        .header-panel {
-            background: white; padding: 20px; border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px;
-        }
-        .upload-section {
-            display: flex; justify-content: flex-start; gap: 40px; margin-bottom: 15px;
-            border-bottom: 1px solid var(--border); padding-bottom: 15px;
-        }
-        .pagination-bar {
-            display: flex; justify-content: space-between; align-items: center;
-            background: #e8f4f8; padding: 10px 20px; border-radius: 8px; font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        /* 危害快速跳轉標籤面板 */
-        .group-name-panel {
-            background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px;
-            padding: 12px 20px; margin-bottom: 5px;
-        }
-        .group-panel-title {
-            font-weight: bold; color: var(--primary); font-size: 14px; margin-bottom: 8px;
-        }
-        .tag-container { display: flex; gap: 8px; flex-wrap: wrap; }
-        .jump-tag {
-            background-color: #e1f5fe; color: #0288d1; border: 1px solid #b3e5fc;
-            padding: 5px 12px; border-radius: 6px; font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s ease;
-        }
-        .jump-tag:hover {
-            background-color: #0288d1; color: white; transform: translateY(-1px);
-        }
-        .group-badge-empty { color: #95a5a6; font-style: italic; font-size: 13px; }
-
-        /* 任務切換下拉選單 */
-        .task-select-container { display: flex; align-items: center; gap: 10px; }
-        .task-select {
-            padding: 6px 12px; font-size: 15px; border: 1px solid var(--border);
-            border-radius: 4px; color: var(--text); background: white;
-            max-width: 400px; text-overflow: ellipsis; white-space: nowrap;
-            cursor: pointer; outline: none;
-        }
-        
-        /* 按鈕樣式 */
-        .btn {
-            background-color: var(--accent); color: white; border: none;
-            padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 15px;
-            transition: background 0.2s;
-        }
-        .btn:hover { filter: brightness(0.9); }
-        .btn:disabled { background-color: #95a5a6; cursor: not-allowed; }
-        .btn-success { background-color: var(--good); }
-        .btn-danger { background-color: var(--bad); }
-        .btn-warning { background-color: #f39c12; }
-        .btn-small { padding: 4px 10px; font-size: 13px; }
-
-        /* 雙欄佈局 */
-        .compare-section { display: flex; gap: 20px; margin-bottom: 20px; }
-        .content-box {
-            flex: 1; background: white; border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column;
-            overflow: hidden;
-        }
-        .content-header {
-            background: var(--primary); color: white; padding: 12px;
-            text-align: center; font-weight: bold; font-size: 16px;
-        }
-        .content-header.annotation-bg { background: #16a085; }
-        .content-body {
-            padding: 20px; overflow-y: auto; height: 65vh; font-size: 15px; scroll-behavior: smooth;
-        }
-
-        /* 左側內文結構樣式 */
-        .section-title {
-            font-size: 16px; font-weight: bold; color: #2c3e50;
-            border-left: 4px solid var(--accent); padding-left: 10px; margin-top: 20px; margin-bottom: 10px;
-        }
-        .section-block { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #34495e;}
-        
-        /* 危害群組卡片 */
-        .hazard-card {
-            border: 1px solid #e0e6ed; border-radius: 8px; margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02); overflow: hidden;
-        }
-        .hazard-card-header {
-            background: #f1f2f6; padding: 10px 15px; font-weight: bold;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #e0e6ed;
-        }
-        .severity-badge {
-            background: #ffeaa7; color: #d35400; padding: 2px 8px; border-radius: 4px; font-size: 12px;
-        }
-        .hazard-card-body { padding: 15px; }
-        .list-title { font-weight: bold; color: #2c3e50; margin-top: 5px; margin-bottom: 5px; font-size: 14px;}
-        .data-list { margin: 0 0 15px 0; padding-left: 20px; font-size: 14px; color: #57606f;}
-        .data-list li { margin-bottom: 6px; }
-
-        /* 右側批註樣式 (user_annotation) */
-        .custom-anno-item {
-            background: #fff9e6; border-left: 4px solid #f1c40f;
-            padding: 12px; margin-bottom: 12px; border-radius: 0 8px 8px 0;
-            font-size: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .highlight {
-            background-color: var(--highlight); cursor: help;
-            border-bottom: 2px solid #fdcb6e; border-radius: 2px;
-        }
-
-        /* 下方綜合評價區 */
-        .page-evaluation {
-            background: white; padding: 20px; border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px;
-        }
-        .radio-group { display: flex; justify-content: center; gap: 40px; margin-bottom: 15px; font-size: 20px; }
-        .radio-group label { cursor: pointer; display: flex; align-items: center; gap: 8px;}
-        .radio-good { color: var(--good); font-weight: bold; }
-        .radio-bad { color: var(--bad); font-weight: bold; }
-        textarea {
-            width: 100%; height: 100px; padding: 12px; border: 1px solid var(--border);
-            border-radius: 6px; resize: vertical; box-sizing: border-box; font-family: inherit; font-size: 15px;
-        }
-        
-        .floating-action { text-align: center; margin-bottom: 15px; position: sticky; top: 10px; z-index: 100; }
-        .status-text { color: var(--good); font-size: 14px; margin-right: 15px;}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作業本身審查（階段一）</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
+  <style>
+    :root {
+      --brand: #063f41;
+      --brand-2: #0e7477;
+      --brand-soft: #eaf5f4;
+      --ink: #1c3033;
+      --muted: #6f8a8c;
+      --line: #d5e3e2;
+      --bg: #f3f7f6;
+      --surface: #fff;
+      --core: #c97d1a;
+      --core-soft: #fff4e4;
+      --flag: #c0392b;
+      --flag-soft: #fdecea;
+      --ok: #1b7a4a;
+      --warn: #b7791f;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    header {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding: 10px 16px; background: var(--brand); color: #fff;
+    }
+    header h1 { font-size: 16px; font-weight: 650; margin: 0; }
+    header .meta { font-size: 12px; opacity: .8; }
+    header .grow { flex: 1; }
+    .hdr-acts { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .hdr-acts input[type="text"] {
+      width: 140px; padding: 6px 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.12); color: #fff; font: inherit; font-size: 13px;
+    }
+    .hdr-acts input::placeholder { color: rgba(255,255,255,.65); }
+    button, .btn {
+      font: inherit; font-size: 13px; padding: 6px 11px; border-radius: 8px;
+      border: 1px solid transparent; cursor: pointer; background: #fff; color: var(--ink);
+    }
+    header button {
+      background: transparent; color: #fff; border-color: rgba(255,255,255,.35);
+    }
+    header button:hover { background: rgba(255,255,255,.12); }
+    header button.primary { background: #fff; color: var(--brand); border-color: #fff; font-weight: 650; }
+    button.primary { background: var(--brand-2); color: #fff; }
+    button.danger { background: #fff; color: var(--flag); border-color: #f5c6c2; }
+    button.ghost { background: #fff; border-color: var(--line); }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .layout { display: grid; grid-template-columns: 280px minmax(0, 1.25fr) minmax(320px, 0.9fr); height: calc(100% - 52px); }
+    aside, .pane, .review {
+      background: var(--surface); overflow: auto; min-width: 0;
+    }
+    aside { border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+    .pane { border-right: 1px solid var(--line); }
+    .side-tools { padding: 10px 12px 8px; display: grid; gap: 8px; }
+    .side-tools input, .side-tools select {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; font: inherit;
+    }
+    .progress-line { font-size: 12px; color: var(--muted); }
+    .progress-line b { color: var(--brand-2); }
+    #taskList { overflow: auto; padding: 4px 8px 16px; }
+    .task {
+      width: 100%; text-align: left; border: 0; background: transparent;
+      padding: 8px 10px; border-radius: 8px; cursor: pointer; color: var(--ink); font: inherit;
+      display: grid; grid-template-columns: 14px 1fr auto; gap: 8px; align-items: start;
+    }
+    .task:hover { background: var(--brand-soft); }
+    .task.active { background: var(--brand-soft); color: var(--brand-2); font-weight: 650; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; background: #c5d4d3; }
+    .dot.started { background: var(--warn); }
+    .dot.done { background: var(--ok); }
+    .task .n { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .pane { padding: 18px 22px 72px; }
+    .review { padding: 16px 18px 72px; background: #fbfdfc; }
+    h2 { font-size: 20px; margin: 0 0 6px; }
+    .desc { color: var(--muted); font-size: 14px; line-height: 1.65; max-width: 78ch; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+    .chip {
+      font-size: 12px; padding: 3px 8px; border-radius: 999px;
+      background: var(--brand-soft); color: var(--brand);
+    }
+    .chip.more { cursor: pointer; background: #fff; border: 1px solid var(--line); }
+    .card {
+      border: 1px solid var(--line); border-radius: 12px; margin: 12px 0;
+      overflow: hidden; background: #fff;
+    }
+    .card.core { border-color: #e8c07a; background: #fffdf8; }
+    .card-h {
+      display: flex; justify-content: space-between; gap: 10px; align-items: center;
+      padding: 10px 14px; background: #f6fafa; border-bottom: 1px solid var(--line);
+      font-weight: 650;
+    }
+    .card.core .card-h { background: var(--core-soft); }
+    .badge {
+      font-size: 11px; font-weight: 650; padding: 2px 8px; border-radius: 999px;
+      background: #e8eeee; color: var(--muted);
+    }
+    .badge.core { background: var(--core); color: #fff; }
+    .badge.s { background: #ffeaa7; color: #9a5b12; }
+    .card-b { padding: 12px 14px 14px; }
+    .list-title { font-size: 13px; font-weight: 650; margin: 10px 0 6px; }
+    ol.lines { margin: 0; padding-left: 22px; }
+    ol.lines li, .reason-block {
+      margin: 0 0 6px; padding: 6px 8px; border-radius: 8px; cursor: pointer;
+      border: 1px solid transparent;
+    }
+    ol.lines li:hover, .reason-block:hover { background: var(--brand-soft); }
+    ol.lines li.flagged, .reason-block.flagged {
+      background: var(--flag-soft); border-color: #f5c6c2;
+    }
+    .missing-row { display: flex; gap: 8px; margin-top: 8px; }
+    .guide {
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+      padding: 10px 12px; margin-bottom: 14px; font-size: 13px; line-height: 1.55; color: #355;
+    }
+    .guide summary { cursor: pointer; font-weight: 650; }
+    .guide ul { margin: 8px 0 0; padding-left: 18px; }
+    .rev-h { font-size: 14px; font-weight: 650; margin: 0 0 8px; }
+    .core-list { display: grid; gap: 6px; margin-bottom: 14px; }
+    .core-item {
+      display: flex; align-items: center; gap: 8px; padding: 7px 8px;
+      border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer;
+    }
+    .core-item input { width: 16px; height: 16px; }
+    .core-item .lib { margin-left: auto; font-size: 11px; color: var(--core); }
+    .hint { font-size: 12px; color: var(--muted); margin: 0 0 12px; }
+    .hint.bad { color: var(--flag); }
+    .hint.ok { color: var(--ok); }
+    .note {
+      background: #fff9e6; border-left: 4px solid #f1c40f;
+      padding: 10px 12px; margin-bottom: 10px; border-radius: 0 8px 8px 0; font-size: 13px;
+    }
+    .note .q { font-style: italic; background: #fff; border: 1px solid #ebd492; padding: 6px 8px; border-radius: 6px; margin: 6px 0; }
+    .note .tags { display: flex; gap: 4px; flex-wrap: wrap; margin: 6px 0; }
+    .tag {
+      font-size: 11px; padding: 1px 7px; border-radius: 999px;
+      background: #fff; border: 1px solid #e0c36a; color: #7a5b12;
+    }
+    .empty { color: var(--muted); font-size: 13px; text-align: center; padding: 24px 8px; }
+    .modal {
+      position: fixed; inset: 0; background: rgba(16, 32, 34, .45);
+      display: flex; align-items: flex-end; justify-content: center; z-index: 40;
+    }
+    .modal.hidden { display: none; }
+    .hidden { display: none !important; }
+    .modal-card {
+      width: min(720px, 100%); max-height: 88vh; overflow: auto;
+      background: #fff; border-radius: 16px 16px 0 0; padding: 18px 18px 22px;
+      box-shadow: 0 -12px 40px rgba(0,0,0,.18);
+    }
+    .modal-card h3 { margin: 0 0 8px; font-size: 16px; }
+    .tag-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .tag-btns button {
+      border: 1px solid var(--line); background: #fff;
+    }
+    .tag-btns button.on {
+      background: var(--brand-2); color: #fff; border-color: var(--brand-2);
+    }
+    textarea {
+      width: 100%; min-height: 110px; padding: 10px; border: 1px solid var(--line);
+      border-radius: 8px; font: inherit; font-size: 14px; resize: vertical;
+    }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+    .status { font-size: 12px; opacity: .85; }
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; height: auto; }
+      aside { max-height: 240px; }
+      .pane, .review { height: auto; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="header-panel">
-        <h1>安全數據審查與標註系統</h1>
-        
-        <div class="upload-section">
-            <div>
-                <strong>📁 上傳模式輸出檔案 (.json)：</strong><br>
-                <input type="file" id="file-input" accept=".json" style="margin-top: 8px;">
-            </div>
-            <div style="border-left: 2px solid var(--border); padding-left: 20px;">
-                <strong>📂 讀取先前的「審查進度檔」繼續作業：</strong><br>
-                <input type="file" id="progress-input" accept=".json" style="margin-top: 8px;">
-            </div>
-        </div>
-
-        <div class="pagination-bar" style="margin-top: 15px;">
-            <div>
-                <button class="btn" id="btn-prev" onclick="changePage(-1)" disabled>◀ 上一筆</button>
-            </div>
-            <div class="task-select-container">
-                <span>當前任務：</span>
-                <select id="task-select" class="task-select" onchange="jumpToPage(this.value)">
-                    <option value="">請先上傳檔案...</option>
-                </select>
-                <span id="current-page-text" style="color: var(--accent); margin-left: 5px;">(0 / 0)</span>
-            </div>
-            <div>
-                <button class="btn" id="btn-next" onclick="changePage(1)" disabled>下一筆 ▶</button>
-            </div>
-        </div>
+  <header>
+    <div>
+      <h1>作業本身審查（階段一）</h1>
+      <div class="meta">與 LLM-as-judge 同一套：勾 2～4 個五分鐘核心，只標有問題的句子</div>
     </div>
-
-    <div class="floating-action">
-        <button class="btn btn-warning" onclick="addUserAnnotation()" style="box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-            ✏️ 選取左側文字後點此加入【局部批註】
-        </button>
+    <div class="grow"></div>
+    <div class="hdr-acts">
+      <span class="status" id="save-status"></span>
+      <input id="annotator" type="text" placeholder="審查人姓名" maxlength="40">
+      <button type="button" id="btn-prev">上一筆</button>
+      <button type="button" id="btn-next">下一筆</button>
+      <button type="button" id="btn-next-open">下一未完成</button>
+      <button type="button" class="primary" id="btn-export">匯出結果</button>
+      <button type="button" id="btn-progress">備份進度</button>
+      <label class="status">還原進度 <input type="file" id="progress-input" accept=".json"></label>
+      <button type="button" id="btn-clear">清除暫存</button>
     </div>
-
-    <div class="group-name-panel">
-        <div class="group-panel-title">🎯 危害類型快速跳轉（點擊直達該章節）：</div>
-        <div id="jump-tag-container" class="tag-container">
-            <span class="group-badge-empty">尚未載入資料...</span>
-        </div>
+  </header>
+  <div class="layout">
+    <aside>
+      <div class="side-tools">
+        <div class="progress-line" id="progress-line">載入作業庫…</div>
+        <input id="search" placeholder="搜尋作業名稱…">
+        <select id="filter">
+          <option value="all">全部作業</option>
+          <option value="open">未完成</option>
+          <option value="done">已完成</option>
+          <option value="noted">有標問題</option>
+        </select>
+      </div>
+      <div id="taskList"></div>
+    </aside>
+    <main class="pane" id="pane">
+      <p class="desc">載入 166 筆現用庫作業後，即可開始審查。</p>
+    </main>
+    <section class="review" id="review"></section>
+  </div>
+  <div id="note-modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card">
+      <h3>標記這條問題</h3>
+      <div class="hint" id="note-meta"></div>
+      <div class="note"><div class="q" id="note-quote"></div></div>
+      <div class="rev-h">標籤（可多選，至少一個）</div>
+      <div class="tag-btns" id="note-tags"></div>
+      <div class="rev-h">說明（必填，寫成句子）</div>
+      <textarea id="note-problem" placeholder="例如：這條只禁止講手機與疲勞，沒有要求持有效操作證才可出車。現場若只核對授權名單，未受訓的人仍能開車。"></textarea>
+      <div class="modal-actions">
+        <button type="button" class="ghost" id="note-cancel">取消</button>
+        <button type="button" class="danger hidden" id="note-delete">刪除這則</button>
+        <button type="button" class="primary" id="note-save">儲存</button>
+      </div>
     </div>
-
-    <div class="compare-section">
-        <div class="content-box">
-            <div class="content-header" id="left-header">模式內容</div>
-            <div class="content-body" id="model-content-area">請上傳 JSON 檔案以載入數據內容...</div>
-        </div>
-        
-        <div class="content-box">
-            <div class="content-header annotation-bg">使用者批註 (user_annotation)</div>
-            <div class="content-body" id="annotation-area">請在左側選取文字並加入批註...</div>
-        </div>
-    </div>
-
-
-
-    <div class="page-evaluation" id="eval-section" style="display: none;">
-        <h3 style="text-align: center; margin-top: 0;">對【本筆資料】的綜合審查評價</h3>
-        
-        <div class="radio-group">
-            <label class="radio-good">
-                <input type="radio" name="page_rating" value="GOOD" onchange="saveCurrentPageState()"> 👍 表現優良 (好)
-            </label>
-            <label class="radio-bad">
-                <input type="radio" name="page_rating" value="BAD" onchange="saveCurrentPageState()"> 👎 有待改善 (壞)
-            </label>
-        </div>
-        
-        <textarea id="page-comment" placeholder="請輸入您對這筆資料的總結審查評語或具體修改建議..." oninput="saveCurrentPageState()"></textarea>
-        
-        <div style="margin-top: 20px; text-align: right; border-top: 1px solid #eee; padding-top: 15px;">
-            <span id="auto-save-status" class="status-text"></span>
-            <button class="btn btn-success" onclick="exportProgress()">💾 存檔 / 下載當前審查進度</button>
-            <button class="btn btn-danger" onclick="clearSystemCache()">🗑️ 清除本機暫存</button>
-        </div>
-    </div>
-</div>
-
+  </div>
 <script>
-    let projectData = {
-        pages: [],
-        totalPages: 0,
-        lastIndex: 0
-    };
-    let currentIndex = 0;
+  const TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長"];
+  const TAG_HELP = {
+    "漏提": "該有的情境或對策沒寫",
+    "空泛": "寫了但現場做不到",
+    "不符行業": "對不到本作業名稱／描述，不是不該掛在某廠",
+    "寫反": "把誘發條件或禁令寫成對策，或對策與描述衝突",
+    "跨類複製": "這句應屬別的危害組",
+    "過長": "可刪可併的重複句"
+  };
+  const STORE = "ra-phase1-expert-v1";
+  localforage.config({
+    driver: localforage.INDEXEDDB,
+    name: "Phase1_Expert_Judge",
+    storeName: "review_progress_phase1_v1"
+  });
 
-    // 設定 IndexedDB 本機快取機制
-    localforage.config({
-        driver: localforage.INDEXEDDB,
-        name: 'Single_Model_User_Annotation_System',
-        storeName: 'review_progress_v2'
+  let library = [];
+  let reviews = {};
+  let currentIndex = 0;
+  let annotator = "";
+  let citedOpen = false;
+  let draftNote = null;
+
+  const $ = (id) => document.getElementById(id);
+
+  function escapeHtml(s) {
+    return String(s ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function noteKey(note) {
+    const idx = note.index === null || note.index === undefined ? "null" : String(note.index);
+    return `${note.groupName}||${note.field}||${idx}`;
+  }
+
+  function emptyReview() {
+    return { coreSet: [], itemNotes: [] };
+  }
+
+  function getReview(taskId) {
+    if (!reviews[taskId]) reviews[taskId] = emptyReview();
+    const r = reviews[taskId];
+    r.coreSet = Array.isArray(r.coreSet) ? r.coreSet : [];
+    r.itemNotes = Array.isArray(r.itemNotes) ? r.itemNotes : [];
+    return r;
+  }
+
+  function reviewErrors(task, review) {
+    const names = new Set((task.hazardGroups || []).map((g) => g.groupName));
+    const core = review.coreSet || [];
+    const errs = [];
+    if (!Array.isArray(core) || core.length < 2 || core.length > 4) {
+      errs.push("核心須勾 2～4 類");
+    }
+    for (const n of core) {
+      if (!names.has(n)) errs.push(`核心不在本作業：${n}`);
+    }
+    for (const note of review.itemNotes || []) {
+      if (!["hazardItems", "AvoidItems", "核心理由"].includes(note.field)) {
+        errs.push("欄位不合法");
+      }
+      const tags = note.tags || [];
+      if (!tags.length) errs.push("問題標註缺標籤");
+      if (tags.some((t) => !TAG_SET.includes(t))) errs.push("有不在詞表的標籤");
+      if (!String(note.problem || "").trim()) errs.push("問題標註缺說明");
+    }
+    return [...new Set(errs)];
+  }
+
+  function isDone(task) {
+    return reviewErrors(task, getReview(task.taskId)).length === 0;
+  }
+
+  function isStarted(task) {
+    const r = getReview(task.taskId);
+    return (r.coreSet && r.coreSet.length > 0) || (r.itemNotes && r.itemNotes.length > 0);
+  }
+
+  function statusOf(task) {
+    if (isDone(task)) return "done";
+    if (isStarted(task)) return "started";
+    return "idle";
+  }
+
+  function findNote(review, partial) {
+    const key = noteKey(partial);
+    return (review.itemNotes || []).find((n) => noteKey(n) === key) || null;
+  }
+
+  function upsertNote(taskId, note) {
+    const r = getReview(taskId);
+    const key = noteKey(note);
+    const idx = r.itemNotes.findIndex((n) => noteKey(n) === key);
+    const clean = {
+      groupName: note.groupName,
+      field: note.field,
+      index: note.index === null || note.index === undefined ? null : Number(note.index),
+      quote: note.quote || "",
+      tags: [...note.tags],
+      problem: String(note.problem || "").trim()
+    };
+    if (idx >= 0) r.itemNotes[idx] = clean;
+    else r.itemNotes.push(clean);
+    persist();
+  }
+
+  function deleteNote(taskId, partial) {
+    const r = getReview(taskId);
+    const key = noteKey(partial);
+    r.itemNotes = r.itemNotes.filter((n) => noteKey(n) !== key);
+    persist();
+  }
+
+  function toggleCore(taskId, groupName, on) {
+    const r = getReview(taskId);
+    const set = new Set(r.coreSet);
+    if (on) set.add(groupName);
+    else set.delete(groupName);
+    r.coreSet = [...set];
+    persist();
+  }
+
+  async function persist() {
+    const payload = {
+      schema: "ra-task-judge-phase1-expert-progress",
+      annotator,
+      lastIndex: currentIndex,
+      reviews,
+      updatedAt: new Date().toISOString()
+    };
+    try {
+      await localforage.setItem(STORE, payload);
+      $("save-status").textContent = "已自動暫存 " + new Date().toLocaleTimeString();
+    } catch (e) {
+      console.error(e);
+      $("save-status").textContent = "暫存失敗";
+    }
+  }
+
+  function downloadJson(filename, obj) {
+    const blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function currentTask() {
+    return library[currentIndex] || null;
+  }
+
+  function renderList() {
+    const q = $("search").value.trim();
+    const filter = $("filter").value;
+    const box = $("taskList");
+    box.innerHTML = "";
+    let done = 0;
+    library.forEach((task, idx) => {
+      if (isDone(task)) done += 1;
+      const st = statusOf(task);
+      if (filter === "open" && st === "done") return;
+      if (filter === "done" && st !== "done") return;
+      if (filter === "noted" && getReview(task.taskId).itemNotes.length === 0) return;
+      if (q && !task.taskName.includes(q) && !String(idx + 1).includes(q)) return;
+      const btn = document.createElement("button");
+      btn.className = "task" + (idx === currentIndex ? " active" : "");
+      btn.type = "button";
+      btn.innerHTML = `<span class="dot ${st}"></span><span>${escapeHtml(task.taskName)}<span class="n">${getReview(task.taskId).itemNotes.length} 則問題</span></span><span class="n">${idx + 1}</span>`;
+      btn.addEventListener("click", () => {
+        currentIndex = idx;
+        citedOpen = false;
+        renderAll();
+        persist();
+      });
+      box.appendChild(btn);
     });
+    $("progress-line").innerHTML = `已完成 <b>${done}</b> / ${library.length}（核心 2～4 類即算完成；沒問題可不標）`;
+  }
 
-    document.getElementById('file-input').addEventListener('change', loadRawFile);
-    document.getElementById('progress-input').addEventListener('change', loadProgressFile);
+  function renderPane() {
+    const task = currentTask();
+    const pane = $("pane");
+    if (!task) {
+      pane.innerHTML = `<p class="desc">找不到作業。</p>`;
+      return;
+    }
+    const review = getReview(task.taskId);
+    const cited = task.citedIn || [];
+    const shown = citedOpen ? cited : cited.slice(0, 4);
+    const citedHtml = shown.map((c) => `<span class="chip">${escapeHtml(c.Industry || "")}／${escapeHtml(c.category || "")}</span>`).join("");
+    const more = cited.length > 4
+      ? `<button type="button" class="chip more" id="cited-more">${citedOpen ? "收合" : "顯示全部 " + cited.length + " 筆"}</button>`
+      : "";
+    let groups = "";
+    (task.hazardGroups || []).forEach((g, gIdx) => {
+      const coreOn = review.coreSet.includes(g.groupName);
+      const libCore = !!g["核心重點_existing"];
+      groups += `<article class="card${coreOn ? " core" : ""}" id="g-${gIdx}">
+        <div class="card-h">
+          <span>${escapeHtml(g.groupName)}</span>
+          <span>
+            ${libCore ? '<span class="badge core">庫內核心</span>' : ""}
+            <span class="badge s">${escapeHtml(g.severitylevel || "")}</span>
+          </span>
+        </div>
+        <div class="card-b">
+          <div class="list-title">核心理由（點一下可標問題）</div>
+          ${renderReason(task, g, gIdx)}
+          <div class="list-title">危害情境</div>
+          ${renderLines(task, g, gIdx, "hazardItems")}
+          <div class="list-title">改善項目</div>
+          ${renderLines(task, g, gIdx, "AvoidItems")}
+          <div class="missing-row">
+            <button type="button" class="ghost" data-miss="1" data-g="${gIdx}" data-field="hazardItems">整組缺危害情境</button>
+            <button type="button" class="ghost" data-miss="1" data-g="${gIdx}" data-field="AvoidItems">整組缺改善項目</button>
+          </div>
+        </div>
+      </article>`;
+    });
+    pane.innerHTML = `
+      <details class="guide">
+        <summary>審查規則（與 LLM 同一套，點開看完即可）</summary>
+        <ul>
+          <li>只評這張作業內文對不對、能不能當現場 5 分鐘分診。不要評該不該掛在某行業。</li>
+          <li>核心勾 2～4 類：常見且夠痛優先；罕見致死列次要，除非主能量就是那個。</li>
+          <li>不要照抄「庫內核心」。泛用卡抓作業名稱的主能量；製程綁定卡要對得上那條製程。</li>
+          <li>只點有問題的句子。沒問題的不要標。說明要寫成句子，不能只寫「需修正」。</li>
+          <li>漏提＝該有的沒寫；空泛＝現場做不到；不符行業＝工序錯置；寫反＝禁令／對策衝突；跨類複製＝貼錯組；過長＝可刪可併。</li>
+        </ul>
+      </details>
+      <h2>${escapeHtml(task.taskName)}</h2>
+      <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
+      <div class="list-title">引用背景（只供判斷泛用或製程綁定，不要據此建議拿掉模板）</div>
+      <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
+      ${groups}`;
+    const moreBtn = $("cited-more");
+    if (moreBtn) moreBtn.addEventListener("click", () => { citedOpen = !citedOpen; renderPane(); });
+    pane.querySelectorAll("[data-field]").forEach((el) => {
+      el.addEventListener("click", () => openNoteFromEl(el));
+    });
+  }
 
-    window.onload = async function() {
-        try {
-            const saved = await localforage.getItem('cached_user_annotation_data');
-            if (saved) {
-                if (confirm("發現上次未完成的暫存進度，是否要恢復？")) {
-                    projectData = saved;
-                    currentIndex = projectData.lastIndex || 0;
-                    initSystem();
-                } else {
-                    await localforage.removeItem('cached_user_annotation_data');
-                }
-            }
-        } catch (e) {
-            console.error("讀取快取失敗", e);
-        }
+  function renderReason(task, group, gIdx) {
+    const review = getReview(task.taskId);
+    const flagged = !!findNote(review, { groupName: group.groupName, field: "核心理由", index: 0 });
+    return `<div class="reason-block${flagged ? " flagged" : ""}" data-g="${gIdx}" data-field="核心理由" data-i="0">${escapeHtml(group["核心理由"] || "（無）")}</div>`;
+  }
+
+  function renderLines(task, group, gIdx, field) {
+    const review = getReview(task.taskId);
+    const items = group[field] || [];
+    if (!items.length) return `<p class="empty">無</p>`;
+    const lis = items.map((text, i) => {
+      const flagged = !!findNote(review, { groupName: group.groupName, field, index: i });
+      return `<li class="${flagged ? "flagged" : ""}" data-g="${gIdx}" data-field="${field}" data-i="${i}">${escapeHtml(text)}</li>`;
+    }).join("");
+    return `<ol class="lines">${lis}</ol>`;
+  }
+
+  function renderReview() {
+    const task = currentTask();
+    const box = $("review");
+    if (!task) { box.innerHTML = ""; return; }
+    const review = getReview(task.taskId);
+    const errs = reviewErrors(task, review);
+    const coreBoxes = (task.hazardGroups || []).map((g) => {
+      const checked = review.coreSet.includes(g.groupName) ? "checked" : "";
+      const lib = g["核心重點_existing"] ? '<span class="lib">庫內有勾，請自行判斷</span>' : "";
+      return `<label class="core-item"><input type="checkbox" data-core="${escapeHtml(g.groupName)}" ${checked}> <span>${escapeHtml(g.groupName)}</span>${lib}</label>`;
+    }).join("");
+    const notes = (review.itemNotes || []).map((n, i) => {
+      const loc = n.index === null ? "整組缺條" : `#${n.index}`;
+      const fieldLabel = n.field === "hazardItems" ? "危害情境" : n.field === "AvoidItems" ? "改善項目" : "核心理由";
+      const tags = (n.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+      return `<article class="note" data-edit="${i}">
+        <div><b>${escapeHtml(n.groupName)}</b> · ${fieldLabel} ${loc}</div>
+        <div class="tags">${tags}</div>
+        ${n.quote ? `<div class="q">${escapeHtml(n.quote)}</div>` : ""}
+        <div>${escapeHtml(n.problem)}</div>
+      </article>`;
+    }).join("");
+    box.innerHTML = `
+      <div class="rev-h">五分鐘優先檢視（勾 2～4 類）</div>
+      <p class="hint${errs.length ? " bad" : " ok"}">${errs.length ? errs.join("；") : "本筆格式已可匯出比對。"} · 已勾 ${review.coreSet.length} 類</p>
+      <div class="core-list">${coreBoxes}</div>
+      <div class="rev-h">已標問題（${review.itemNotes.length}）</div>
+      <p class="hint">點左側句子或核心理由即可新增。沒問題的句子不要標。</p>
+      ${notes || '<p class="empty">尚未標任何問題。若內文可接受，勾完核心即可。</p>'}`;
+    box.querySelectorAll("input[data-core]").forEach((input) => {
+      input.addEventListener("change", () => {
+        toggleCore(task.taskId, input.getAttribute("data-core"), input.checked);
+        renderAll();
+      });
+    });
+    box.querySelectorAll("[data-edit]").forEach((el) => {
+      el.addEventListener("click", () => {
+        const note = review.itemNotes[Number(el.getAttribute("data-edit"))];
+        openNoteEditor(task, note, true);
+      });
+    });
+  }
+
+  function renderAll() {
+    renderList();
+    renderPane();
+    renderReview();
+    $("btn-prev").disabled = currentIndex <= 0;
+    $("btn-next").disabled = currentIndex >= library.length - 1;
+  }
+
+  function quoteFrom(task, gIdx, field, index) {
+    const g = task.hazardGroups[gIdx];
+    if (index === null) return "";
+    if (field === "核心理由") return g["核心理由"] || "";
+    return (g[field] || [])[index] || "";
+  }
+
+  function openNoteFromEl(el) {
+    const task = currentTask();
+    const gIdx = Number(el.getAttribute("data-g"));
+    const field = el.getAttribute("data-field");
+    const miss = el.getAttribute("data-miss") === "1";
+    const index = miss ? null : (el.getAttribute("data-i") === "" ? null : Number(el.getAttribute("data-i")));
+    const group = task.hazardGroups[gIdx];
+    const partial = {
+      groupName: group.groupName,
+      field,
+      index,
+      quote: quoteFrom(task, gIdx, field, index)
     };
+    const existing = findNote(getReview(task.taskId), partial);
+    openNoteEditor(task, existing || partial, !!existing);
+  }
 
-    // 讀取原始檔案 (割除 Autogen 的舊 Annotation 欄位)
-    function loadRawFile(event) {
-        const file = event.target.files[0];
-        if (!file) return;
+  function openNoteEditor(task, note, isEdit) {
+    draftNote = {
+      taskId: task.taskId,
+      groupName: note.groupName,
+      field: note.field,
+      index: note.index === undefined ? null : note.index,
+      quote: note.quote || "",
+      tags: [...(note.tags || [])],
+      problem: note.problem || "",
+      isEdit
+    };
+    const fieldLabel = note.field === "hazardItems" ? "危害情境" : note.field === "AvoidItems" ? "改善項目" : "核心理由";
+    const loc = draftNote.index === null ? "無法對到既有句子（整組缺條）" : `第 ${draftNote.index} 條`;
+    $("note-meta").textContent = `${note.groupName} · ${fieldLabel} · ${loc}`;
+    $("note-quote").textContent = draftNote.quote || "（無對應原文）";
+    $("note-problem").value = draftNote.problem;
+    $("note-delete").classList.toggle("hidden", !isEdit);
+    const tagBox = $("note-tags");
+    tagBox.innerHTML = "";
+    TAG_SET.forEach((t) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = `${t}｜${TAG_HELP[t]}`;
+      if (draftNote.tags.includes(t)) b.classList.add("on");
+      b.addEventListener("click", () => {
+        if (draftNote.tags.includes(t)) draftNote.tags = draftNote.tags.filter((x) => x !== t);
+        else draftNote.tags.push(t);
+        b.classList.toggle("on");
+      });
+      tagBox.appendChild(b);
+    });
+    $("note-modal").classList.remove("hidden");
+    $("note-modal").setAttribute("aria-hidden", "false");
+    $("note-problem").focus();
+  }
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                let raw = JSON.parse(e.target.result);
-                const arr = Array.isArray(raw) ? raw : [raw];
-                
-                if (arr.length === 0 || !arr[0].taskName) {
-                    throw new Error("格式不符，未偵測到標準結構檔案");
-                }
+  function closeModal() {
+    $("note-modal").classList.add("hidden");
+    $("note-modal").setAttribute("aria-hidden", "true");
+    draftNote = null;
+  }
 
-                initializeProjectData(arr);
-            } catch (err) {
-                alert(`檔案解析失敗: ${err.message}`);
-            }
+  function saveDraftNote() {
+    if (!draftNote) return;
+    const problem = $("note-problem").value.trim();
+    if (!draftNote.tags.length) { alert("請至少選一個標籤。"); return; }
+    if (!problem) { alert("請用句子寫出問題說明。"); return; }
+    upsertNote(draftNote.taskId, { ...draftNote, problem });
+    closeModal();
+    renderAll();
+  }
+
+  function exportResult() {
+    annotator = $("annotator").value.trim();
+    if (!annotator) {
+      alert("請先填審查人姓名，匯出檔才分得出是哪一位專家。");
+      $("annotator").focus();
+      return;
+    }
+    const tasks = {};
+    const incomplete = [];
+    library.forEach((task) => {
+      const review = getReview(task.taskId);
+      tasks[task.taskId] = {
+        taskId: task.taskId,
+        taskName: task.taskName,
+        coreSet: [...review.coreSet],
+        itemNotes: review.itemNotes.map((n) => ({
+          groupName: n.groupName,
+          field: n.field,
+          index: n.index === undefined ? null : n.index,
+          quote: n.quote || "",
+          tags: [...(n.tags || [])],
+          problem: n.problem || ""
+        }))
+      };
+      if (!isDone(task)) incomplete.push(task.taskId);
+    });
+    const doc = {
+      schema: "ra-task-judge-phase1",
+      phase: 1,
+      annotator: "expert:" + annotator,
+      exportedAt: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"),
+      nTasks: library.length,
+      nComplete: library.length - incomplete.length,
+      incomplete,
+      formatNotes: [
+        "schema v2: coreSet + itemNotes only; citedIn is pack background; nearDup/hang belong to phase 2"
+      ],
+      tasks
+    };
+    const day = new Date().toISOString().slice(0, 10);
+    downloadJson(`phase1_expert_${annotator}_${day}.json`, doc);
+    if (incomplete.length) {
+      alert(`已下載。尚有 ${incomplete.length} 筆未完成（核心不是 2～4 類，或問題標註缺標籤／說明）。未完成的作業仍寫進檔案，之後可繼續補。`);
+    }
+  }
+
+  function exportProgress() {
+    annotator = $("annotator").value.trim();
+    downloadJson(`phase1_expert_progress_${new Date().toISOString().slice(0, 10)}.json`, {
+      schema: "ra-task-judge-phase1-expert-progress",
+      annotator,
+      lastIndex: currentIndex,
+      reviews,
+      updatedAt: new Date().toISOString()
+    });
+  }
+
+  function applyProgress(obj) {
+    if (!obj || typeof obj !== "object") throw new Error("進度檔不是物件");
+    if (obj.reviews && typeof obj.reviews === "object") {
+      reviews = obj.reviews;
+    } else if (obj.tasks && typeof obj.tasks === "object") {
+      reviews = {};
+      Object.values(obj.tasks).forEach((t) => {
+        if (!t || !t.taskId) return;
+        reviews[t.taskId] = {
+          coreSet: t.coreSet || [],
+          itemNotes: t.itemNotes || []
         };
-        reader.readAsText(file);
+      });
+    } else {
+      throw new Error("找不到 reviews 或 tasks");
     }
-
-    function initializeProjectData(rawArray) {
-        projectData.pages = [];
-        projectData.totalPages = rawArray.length;
-
-        rawArray.forEach((item, idx) => {
-            // 完美剝離剔除舊有的 Autogen Annotation 欄位，不進行抓取
-            const { Annotation, ...cleanRawData } = item;
-
-            projectData.pages.push({
-                index: idx,
-                taskName: item.taskName || `未命名任務 ${idx + 1}`,
-                rawData: cleanRawData, // 封存原始純淨工安欄位
-                
-                // 使用者人工審查基礎結構
-                rating: "",            // GOOD 或 BAD
-                comment: "",           // 綜合評語
-                user_annotation: [],   // 存放使用者自訂局部批註項目
-                savedHtmlContent: null // 存放包含黃色高亮的動態 HTML 快取
-            });
-        });
-
-        currentIndex = 0;
-        initSystem();
+    if (obj.annotator) {
+      annotator = String(obj.annotator).replace(/^expert:/, "");
+      $("annotator").value = annotator;
     }
-
-    function initSystem() {
-        document.getElementById('eval-section').style.display = 'block';
-        buildTaskDropdown();
-        renderCurrentPage();
+    if (Number.isInteger(obj.lastIndex) && obj.lastIndex >= 0 && obj.lastIndex < library.length) {
+      currentIndex = obj.lastIndex;
     }
+  }
 
-    function buildTaskDropdown() {
-        const select = document.getElementById('task-select');
-        select.innerHTML = '';
-        projectData.pages.forEach((page, idx) => {
-            const opt = document.createElement('option');
-            opt.value = idx;
-            opt.textContent = `[${idx + 1}] ${page.taskName}`;
-            select.appendChild(opt);
-        });
-    }
-
-    function renderCurrentPage() {
-        const page = projectData.pages[currentIndex];
-        if (!page) return;
-
-        // 1. 渲染左側區塊 (優先沿用高亮快取，若無則全新渲染)
-        if (page.savedHtmlContent) {
-            document.getElementById('model-content-area').innerHTML = page.savedHtmlContent;
-        } else {
-            document.getElementById('model-content-area').innerHTML = generateModelHtml(page);
+  function wire() {
+    $("search").addEventListener("input", renderList);
+    $("filter").addEventListener("change", renderList);
+    $("annotator").addEventListener("input", () => {
+      annotator = $("annotator").value.trim();
+      persist();
+    });
+    $("btn-prev").addEventListener("click", () => {
+      if (currentIndex > 0) { currentIndex -= 1; citedOpen = false; renderAll(); persist(); }
+    });
+    $("btn-next").addEventListener("click", () => {
+      if (currentIndex < library.length - 1) { currentIndex += 1; citedOpen = false; renderAll(); persist(); }
+    });
+    $("btn-next-open").addEventListener("click", () => {
+      const start = currentIndex;
+      for (let i = 1; i <= library.length; i += 1) {
+        const idx = (start + i) % library.length;
+        if (!isDone(library[idx])) {
+          currentIndex = idx;
+          citedOpen = false;
+          renderAll();
+          persist();
+          return;
         }
-
-        // 2. 建立頂部快速跳轉標籤
-        renderJumpTags(page);
-
-        // 3. 渲染右側 user_annotation 專區
-        renderUserAnnotationArea(page);
-
-        // 4. 還原下方單選鈕及評論狀態
-        const radios = document.getElementsByName('page_rating');
-        radios.forEach(r => r.checked = false);
-        if (page.rating) {
-            const targetRadio = document.querySelector(`input[name="page_rating"][value="${page.rating}"]`);
-            if (targetRadio) targetRadio.checked = true;
-        }
-        document.getElementById('page-comment').value = page.comment || "";
-
-        // 5. 分頁控制更新
-        document.getElementById('current-page-text').innerText = `(${currentIndex + 1} / ${projectData.totalPages})`;
-        document.getElementById('btn-prev').disabled = (currentIndex === 0);
-        document.getElementById('btn-next').disabled = (currentIndex === projectData.totalPages - 1);
-        document.getElementById('task-select').value = currentIndex;
-
-        projectData.lastIndex = currentIndex;
-        saveToLocalCache();
-    }
-
-    // 左側結構渲染
-    function generateModelHtml(page) {
-        const data = page.rawData;
-        let html = `<div>`;
-        html += `<div class="section-title">📌 任務名稱 (taskName)</div>`;
-        html += `<div class="section-block" style="font-size:18px; font-weight:bold; color:#2c3e50;">${page.taskName}</div>`;
-        
-        if (data.reasoningProcess) {
-            html += `<div class="section-title">🧠 推理過程 (reasoningProcess)</div>`;
-            html += `<div class="section-block">${data.reasoningProcess.replace(/\n/g, '<br>')}</div>`;
-        }
-        
-        if (data.taskdescribe) {
-            html += `<div class="section-title">📝 任務描述 (taskdescribe)</div>`;
-            html += `<div class="section-block">${data.taskdescribe.replace(/\n/g, '<br>')}</div>`;
-        }
-
-        html += `<div class="section-title">⚡ 危害群組細節 (hazardGroups)</div>`;
-        
-        if (data.hazardGroups && data.hazardGroups.length > 0) {
-            data.hazardGroups.forEach((group, gIdx) => {
-                const gName = Array.isArray(group.groupName) ? group.groupName.join(', ') : group.groupName;
-                html += `
-                <div class="hazard-card" id="hazard-group-${gIdx}">
-                    <div class="hazard-card-header">
-                        <span>🔍 危害類型：<span style="color:#2980b9; font-size:16px;">${gName}</span></span>
-                        <span class="severity-badge">嚴重度: ${group.severitylevel || '未標示'}</span>
-                    </div>
-                    <div class="hazard-card-body">
-                        <div class="list-title">💥 危害情境描述 (hazarditems)：</div>
-                        <ul class="data-list">
-                            ${group.hazarditems.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                        <div class="list-title">🛡️ 控制與防護措施 (AvoidItems)：</div>
-                        <ul class="data-list" style="color: #2f3542;">
-                            ${group.AvoidItems.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>`;
-            });
-        } else {
-            html += `<p style="color:#95a5a6; font-style:italic;">本筆資料無危害群組數據。</p>`;
-        }
-
-        html += `</div>`;
-        return html;
-    }
-
-    // 頂部跳轉標籤
-    function renderJumpTags(page) {
-        const container = document.getElementById('jump-tag-container');
-        container.innerHTML = '';
-        const groups = page.rawData.hazardGroups;
-        
-        if (groups && groups.length > 0) {
-            groups.forEach((group, gIdx) => {
-                const gName = Array.isArray(group.groupName) ? group.groupName[0] : group.groupName;
-                const tag = document.createElement('span');
-                tag.className = 'jump-tag';
-                tag.textContent = gName;
-                tag.onclick = function() {
-                    const targetEl = document.getElementById(`hazard-group-${gIdx}`);
-                    const scrollContainer = document.getElementById('model-content-area');
-                    if (targetEl && scrollContainer) {
-                        scrollContainer.scrollTo({
-                            top: targetEl.offsetTop - scrollContainer.offsetTop - 10,
-                            behavior: 'smooth'
-                        });
-                    }
-                };
-                container.appendChild(tag);
-            });
-        } else {
-            container.innerHTML = '<span class="group-badge-empty">無危害群組可跳轉</span>';
-        }
-    }
-
-    // 右側 user_annotation 渲染區
-    function renderUserAnnotationArea(page) {
-        const container = document.getElementById('annotation-area');
-        container.innerHTML = '';
-
-        const annos = page.user_annotation || [];
-        if (annos.length === 0) {
-            container.innerHTML = `<p style="color:#95a5a6; font-style:italic; font-size:14px; text-align:center; margin-top:30px;">
-                💡 目前無新增批註。<br>您可以用滑鼠反白圈選左側任何文字，點擊上方黃色按鈕加入您的審查意見。
-            </p>`;
-            return;
-        }
-
-        container.innerHTML = `<h4 style="margin-top:0; color:#16a085; border-bottom: 1px solid #eee; padding-bottom:8px;">📝 當前使用者局部批註清單 (user_annotation)：</h4>`;
-        annos.forEach(anno => {
-            container.innerHTML += `
-            <div class="custom-anno-item" id="custom-anno-${anno.id}">
-                <div style="font-size:12px; color:#7f8c8d; margin-bottom:5px;">🎯 圈選內文：</div>
-                <div style="font-style:italic; background:white; padding:6px 10px; border:1px solid #ebd492; margin-bottom:8px; border-radius:4px;">"${anno.text}"</div>
-                <div><strong>💡 審查意見：</strong><span>${anno.comment}</span></div>
-                <div style="text-align:right; margin-top:8px;">
-                    <button class="btn btn-small btn-danger" onclick="deleteUserAnnotation('${anno.id}')">🗑️ 刪除</button>
-                </div>
-            </div>`;
-        });
-    }
-
-    // 圈選加入 user_annotation
-    function addUserAnnotation() {
-        const selection = window.getSelection();
-        const text = selection.toString().trim();
-        
-        if (!text) { 
-            alert('請先在左側內文區域中，用滑鼠反白選取一段你想加註解的文字！'); 
-            return; 
-        }
-
-        const note = prompt('請輸入您對此段內文的審查意見或建議：');
-        if (note === null || note.trim() === '') return;
-
-        const range = selection.getRangeAt(0);
-        const containerArea = document.getElementById('model-content-area');
-        if (!containerArea.contains(range.commonAncestorContainer)) {
-            alert('不支援此操作！您只能對左側的「模式生成內容區」進行文字標記。');
-            return;
-        }
-
-        const uniqueId = 'user_anno_' + Date.now();
-        const span = document.createElement('span');
-        span.className = 'highlight';
-        span.title = note;
-        span.dataset.id = uniqueId;
-
+      }
+      alert("166 筆都已完成。");
+    });
+    $("btn-export").addEventListener("click", exportResult);
+    $("btn-progress").addEventListener("click", exportProgress);
+    $("progress-input").addEventListener("change", (ev) => {
+      const file = ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
         try {
-            range.surroundContents(span);
-        } catch (e) {
-            alert('標記範圍選擇錯誤：無法跨越欄位、章節標題或大型排版區塊，請於單一文字段落內進行選取。');
-            return;
+          applyProgress(JSON.parse(reader.result));
+          persist();
+          renderAll();
+          alert("進度已還原。");
+        } catch (err) {
+          alert("讀取失敗：" + err.message);
         }
-        selection.removeAllRanges();
+      };
+      reader.readAsText(file, "UTF-8");
+      ev.target.value = "";
+    });
+    $("btn-clear").addEventListener("click", async () => {
+      if (!confirm("確定清除本機暫存？未下載的審查會消失。")) return;
+      await localforage.removeItem(STORE);
+      reviews = {};
+      currentIndex = 0;
+      renderAll();
+    });
+    $("note-cancel").addEventListener("click", closeModal);
+    $("note-save").addEventListener("click", saveDraftNote);
+    $("note-delete").addEventListener("click", () => {
+      if (!draftNote) return;
+      deleteNote(draftNote.taskId, draftNote);
+      closeModal();
+      renderAll();
+    });
+    $("note-modal").addEventListener("click", (e) => {
+      if (e.target.id === "note-modal") closeModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+      if ($("note-modal").classList.contains("hidden") === false) return;
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
+      if (e.key === "ArrowLeft") $("btn-prev").click();
+      if (e.key === "ArrowRight") $("btn-next").click();
+    });
+  }
 
-        // 寫入數據庫
-        projectData.pages[currentIndex].user_annotation.push({
-            id: uniqueId,
-            text: text,
-            comment: note.trim()
-        });
-
-        saveCurrentPageState();
-        renderUserAnnotationArea(projectData.pages[currentIndex]);
+  async function boot() {
+    wire();
+    const res = await fetch("data/library.json");
+    if (!res.ok) throw new Error("無法載入 data/library.json");
+    const doc = await res.json();
+    library = doc.tasks || [];
+    if (!library.length) throw new Error("作業庫是空的");
+    const saved = await localforage.getItem(STORE);
+    if (saved && saved.reviews) {
+      if (confirm("發現上次未完成的暫存，是否恢復？")) applyProgress(saved);
     }
+    renderAll();
+  }
 
-    function deleteUserAnnotation(id) {
-        if (!confirm('確定要移除這個批註嗎？左側對應的黃色反白標記也會一併刪除。')) return;
-
-        const page = projectData.pages[currentIndex];
-        const idx = page.user_annotation.findIndex(a => a.id === id);
-        
-        if (idx > -1) {
-            page.user_annotation.splice(idx, 1);
-            
-            const span = document.querySelector(`span[data-id="${id}"]`);
-            if (span) {
-                const textNode = document.createTextNode(span.textContent);
-                span.parentNode.replaceChild(textNode, span);
-            }
-            
-            saveCurrentPageState();
-            renderUserAnnotationArea(page);
-        }
-    }
-
-    function saveCurrentPageState() {
-        if (!projectData.pages[currentIndex]) return;
-        const page = projectData.pages[currentIndex];
-
-        const selectedRating = document.querySelector('input[name="page_rating"]:checked');
-        page.rating = selectedRating ? selectedRating.value : "";
-        page.comment = document.getElementById('page-comment').value;
-        page.savedHtmlContent = document.getElementById('model-content-area').innerHTML;
-
-        saveToLocalCache();
-    }
-
-    async function saveToLocalCache() {
-        const status = document.getElementById('auto-save-status');
-        try {
-            await localforage.setItem('cached_user_annotation_data', projectData);
-            status.innerText = `✔️ 已自動更新暫存 (${new Date().toLocaleTimeString()})`;
-            setTimeout(() => { if(status.innerText.includes('已自動更新')) status.innerText = ''; }, 2000);
-        } catch (e) {
-            console.error("快取失敗", e);
-        }
-    }
-
-    function changePage(direction) {
-        saveCurrentPageState();
-        currentIndex += direction;
-        renderCurrentPage();
-    }
-
-    function jumpToPage(index) {
-        if (index === "") return;
-        saveCurrentPageState();
-        currentIndex = parseInt(index);
-        renderCurrentPage();
-    }
-
-    // 💾 匯出完整的審查報告 (資料欄位完美結合 user_annotation)
-    function exportProgress() {
-        saveCurrentPageState();
-        
-        // 重新組裝，剔除系統 UI 控制參數，對齊您所要求的整合標準
-        const finalExportArray = projectData.pages.map(page => {
-            return {
-                ...page.rawData,
-                rating: page.rating || "",
-                comment: page.comment || "",
-                user_annotation: page.user_annotation.map(ua => ({
-                    text: ua.text,
-                    comment: ua.comment
-                })) // 以 user_annotation 陣列型態乾淨輸出
-            };
-        });
-
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(finalExportArray, null, 4));
-        const downloadNode = document.createElement('a');
-        downloadNode.setAttribute("href", dataStr);
-        downloadNode.setAttribute("download", `User_Annotation_Report_${new Date().toISOString().slice(0,10)}.json`);
-        document.body.appendChild(downloadNode);
-        downloadNode.click();
-        downloadNode.remove();
-    }
-
-    // 📂 讀取先前的審查進度檔
-    function loadProgressFile(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const arr = JSON.parse(e.target.result);
-                if (!Array.isArray(arr) || (arr.length > 0 && !arr[0].taskName)) {
-                    throw new Error("此檔案格式不符，請上傳本系統產生的審查進度 JSON 檔案");
-                }
-                
-                projectData.pages = arr.map((item, idx) => {
-                    const { rating, comment, user_annotation, ...cleanRaw } = item;
-                    // 還原內部結構並給予隨機 ID 便於系統追蹤
-                    const remappedAnnos = (user_annotation || []).map((ua, uIdx) => ({
-                        id: `imported_${idx}_${uIdx}_${Date.now()}`,
-                        text: ua.text,
-                        comment: ua.comment
-                    }));
-
-                    return {
-                        index: idx,
-                        taskName: item.taskName || `任務 ${idx + 1}`,
-                        rawData: cleanRaw,
-                        rating: rating || "",
-                        comment: comment || "",
-                        user_annotation: remappedAnnos,
-                        savedHtmlContent: null
-                    };
-                });
-                projectData.totalPages = projectData.pages.length;
-                currentIndex = 0;
-                initSystem();
-                alert("歷史審查進度檔案載入成功！已成功還原 user_annotation 與各項評價紀錄。");
-            } catch (err) {
-                alert(`讀取失敗: ${err.message}`);
-            }
-        };
-        reader.readAsText(file);
-    }
-
-    async function clearSystemCache() {
-        if (confirm("⚠️ 確定要清除所有本機暫存紀錄嗎？")) {
-            await localforage.clear();
-            alert("快取已全數清空！");
-            window.location.reload();
-        }
-    }
+  boot().catch((err) => {
+    $("pane").innerHTML = `<p class="desc">載入失敗：${escapeHtml(err.message)}。請用本機伺服器或 GitHub Pages 開啟，不要直接雙擊 HTML。</p>`;
+  });
 </script>
-
 </body>
 </html>
