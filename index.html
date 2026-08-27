@@ -234,14 +234,15 @@
     </div>
   </div>
 <script>
-  const TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長"];
+  const TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長", "文風改良"];
   const TAG_HELP = {
     "漏提": "該有的情境或對策沒寫",
     "空泛": "寫了但現場做不到",
     "不符行業": "對不到本作業名稱／描述，不是不該掛在某廠",
     "寫反": "把誘發條件或禁令寫成對策，或對策與描述衝突",
     "跨類複製": "這句應屬別的危害組",
-    "過長": "可刪可併的重複句"
+    "過長": "可刪可併的重複句",
+    "文風改良": "寫得太機械、像套話，不像現場會講的話"
   };
   const STORE = "ra-phase1-expert-v1";
   localforage.config({
@@ -793,7 +794,7 @@
 
   async function boot() {
     wire();
-    const res = await fetch("data/library.json?v=20260827d");
+    const res = await fetch("data/library.json?v=20260827e");
     if (!res.ok) throw new Error("無法載入 data/library.json");
     const doc = await res.json();
     library = doc.tasks || [];
