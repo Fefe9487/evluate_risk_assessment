@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>作業本身審查（階段一）</title>
+  <title>作業本身審查</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/localforage/1.10.0/localforage.min.js"></script>
   <style>
     :root {
@@ -169,6 +169,7 @@
       width: 100%; min-height: 110px; padding: 10px; border: 1px solid var(--line);
       border-radius: 8px; font: inherit; font-size: 14px; resize: vertical;
     }
+    #overall-comment { min-height: 140px; background: #fff; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
     .status { font-size: 12px; opacity: .85; }
     @media (max-width: 1100px) {
@@ -181,8 +182,8 @@
 <body>
   <header>
     <div>
-      <h1>作業本身審查（階段一）</h1>
-      <div class="meta">與 LLM-as-judge 同一套：勾 2～4 個五分鐘核心，只標有問題的句子</div>
+      <h1>作業本身審查</h1>
+      <div class="meta">勾五分鐘核心、點句子標問題；綜合意見不限格式</div>
     </div>
     <div class="grow"></div>
     <div class="hdr-acts">
@@ -272,7 +273,7 @@
   }
 
   function emptyReview() {
-    return { coreSet: [], itemNotes: [] };
+    return { coreSet: [], itemNotes: [], overallComment: "" };
   }
 
   function getReview(taskId) {
@@ -280,6 +281,7 @@
     const r = reviews[taskId];
     r.coreSet = Array.isArray(r.coreSet) ? r.coreSet : [];
     r.itemNotes = Array.isArray(r.itemNotes) ? r.itemNotes : [];
+    r.overallComment = typeof r.overallComment === "string" ? r.overallComment : "";
     return r;
   }
 
@@ -311,7 +313,9 @@
 
   function isStarted(task) {
     const r = getReview(task.taskId);
-    return (r.coreSet && r.coreSet.length > 0) || (r.itemNotes && r.itemNotes.length > 0);
+    return (r.coreSet && r.coreSet.length > 0)
+      || (r.itemNotes && r.itemNotes.length > 0)
+      || String(r.overallComment || "").trim().length > 0;
   }
 
   function statusOf(task) {
@@ -402,7 +406,10 @@
       const st = statusOf(task);
       if (filter === "open" && st === "done") return;
       if (filter === "done" && st !== "done") return;
-      if (filter === "noted" && getReview(task.taskId).itemNotes.length === 0) return;
+      if (filter === "noted") {
+        const r = getReview(task.taskId);
+        if (!r.itemNotes.length && !String(r.overallComment || "").trim()) return;
+      }
       if (q && !task.taskName.includes(q) && !String(idx + 1).includes(q)) return;
       const btn = document.createElement("button");
       btn.className = "task" + (idx === currentIndex ? " active" : "");
@@ -460,16 +467,6 @@
       </article>`;
     });
     pane.innerHTML = `
-      <details class="guide">
-        <summary>審查規則（與 LLM 同一套，點開看完即可）</summary>
-        <ul>
-          <li>只評這張作業內文對不對、能不能當現場 5 分鐘分診。不要評該不該掛在某行業。</li>
-          <li>核心勾 2～4 類：常見且夠痛優先；罕見致死列次要，除非主能量就是那個。</li>
-          <li>不要照抄「庫內核心」。泛用卡抓作業名稱的主能量；製程綁定卡要對得上那條製程。</li>
-          <li>只點有問題的句子。沒問題的不要標。說明要寫成句子，不能只寫「需修正」。</li>
-          <li>漏提＝該有的沒寫；空泛＝現場做不到；不符行業＝工序錯置；寫反＝禁令／對策衝突；跨類複製＝貼錯組；過長＝可刪可併。</li>
-        </ul>
-      </details>
       <h2>${escapeHtml(task.taskName)}</h2>
       <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
       <div class="list-title">引用背景（只供判斷泛用或製程綁定，不要據此建議拿掉模板）</div>
@@ -523,11 +520,22 @@
     }).join("");
     box.innerHTML = `
       <div class="rev-h">五分鐘優先檢視（勾 2～4 類）</div>
-      <p class="hint${errs.length ? " bad" : " ok"}">${errs.length ? errs.join("；") : "本筆格式已可匯出比對。"} · 已勾 ${review.coreSet.length} 類</p>
+      <p class="hint${errs.length ? " bad" : " ok"}">${errs.length ? errs.join("；") : "核心已勾 2～4 類。"} · 已勾 ${review.coreSet.length} 類</p>
       <div class="core-list">${coreBoxes}</div>
+      <div class="rev-h">綜合意見（選填，不限格式）</div>
+      <p class="hint">不受標籤、條數或核心勾選限制。可寫整體好壞、缺什麼、現場能不能用。</p>
+      <textarea id="overall-comment" placeholder="自由書寫即可，不必套左側的逐條標註規則。">${escapeHtml(review.overallComment || "")}</textarea>
       <div class="rev-h">已標問題（${review.itemNotes.length}）</div>
-      <p class="hint">點左側句子或核心理由即可新增。沒問題的句子不要標。</p>
-      ${notes || '<p class="empty">尚未標任何問題。若內文可接受，勾完核心即可。</p>'}`;
+      <p class="hint">點左側句子或核心理由即可新增。沒問題的句子不必標。</p>
+      ${notes || '<p class="empty">尚未標任何句子。若只想寫整體看法，用上面的綜合意見即可。</p>'}`;
+    const overall = $("overall-comment");
+    if (overall) {
+      overall.addEventListener("input", () => {
+        getReview(task.taskId).overallComment = overall.value;
+        persist();
+        renderList();
+      });
+    }
     box.querySelectorAll("input[data-core]").forEach((input) => {
       input.addEventListener("change", () => {
         toggleCore(task.taskId, input.getAttribute("data-core"), input.checked);
@@ -641,6 +649,7 @@
         taskId: task.taskId,
         taskName: task.taskName,
         coreSet: [...review.coreSet],
+        overallComment: String(review.overallComment || "").trim(),
         itemNotes: review.itemNotes.map((n) => ({
           groupName: n.groupName,
           field: n.field,
@@ -661,7 +670,7 @@
       nComplete: library.length - incomplete.length,
       incomplete,
       formatNotes: [
-        "schema v2: coreSet + itemNotes only; citedIn is pack background; nearDup/hang belong to phase 2"
+        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見，不套標籤詞表"
       ],
       tasks
     };
@@ -693,7 +702,8 @@
         if (!t || !t.taskId) return;
         reviews[t.taskId] = {
           coreSet: t.coreSet || [],
-          itemNotes: t.itemNotes || []
+          itemNotes: t.itemNotes || [],
+          overallComment: typeof t.overallComment === "string" ? t.overallComment : ""
         };
       });
     } else {
