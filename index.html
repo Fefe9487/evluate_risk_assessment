@@ -213,7 +213,7 @@
       <div id="taskList"></div>
     </aside>
     <main class="pane" id="pane">
-      <p class="desc">載入 166 筆現用庫作業後，即可開始審查。</p>
+      <p class="desc">載入現用庫作業後，即可開始審查。</p>
     </main>
     <section class="review" id="review"></section>
   </div>
@@ -743,7 +743,7 @@
           return;
         }
       }
-      alert("166 筆都已完成。");
+      alert(library.length + " 筆都已完成。");
     });
     $("btn-export").addEventListener("click", exportResult);
     $("btn-progress").addEventListener("click", exportProgress);
@@ -793,7 +793,7 @@
 
   async function boot() {
     wire();
-    const res = await fetch("data/library.json?v=20260827c");
+    const res = await fetch("data/library.json?v=20260827d");
     if (!res.ok) throw new Error("無法載入 data/library.json");
     const doc = await res.json();
     library = doc.tasks || [];

@@ -2,7 +2,7 @@
 
 線上位置：https://fefe9487.github.io/evluate_risk_assessment/
 
-這站給外部專家標 **現用庫 166 筆作業**。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。
+這站給外部專家標 **現用庫作業**（含十業新掛的三張卡）。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。引用背景來自正式 `industryMapping.json`。
 
 ## 專家怎麼用
 
@@ -63,5 +63,6 @@
 
 ## 維護者
 
-- 作業正文：`data/library.json`（與 TOIRA 公開庫同步，僅 `inLibrary` 166 筆；`核心重點_existing` 是庫內旗，專家不要照抄）
+- 作業正文：`data/library.json`（與 TOIRA 公開庫同步；`核心重點_existing` 是庫內旗，專家不要照抄）
+- 行業掛載：`data/industryMapping.json`（與 TOIRA／給璞藝同一份）
 - 比對腳本在主專案：`judge_draft/_compare_expert_phase1.py`
