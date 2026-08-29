@@ -290,8 +290,8 @@
     const names = new Set((task.hazardGroups || []).map((g) => g.groupName));
     const core = review.coreSet || [];
     const errs = [];
-    if (!Array.isArray(core) || core.length < 2 || core.length > 4) {
-      errs.push("核心須勾 2～4 類");
+    if (!Array.isArray(core) || core.length < 2) {
+      errs.push("核心至少勾 2 類");
     }
     for (const n of core) {
       if (!names.has(n)) errs.push(`核心不在本作業：${n}`);
@@ -424,7 +424,7 @@
       });
       box.appendChild(btn);
     });
-    $("progress-line").innerHTML = `已完成 <b>${done}</b> / ${library.length}（核心 2～4 類即算完成；沒問題可不標）`;
+    $("progress-line").innerHTML = `已完成 <b>${done}</b> / ${library.length}（核心至少 2 類即算完成，沒有上限；沒問題可不標）`;
   }
 
   function renderPane() {
@@ -520,8 +520,8 @@
       </article>`;
     }).join("");
     box.innerHTML = `
-      <div class="rev-h">五分鐘優先檢視（勾 2～4 類）</div>
-      <p class="hint${errs.length ? " bad" : " ok"}">${errs.length ? errs.join("；") : "核心已勾 2～4 類。"} · 已勾 ${review.coreSet.length} 類</p>
+      <div class="rev-h">五分鐘優先檢視（至少 2 類，沒有上限）</div>
+      <p class="hint${errs.length ? " bad" : " ok"}">${errs.length ? errs.join("；") + " · " : ""}已勾 ${review.coreSet.length} 類</p>
       <div class="core-list">${coreBoxes}</div>
       <div class="rev-h">綜合意見（選填，不限格式）</div>
       <p class="hint">不受標籤、條數或核心勾選限制。可寫整體好壞、缺什麼、現場能不能用。</p>
@@ -678,7 +678,7 @@
     const day = new Date().toISOString().slice(0, 10);
     downloadJson(`phase1_expert_${annotator}_${day}.json`, doc);
     if (incomplete.length) {
-      alert(`已下載。尚有 ${incomplete.length} 筆未完成（核心不是 2～4 類，或問題標註缺標籤／說明）。未完成的作業仍寫進檔案，之後可繼續補。`);
+      alert(`已下載。尚有 ${incomplete.length} 筆未完成（核心未滿 2 類，或問題標註缺標籤／說明）。未完成的作業仍寫進檔案，之後可繼續補。`);
     }
   }
 
