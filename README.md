@@ -4,7 +4,11 @@
 
 這站給外部專家標 **現用庫作業**（含十業新掛的三張卡）。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。引用背景來自正式 `industryMapping.json`。
 
-只讀對照 **Fat 原版**（壓縮前的 `給璞藝/tasksLibrary_2.0_0811.json`，167 張）：[fat.html](fat.html)。這頁不寫審查、不改 slim。六張後來才進 slim 的辦公／文書卡沒有 fat。
+只讀對照 **Fat 原版**：[fat.html](fat.html)。這頁不寫審查、不改 slim。六張後來才進 slim 的辦公／文書卡沒有 fat。
+
+只讀對照 **專業版底稿**：[full.html](full.html)（Phase 1 第 1 階段 `writeback_full`，尚未做第 2 階段掃讀壓縮）。原批次 170 張；後來才進庫的三張（廳舍修繕、道路維護、高處繩索接近）已後補進去，頁面會標「後補」。
+
+影視拍攝那張 2.0 庫混用「取代／消除／複合標」，不能當控制層級；Fat 頁改放 Gen4 完整 JSA，層級收到工程改善／行政管理／個人防護。
 
 ## 專家怎麼用
 
@@ -68,5 +72,6 @@
 
 - 作業正文：`data/library.json`（與 TOIRA 公開庫同步；`核心重點_existing` 是庫內旗，專家不要照抄）
 - Fat 原版（只讀）：`data/library_fat.json` + `fat.html`
+- 專業版底稿（只讀）：`data/library_full.json` + `full.html`（170 張 writeback_full + 後補三張）
 - 行業掛載：`data/industryMapping.json`（與 TOIRA／給璞藝同一份）
 - 比對腳本在主專案：`judge_draft/_compare_expert_phase1.py`
