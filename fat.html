@@ -80,10 +80,18 @@
     }
     .badge.core { background: var(--core); color: #fff; }
     .badge.s { background: #ffeaa7; color: #9a5b12; }
+    .badge.eng { background: var(--brand-2); color: #fff; }
+    .badge.admin { background: #4d6b6d; color: #fff; }
+    .badge.ppe { background: var(--core); color: #fff; }
+    .badge.miss { background: #c0392b; color: #fff; }
     .card-b { padding: 12px 14px 14px; }
     .list-title { font-size: 13px; font-weight: 650; margin: 10px 0 6px; }
     ol.lines { margin: 0; padding-left: 22px; }
     ol.lines li { margin: 0 0 6px; padding: 6px 8px; border-radius: 8px; line-height: 1.5; }
+    ol.controls { padding-left: 0; list-style: none; }
+    ol.controls li {
+      display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: start;
+    }
     .reason-block { margin: 0 0 6px; padding: 6px 8px; line-height: 1.5; }
     .empty { color: var(--muted); font-size: 13px; }
     .guide {
@@ -148,6 +156,51 @@
     history.replaceState(null, "", url);
   }
 
+  const TAG_RE = /[（(]([^）)]+)[)）]\s*$/;
+  const TAG_MAP = {
+    "工程改善": "工程改善",
+    "工程控制": "工程改善",
+    "取代": "工程改善",
+    "消除": "工程改善",
+    "行政管理": "行政管理",
+    "管理控制": "行政管理",
+    "個人防護": "個人防護",
+    "個人防護具": "個人防護"
+  };
+
+  function normalizeTag(raw) {
+    const parts = String(raw || "").split(/[／/、,，]/);
+    for (const part of parts) {
+      const mapped = TAG_MAP[part.trim()];
+      if (mapped) return mapped;
+    }
+    return "";
+  }
+
+  function splitControl(text) {
+    const s = String(text || "").trim();
+    const m = TAG_RE.exec(s);
+    if (!m) return { text: s, tag: "", missing: true };
+    return {
+      text: s.slice(0, m.index).replace(/[。；;]+$/, "").trim(),
+      tag: normalizeTag(m[1]),
+      missing: !normalizeTag(m[1])
+    };
+  }
+
+  function tagClass(tag, missing) {
+    if (missing || !tag) return "miss";
+    if (tag === "工程改善") return "eng";
+    if (tag === "個人防護") return "ppe";
+    return "admin";
+  }
+
+  function renderControl(text) {
+    const { text: body, tag, missing } = splitControl(text);
+    const label = missing ? "未標層級" : tag;
+    return `<li><span class="badge ${tagClass(tag, missing)}">${escapeHtml(label)}</span><span>${escapeHtml(body)}</span></li>`;
+  }
+
   function counts(task) {
     const groups = task.hazardGroups || [];
     let avoid = 0;
@@ -189,12 +242,15 @@
       ? `<button type="button" class="chip more" id="cited-more">${citedOpen ? "收合" : "顯示全部 " + cited.length + " 筆"}</button>`
       : "";
     const c = counts(task);
+    const note = task.sourceNote
+      ? `<div class="guide">${escapeHtml(task.sourceNote)}</div>`
+      : `<div class="guide">這是 Fat 原版（給璞藝／tasksLibrary_2.0_0811），共 ${c.groups} 組、${c.avoid} 條改善。審查請回 slim 頁。</div>`;
     let groups = "";
     (task.hazardGroups || []).forEach((g) => {
       const libCore = !!g["核心重點_existing"];
       const hazards = (g.hazardItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
-      const avoids = (g.AvoidItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
-      const common = (g.CommonAvoidItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+      const avoids = (g.AvoidItems || []).map((t) => renderControl(t)).join("");
+      const common = (g.CommonAvoidItems || []).map((t) => renderControl(t)).join("");
       groups += `<article class="card${libCore ? " core" : ""}">
         <div class="card-h">
           <span>${escapeHtml(g.groupName)}</span>
@@ -209,19 +265,18 @@
           <div class="list-title">危害情境（${(g.hazardItems || []).length}）</div>
           ${hazards ? `<ol class="lines">${hazards}</ol>` : `<p class="empty">無</p>`}
           <div class="list-title">改善項目（${(g.AvoidItems || []).length}）</div>
-          ${avoids ? `<ol class="lines">${avoids}</ol>` : `<p class="empty">無</p>`}
-          ${common ? `<div class="list-title">組內共用改善</div><ol class="lines">${common}</ol>` : ""}
+          ${avoids ? `<ol class="lines controls">${avoids}</ol>` : `<p class="empty">無</p>`}
+          ${common ? `<div class="list-title">組內共用改善</div><ol class="lines controls">${common}</ol>` : ""}
         </div>
       </article>`;
     });
-    const taskCommon = (task.taskCommonAvoidItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
     pane.innerHTML = `
-      <div class="guide">這是 Fat 原版（給璞藝／tasksLibrary_2.0_0811），共 ${c.groups} 組、${c.avoid} 條改善。審查請回 slim 頁。</div>
+      ${note}
       <h2>${escapeHtml(task.taskName)}</h2>
       <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
       <div class="list-title">引用背景</div>
       <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
-      ${taskCommon ? `<div class="list-title">作業級共用改善</div><ol class="lines">${taskCommon}</ol>` : ""}
+      ${(task.taskCommonAvoidItems || []).length ? `<div class="list-title">作業級共用改善</div><ol class="lines controls">${(task.taskCommonAvoidItems || []).map((t) => renderControl(t)).join("")}</ol>` : ""}
       ${groups}`;
     const moreBtn = $("cited-more");
     if (moreBtn) moreBtn.addEventListener("click", () => { citedOpen = !citedOpen; renderPane(); });
@@ -252,7 +307,7 @@
 
   async function boot() {
     wire();
-    const res = await fetch("data/library_fat.json?v=20260909fat");
+    const res = await fetch("data/library_fat.json?v=20260909fat2");
     if (!res.ok) throw new Error("無法載入 data/library_fat.json");
     const doc = await res.json();
     library = doc.tasks || [];
