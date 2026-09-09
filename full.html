@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fat 原版（只讀）</title>
+  <title>專業版底稿（壓縮前）</title>
   <style>
     :root {
       --brand: #063f41;
@@ -63,6 +63,7 @@
       background: var(--brand-soft); color: var(--brand);
     }
     .chip.more { cursor: pointer; background: #fff; border: 1px solid var(--line); }
+    .chip.later { background: var(--core-soft); color: #9a5b12; }
     .card {
       border: 1px solid var(--line); border-radius: 12px; margin: 12px 0;
       overflow: hidden; background: #fff;
@@ -107,25 +108,25 @@
 <body>
   <header>
     <div>
-      <h1>Fat 原版（只讀）</h1>
-      <div class="meta">壓縮前的 2.0 作業庫。不寫審查、不改現用 slim。</div>
+      <h1>專業版底稿（壓縮前）</h1>
+      <div class="meta">Phase 1 第 1 階段 writeback_full。不寫審查、不改現用 slim。</div>
     </div>
     <div class="grow"></div>
     <a class="nav" href="index.html">回審查頁</a>
-    <a class="nav" href="full.html">專業版</a>
+    <a class="nav" href="fat.html">Fat 原版</a>
     <button type="button" id="btn-prev">上一筆</button>
     <button type="button" id="btn-next">下一筆</button>
   </header>
   <div class="layout">
     <aside>
       <div class="side-tools">
-        <div class="progress-line" id="progress-line">載入 Fat 原版…</div>
+        <div class="progress-line" id="progress-line">載入專業版底稿…</div>
         <input id="search" placeholder="搜尋作業名稱…">
       </div>
       <div id="taskList"></div>
     </aside>
     <main class="pane" id="pane">
-      <p class="desc">載入 Fat 原版後即可對照。</p>
+      <p class="desc">載入專業版底稿後即可對照。</p>
     </main>
   </div>
 <script>
@@ -216,10 +217,11 @@
     library.forEach((task, idx) => {
       if (q && !task.taskName.includes(q) && !String(idx + 1).includes(q)) return;
       const c = counts(task);
+      const later = task.laterCard ? "後補 · " : "";
       const btn = document.createElement("button");
       btn.className = "task" + (idx === currentIndex ? " active" : "");
       btn.type = "button";
-      btn.innerHTML = `<span>${escapeHtml(task.taskName)}<span class="n">${c.groups} 組／${c.avoid} 條改善</span></span><span class="n">${idx + 1}</span>`;
+      btn.innerHTML = `<span>${escapeHtml(task.taskName)}<span class="n">${later}${c.groups} 組／${c.avoid} 條改善</span></span><span class="n">${idx + 1}</span>`;
       btn.addEventListener("click", () => {
         currentIndex = idx;
         citedOpen = false;
@@ -243,9 +245,13 @@
       ? `<button type="button" class="chip more" id="cited-more">${citedOpen ? "收合" : "顯示全部 " + cited.length + " 筆"}</button>`
       : "";
     const c = counts(task);
+    const laterChip = task.laterCard ? `<span class="chip later">後補三張</span>` : "";
     const note = task.sourceNote
       ? `<div class="guide">${escapeHtml(task.sourceNote)}</div>`
-      : `<div class="guide">這是 Fat 原版（給璞藝／tasksLibrary_2.0_0811），共 ${c.groups} 組、${c.avoid} 條改善。審查請回 slim 頁。</div>`;
+      : `<div class="guide">這是 Phase 1 專業版底稿（writeback_full），尚未做第 2 階段掃讀壓縮。共 ${c.groups} 組、${c.avoid} 條改善。審查請回 slim 頁。</div>`;
+    const summary = task.change_summary
+      ? `<div class="guide">寫回摘要：${escapeHtml(task.change_summary)}</div>`
+      : "";
     let groups = "";
     (task.hazardGroups || []).forEach((g) => {
       const libCore = !!g["核心重點_existing"];
@@ -273,7 +279,8 @@
     });
     pane.innerHTML = `
       ${note}
-      <h2>${escapeHtml(task.taskName)}</h2>
+      ${summary}
+      <h2>${escapeHtml(task.taskName)} ${laterChip}</h2>
       <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
       <div class="list-title">引用背景</div>
       <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
@@ -286,7 +293,7 @@
   function renderAll() {
     const task = library[currentIndex];
     setLocation(task);
-    $("progress-line").innerHTML = `Fat 原版 <b>${library.length}</b> 張　第 ${currentIndex + 1} 張`;
+    $("progress-line").innerHTML = `專業版 <b>${library.length}</b> 張　第 ${currentIndex + 1} 張`;
     renderList();
     renderPane();
   }
@@ -308,17 +315,17 @@
 
   async function boot() {
     wire();
-    const res = await fetch("data/library_fat.json?v=20260909fat2");
-    if (!res.ok) throw new Error("無法載入 data/library_fat.json");
+    const res = await fetch("data/library_full.json?v=20260909full1");
+    if (!res.ok) throw new Error("無法載入 data/library_full.json");
     const doc = await res.json();
     library = doc.tasks || [];
-    if (!library.length) throw new Error("Fat 作業庫是空的");
+    if (!library.length) throw new Error("專業版作業庫是空的");
     const want = wantedTaskId();
     if (want) {
       const idx = library.findIndex((t) => t.taskId === want || t.taskName === want);
       if (idx >= 0) currentIndex = idx;
     }
-    $("progress-line").innerHTML = `Fat 原版 <b>${library.length}</b> 張`;
+    $("progress-line").innerHTML = `專業版 <b>${library.length}</b> 張`;
     renderAll();
   }
 
