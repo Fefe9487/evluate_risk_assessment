@@ -4,6 +4,8 @@
 
 這站給外部專家標 **現用庫作業**（含十業新掛的三張卡）。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。引用背景來自正式 `industryMapping.json`。
 
+只讀對照 **Fat 原版**（壓縮前的 `給璞藝/tasksLibrary_2.0_0811.json`，167 張）：[fat.html](fat.html)。這頁不寫審查、不改 slim。六張後來才進 slim 的辦公／文書卡沒有 fat。
+
 ## 專家怎麼用
 
 1. 用 Chrome / Edge 打開上面網址（不要下載 HTML 後雙擊，資料檔載不進來）。
@@ -65,5 +67,6 @@
 ## 維護者
 
 - 作業正文：`data/library.json`（與 TOIRA 公開庫同步；`核心重點_existing` 是庫內旗，專家不要照抄）
+- Fat 原版（只讀）：`data/library_fat.json` + `fat.html`
 - 行業掛載：`data/industryMapping.json`（與 TOIRA／給璞藝同一份）
 - 比對腳本在主專案：`judge_draft/_compare_expert_phase1.py`

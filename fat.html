@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fat 原版（只讀）</title>
+  <style>
+    :root {
+      --brand: #063f41;
+      --brand-2: #0e7477;
+      --brand-soft: #eaf5f4;
+      --ink: #1c3033;
+      --muted: #6f8a8c;
+      --line: #d5e3e2;
+      --bg: #f3f7f6;
+      --surface: #fff;
+      --core: #c97d1a;
+      --core-soft: #fff4e4;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "Segoe UI", sans-serif;
+      background: var(--bg); color: var(--ink);
+    }
+    header {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding: 10px 16px; background: var(--brand); color: #fff;
+    }
+    header h1 { font-size: 16px; font-weight: 650; margin: 0; }
+    header .meta { font-size: 12px; opacity: .8; }
+    header .grow { flex: 1; }
+    header a.nav, header button {
+      font: inherit; font-size: 13px; padding: 6px 11px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.35); color: #fff; text-decoration: none;
+      background: transparent; cursor: pointer;
+    }
+    header a.nav:hover, header button:hover { background: rgba(255,255,255,.12); }
+    .layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); height: calc(100% - 52px); }
+    aside, .pane { background: var(--surface); overflow: auto; min-width: 0; }
+    aside { border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+    .side-tools { padding: 10px 12px 8px; display: grid; gap: 8px; }
+    .side-tools input {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; font: inherit;
+    }
+    .progress-line { font-size: 12px; color: var(--muted); }
+    .progress-line b { color: var(--brand-2); }
+    #taskList { overflow: auto; padding: 4px 8px 16px; }
+    .task {
+      width: 100%; text-align: left; border: 0; background: transparent;
+      padding: 8px 10px; border-radius: 8px; cursor: pointer; color: var(--ink); font: inherit;
+      display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: start;
+    }
+    .task:hover { background: var(--brand-soft); }
+    .task.active { background: var(--brand-soft); color: var(--brand-2); font-weight: 650; }
+    .task .n { font-size: 11px; color: var(--muted); font-weight: 400; display: block; margin-top: 3px; }
+    .pane { padding: 18px 22px 72px; }
+    h2 { font-size: 20px; margin: 0 0 6px; }
+    .desc { color: var(--muted); font-size: 14px; line-height: 1.65; max-width: 78ch; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 16px; }
+    .chip {
+      font-size: 12px; padding: 3px 8px; border-radius: 999px;
+      background: var(--brand-soft); color: var(--brand);
+    }
+    .chip.more { cursor: pointer; background: #fff; border: 1px solid var(--line); }
+    .card {
+      border: 1px solid var(--line); border-radius: 12px; margin: 12px 0;
+      overflow: hidden; background: #fff;
+    }
+    .card.core { border-color: #e8c07a; background: #fffdf8; }
+    .card-h {
+      display: flex; justify-content: space-between; gap: 10px; align-items: center;
+      padding: 10px 14px; background: #f6fafa; border-bottom: 1px solid var(--line);
+      font-weight: 650;
+    }
+    .card.core .card-h { background: var(--core-soft); }
+    .badge {
+      font-size: 11px; font-weight: 650; padding: 2px 8px; border-radius: 999px;
+      background: #e8eeee; color: var(--muted);
+    }
+    .badge.core { background: var(--core); color: #fff; }
+    .badge.s { background: #ffeaa7; color: #9a5b12; }
+    .card-b { padding: 12px 14px 14px; }
+    .list-title { font-size: 13px; font-weight: 650; margin: 10px 0 6px; }
+    ol.lines { margin: 0; padding-left: 22px; }
+    ol.lines li { margin: 0 0 6px; padding: 6px 8px; border-radius: 8px; line-height: 1.5; }
+    .reason-block { margin: 0 0 6px; padding: 6px 8px; line-height: 1.5; }
+    .empty { color: var(--muted); font-size: 13px; }
+    .guide {
+      background: #fff; border: 1px solid var(--line); border-radius: 10px;
+      padding: 10px 12px; margin-bottom: 14px; font-size: 13px; line-height: 1.55; color: #355;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; height: auto; }
+      aside { max-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Fat 原版（只讀）</h1>
+      <div class="meta">壓縮前的 2.0 作業庫。不寫審查、不改現用 slim。</div>
+    </div>
+    <div class="grow"></div>
+    <a class="nav" href="index.html">回審查頁</a>
+    <button type="button" id="btn-prev">上一筆</button>
+    <button type="button" id="btn-next">下一筆</button>
+  </header>
+  <div class="layout">
+    <aside>
+      <div class="side-tools">
+        <div class="progress-line" id="progress-line">載入 Fat 原版…</div>
+        <input id="search" placeholder="搜尋作業名稱…">
+      </div>
+      <div id="taskList"></div>
+    </aside>
+    <main class="pane" id="pane">
+      <p class="desc">載入 Fat 原版後即可對照。</p>
+    </main>
+  </div>
+<script>
+  let library = [];
+  let currentIndex = 0;
+  let citedOpen = false;
+  const $ = (id) => document.getElementById(id);
+
+  function escapeHtml(s) {
+    return String(s ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function wantedTaskId() {
+    const q = new URLSearchParams(location.search).get("task");
+    if (q) return q;
+    const hash = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+    return hash || "";
+  }
+
+  function setLocation(task) {
+    if (!task) return;
+    const url = new URL(location.href);
+    url.searchParams.set("task", task.taskId);
+    url.hash = "";
+    history.replaceState(null, "", url);
+  }
+
+  function counts(task) {
+    const groups = task.hazardGroups || [];
+    let avoid = 0;
+    groups.forEach((g) => { avoid += (g.AvoidItems || []).length; });
+    return { groups: groups.length, avoid };
+  }
+
+  function renderList() {
+    const q = $("search").value.trim();
+    const box = $("taskList");
+    box.innerHTML = "";
+    library.forEach((task, idx) => {
+      if (q && !task.taskName.includes(q) && !String(idx + 1).includes(q)) return;
+      const c = counts(task);
+      const btn = document.createElement("button");
+      btn.className = "task" + (idx === currentIndex ? " active" : "");
+      btn.type = "button";
+      btn.innerHTML = `<span>${escapeHtml(task.taskName)}<span class="n">${c.groups} 組／${c.avoid} 條改善</span></span><span class="n">${idx + 1}</span>`;
+      btn.addEventListener("click", () => {
+        currentIndex = idx;
+        citedOpen = false;
+        renderAll();
+      });
+      box.appendChild(btn);
+    });
+  }
+
+  function renderPane() {
+    const task = library[currentIndex];
+    const pane = $("pane");
+    if (!task) {
+      pane.innerHTML = `<p class="desc">找不到作業。</p>`;
+      return;
+    }
+    const cited = task.citedIn || [];
+    const shown = citedOpen ? cited : cited.slice(0, 4);
+    const citedHtml = shown.map((c) => `<span class="chip">${escapeHtml(c.Industry || "")}／${escapeHtml(c.category || "")}</span>`).join("");
+    const more = cited.length > 4
+      ? `<button type="button" class="chip more" id="cited-more">${citedOpen ? "收合" : "顯示全部 " + cited.length + " 筆"}</button>`
+      : "";
+    const c = counts(task);
+    let groups = "";
+    (task.hazardGroups || []).forEach((g) => {
+      const libCore = !!g["核心重點_existing"];
+      const hazards = (g.hazardItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+      const avoids = (g.AvoidItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+      const common = (g.CommonAvoidItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+      groups += `<article class="card${libCore ? " core" : ""}">
+        <div class="card-h">
+          <span>${escapeHtml(g.groupName)}</span>
+          <span>
+            ${libCore ? '<span class="badge core">庫內核心</span>' : ""}
+            <span class="badge s">${escapeHtml(g.severitylevel || "")}</span>
+          </span>
+        </div>
+        <div class="card-b">
+          <div class="list-title">核心理由</div>
+          <div class="reason-block">${escapeHtml(g["核心理由"] || "（無）")}</div>
+          <div class="list-title">危害情境（${(g.hazardItems || []).length}）</div>
+          ${hazards ? `<ol class="lines">${hazards}</ol>` : `<p class="empty">無</p>`}
+          <div class="list-title">改善項目（${(g.AvoidItems || []).length}）</div>
+          ${avoids ? `<ol class="lines">${avoids}</ol>` : `<p class="empty">無</p>`}
+          ${common ? `<div class="list-title">組內共用改善</div><ol class="lines">${common}</ol>` : ""}
+        </div>
+      </article>`;
+    });
+    const taskCommon = (task.taskCommonAvoidItems || []).map((t) => `<li>${escapeHtml(t)}</li>`).join("");
+    pane.innerHTML = `
+      <div class="guide">這是 Fat 原版（給璞藝／tasksLibrary_2.0_0811），共 ${c.groups} 組、${c.avoid} 條改善。審查請回 slim 頁。</div>
+      <h2>${escapeHtml(task.taskName)}</h2>
+      <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
+      <div class="list-title">引用背景</div>
+      <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
+      ${taskCommon ? `<div class="list-title">作業級共用改善</div><ol class="lines">${taskCommon}</ol>` : ""}
+      ${groups}`;
+    const moreBtn = $("cited-more");
+    if (moreBtn) moreBtn.addEventListener("click", () => { citedOpen = !citedOpen; renderPane(); });
+  }
+
+  function renderAll() {
+    const task = library[currentIndex];
+    setLocation(task);
+    $("progress-line").innerHTML = `Fat 原版 <b>${library.length}</b> 張　第 ${currentIndex + 1} 張`;
+    renderList();
+    renderPane();
+  }
+
+  function wire() {
+    $("search").addEventListener("input", renderList);
+    $("btn-prev").addEventListener("click", () => {
+      if (currentIndex > 0) { currentIndex -= 1; citedOpen = false; renderAll(); }
+    });
+    $("btn-next").addEventListener("click", () => {
+      if (currentIndex < library.length - 1) { currentIndex += 1; citedOpen = false; renderAll(); }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "INPUT") return;
+      if (e.key === "ArrowLeft") $("btn-prev").click();
+      if (e.key === "ArrowRight") $("btn-next").click();
+    });
+  }
+
+  async function boot() {
+    wire();
+    const res = await fetch("data/library_fat.json?v=20260909fat");
+    if (!res.ok) throw new Error("無法載入 data/library_fat.json");
+    const doc = await res.json();
+    library = doc.tasks || [];
+    if (!library.length) throw new Error("Fat 作業庫是空的");
+    const want = wantedTaskId();
+    if (want) {
+      const idx = library.findIndex((t) => t.taskId === want || t.taskName === want);
+      if (idx >= 0) currentIndex = idx;
+    }
+    $("progress-line").innerHTML = `Fat 原版 <b>${library.length}</b> 張`;
+    renderAll();
+  }
+
+  boot().catch((err) => {
+    $("pane").innerHTML = `<p class="desc">載入失敗：${escapeHtml(err.message)}。請用 GitHub Pages 或本機伺服器開啟，不要直接雙擊 HTML。</p>`;
+  });
+</script>
+</body>
+</html>
