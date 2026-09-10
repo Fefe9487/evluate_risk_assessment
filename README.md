@@ -13,7 +13,7 @@
 ## 專家怎麼用
 
 1. 用 Chrome / Edge 打開上面網址（不要下載 HTML 後雙擊，資料檔載不進來）。
-2. 右上角填**審查人姓名**。
+2. 右上角會顯示你的審查代號（第一次進站輸入後會留在這台電腦，不必每次重填）。
 3. 每一筆可做三件事（可只做其中幾項）：
    - 勾五分鐘核心危害：**至少 2 類，沒有上限**（不要照抄「庫內核心」）。
    - 點有問題的危害情境、改善項目、核心理由或 **S 分數**，選標籤並用句子說明。沒問題的句子不必標。
@@ -77,6 +77,7 @@
 ## 維護者
 
 - 作業正文：`data/library.json`（專家版 writeback_full；`核心重點_existing` 是庫內旗，專家不要照抄）
+- 題包分發：`data/assignments.json`（A01 營造 70 題、A02／A03 各 70 題；`superpower` 看全庫）
 - Fat 原版（只讀）：`data/library_fat.json` + `fat.html`
 - 專業版底稿（只讀）：`data/library_full.json` + `full.html`（170 張 writeback_full + 後補三張）
 - 行業掛載：`data/industryMapping.json`（與 TOIRA／給璞藝同一份）

@@ -192,6 +192,29 @@
     #overall-comment { min-height: 140px; background: #fff; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
     .status { font-size: 12px; opacity: .85; }
+    #gate {
+      position: fixed; inset: 0; z-index: 80;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    #gate.hidden { display: none; }
+    .gate-card {
+      width: min(420px, 92vw); background: #fff; border: 1px solid var(--line);
+      border-radius: 16px; padding: 28px 24px;
+    }
+    .gate-card h2 { margin-bottom: 8px; }
+    .gate-card .desc { margin: 0 0 16px; }
+    .gate-card input {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--line);
+      border-radius: 8px; font: inherit; font-size: 16px; margin-bottom: 12px;
+    }
+    .gate-card .err { color: var(--flag); font-size: 13px; min-height: 1.2em; margin: 0 0 10px; }
+    .chip.overlap { background: #fff4e4; color: var(--core); }
+    .pack-chip {
+      font-size: 12px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3);
+    }
     @media (max-width: 1100px) {
       .layout { grid-template-columns: 1fr; height: auto; }
       aside { max-height: 240px; }
@@ -200,6 +223,15 @@
   </style>
 </head>
 <body>
+  <div id="gate">
+    <form class="gate-card" id="gate-form">
+      <h2>輸入審查代號</h2>
+      <p class="desc">代號只填一次，之後會留在這台電腦。題目會依代號自動分發。</p>
+      <input id="gate-code" type="text" autocomplete="username" placeholder="審查代號" maxlength="40" autofocus>
+      <p class="err" id="gate-err"></p>
+      <button type="submit" class="primary">進入審查</button>
+    </form>
+  </div>
   <header>
     <div>
       <h1>作業本身審查</h1>
@@ -207,17 +239,20 @@
     </div>
     <div class="grow"></div>
     <div class="hdr-acts">
+      <span class="pack-chip" id="pack-chip"></span>
       <span class="status" id="save-status"></span>
       <a class="nav" href="fat.html">Fat 原版</a>
       <a class="nav" href="full.html">專業版</a>
-      <input id="annotator" type="text" placeholder="審查人姓名" maxlength="40">
+      <input id="annotator" type="text" class="hidden" maxlength="40" tabindex="-1">
       <button type="button" id="btn-prev">上一筆</button>
       <button type="button" id="btn-next">下一筆</button>
       <button type="button" id="btn-next-open">下一未完成</button>
       <button type="button" class="primary" id="btn-export">匯出結果</button>
       <button type="button" id="btn-progress">備份進度</button>
       <label class="status">還原進度 <input type="file" id="progress-input" accept=".json"></label>
+      <label class="status hidden" id="admin-import-wrap">匯入審查結果 <input type="file" id="admin-import" accept=".json" multiple></label>
       <button type="button" id="btn-clear">清除暫存</button>
+      <button type="button" id="btn-logout">登出</button>
     </div>
   </header>
   <div class="layout">
@@ -268,14 +303,18 @@
     "不適當": "S 評分、情境或對策不適當"
   };
   const NOTE_FIELDS = ["hazardItems", "AvoidItems", "核心理由", "severitylevel"];
-  const STORE = "ra-phase1-expert-v1";
-  localforage.config({
-    driver: localforage.INDEXEDDB,
-    name: "Phase1_Expert_Judge",
-    storeName: "review_progress_phase1_v1"
-  });
+  const CODE_KEY = "ra-phase1-expert-code";
+  const BACKUP_MARKS = [20, 40, 60];
 
   let library = [];
+  let allTasks = [];
+  let assignments = null;
+  let packCode = "";
+  let packMeta = null;
+  let overlapIds = new Set();
+  let progressDb = null;
+  let lastBackupMilestone = 0;
+  let completeReminded = false;
   let reviews = {};
   let currentIndex = 0;
   let annotator = "";
@@ -283,6 +322,42 @@
   let draftNote = null;
 
   const $ = (id) => document.getElementById(id);
+
+  function normalizeCode(s) {
+    return String(s || "").trim();
+  }
+
+  function packByCode(code) {
+    const key = normalizeCode(code);
+    const packs = (assignments && assignments.codes) || {};
+    return packs[key] || null;
+  }
+
+  function overlapSetFor(code) {
+    const ov = (assignments && assignments.overlap) || {};
+    let keys = [];
+    if (code === "A01") keys = ["A01_A02", "A01_A03"];
+    else if (code === "A02") keys = ["A01_A02", "A02_A03"];
+    else if (code === "A03") keys = ["A01_A03", "A02_A03"];
+    const out = new Set();
+    keys.forEach((k) => (ov[k] || []).forEach((id) => out.add(id)));
+    return out;
+  }
+
+  function tasksForPack(meta, code) {
+    if (!meta || meta.role === "admin") return allTasks.slice();
+    const byId = {};
+    allTasks.forEach((t) => { byId[t.taskId] = t; });
+    return (meta.taskIds || []).map((id) => byId[id]).filter(Boolean);
+  }
+
+  function openDb(code) {
+    return localforage.createInstance({
+      driver: localforage.INDEXEDDB,
+      name: "Phase1_Expert_Judge",
+      storeName: "review_progress_" + code
+    });
+  }
 
   function escapeHtml(s) {
     return String(s ?? "")
@@ -391,18 +466,53 @@
     else set.delete(groupName);
     r.coreSet = [...set];
     persist();
+    maybeRemindBackup();
+  }
+
+  function doneCount() {
+    return library.filter((t) => isDone(t)).length;
+  }
+
+  function maybeRemindBackup() {
+    if (!packMeta || packMeta.role === "admin") return;
+    const done = doneCount();
+    for (let i = 0; i < BACKUP_MARKS.length; i += 1) {
+      const mark = BACKUP_MARKS[i];
+      if (done >= mark && lastBackupMilestone < mark) {
+        lastBackupMilestone = mark;
+        persist();
+        const go = confirm(`已完成 ${done} / ${library.length} 題。請先下載備份，避免換電腦或清快取後遺失。`);
+        if (go) exportProgress();
+        return;
+      }
+    }
+    if (library.length && done === library.length && !completeReminded) {
+      completeReminded = true;
+      persist();
+      const go = confirm("本題包已全部完成。請匯出結果寄回。");
+      if (go) exportResult();
+    }
   }
 
   async function persist() {
+    if (!progressDb || (packMeta && packMeta.role === "admin")) {
+      if (packMeta && packMeta.role === "admin" && $("save-status")) {
+        $("save-status").textContent = "高級模式不寫入勞檢員暫存";
+      }
+      return;
+    }
     const payload = {
       schema: "ra-task-judge-phase1-expert-progress",
       annotator,
+      packCode,
       lastIndex: currentIndex,
+      lastBackupMilestone,
+      completeReminded,
       reviews,
       updatedAt: new Date().toISOString()
     };
     try {
-      await localforage.setItem(STORE, payload);
+      await progressDb.setItem("progress", payload);
       $("save-status").textContent = "已自動暫存 " + new Date().toLocaleTimeString();
     } catch (e) {
       console.error(e);
@@ -447,7 +557,7 @@
       const btn = document.createElement("button");
       btn.className = "task" + (idx === currentIndex ? " active" : "");
       btn.type = "button";
-      btn.innerHTML = `<span class="dot ${st}"></span><span>${escapeHtml(task.taskName)}<span class="n">${getReview(task.taskId).itemNotes.length} 則問題</span></span><span class="n">${idx + 1}</span>`;
+      btn.innerHTML = `<span class="dot ${st}"></span><span>${escapeHtml(task.taskName)}${overlapIds.has(task.taskId) ? '<span class="n"> · 重疊</span>' : ""}<span class="n">${getReview(task.taskId).itemNotes.length} 則問題</span></span><span class="n">${idx + 1}</span>`;
       btn.addEventListener("click", () => {
         currentIndex = idx;
         citedOpen = false;
@@ -707,15 +817,11 @@
     upsertNote(draftNote.taskId, { ...draftNote, problem });
     closeModal();
     renderAll();
+    maybeRemindBackup();
   }
 
   function exportResult() {
-    annotator = $("annotator").value.trim();
-    if (!annotator) {
-      alert("請先填審查人姓名，匯出檔才分得出是哪一位專家。");
-      $("annotator").focus();
-      return;
-    }
+    if (!packCode) return;
     const tasks = {};
     const incomplete = [];
     library.forEach((task) => {
@@ -740,7 +846,9 @@
     const doc = {
       schema: "ra-task-judge-phase1",
       phase: 1,
-      annotator: "expert:" + annotator,
+      annotator: "expert:" + packCode,
+      packCode,
+      packLabel: packMeta ? packMeta.label : "",
       exportedAt: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"),
       nTasks: library.length,
       nComplete: library.length - incomplete.length,
@@ -752,18 +860,20 @@
       tasks
     };
     const day = new Date().toISOString().slice(0, 10);
-    downloadJson(`phase1_expert_${annotator}_${day}.json`, doc);
+    downloadJson(`phase1_expert_${packCode}_${day}.json`, doc);
     if (incomplete.length) {
       alert(`已下載。尚有 ${incomplete.length} 筆未完成（核心未滿 2 類，或問題標註缺標籤／說明）。未完成的作業仍寫進檔案，之後可繼續補。`);
     }
   }
 
   function exportProgress() {
-    annotator = $("annotator").value.trim();
-    downloadJson(`phase1_expert_progress_${new Date().toISOString().slice(0, 10)}.json`, {
+    downloadJson(`phase1_expert_progress_${packCode}_${new Date().toISOString().slice(0, 10)}.json`, {
       schema: "ra-task-judge-phase1-expert-progress",
       annotator,
+      packCode,
       lastIndex: currentIndex,
+      lastBackupMilestone,
+      completeReminded,
       reviews,
       updatedAt: new Date().toISOString()
     });
@@ -791,6 +901,8 @@
       annotator = String(obj.annotator).replace(/^expert:/, "");
       $("annotator").value = annotator;
     }
+    if (Number.isInteger(obj.lastBackupMilestone)) lastBackupMilestone = obj.lastBackupMilestone;
+    if (obj.completeReminded) completeReminded = !!obj.completeReminded;
     if (Number.isInteger(obj.lastIndex) && obj.lastIndex >= 0 && obj.lastIndex < library.length) {
       currentIndex = obj.lastIndex;
     }
@@ -799,9 +911,13 @@
   function wire() {
     $("search").addEventListener("input", renderList);
     $("filter").addEventListener("change", renderList);
-    $("annotator").addEventListener("input", () => {
-      annotator = $("annotator").value.trim();
-      persist();
+    $("gate-form").addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      tryEnter($("gate-code").value);
+    });
+    $("btn-logout").addEventListener("click", () => {
+      localStorage.removeItem(CODE_KEY);
+      location.reload();
     });
     $("btn-prev").addEventListener("click", () => {
       if (currentIndex > 0) { currentIndex -= 1; citedOpen = false; renderAll(); persist(); }
@@ -842,11 +958,25 @@
       reader.readAsText(file, "UTF-8");
       ev.target.value = "";
     });
+    $("admin-import").addEventListener("change", (ev) => {
+      const files = [...(ev.target.files || [])];
+      if (!files.length) return;
+      Promise.all(files.map((file) => file.text().then((txt) => JSON.parse(txt))))
+        .then((docs) => {
+          docs.forEach((doc) => applyProgress(doc));
+          renderAll();
+          alert("已匯入 " + files.length + " 份審查結果，可在左側翻閱。");
+        })
+        .catch((err) => alert("讀取失敗：" + err.message));
+      ev.target.value = "";
+    });
     $("btn-clear").addEventListener("click", async () => {
       if (!confirm("確定清除本機暫存？未下載的審查會消失。")) return;
-      await localforage.removeItem(STORE);
+      if (progressDb) await progressDb.removeItem("progress");
       reviews = {};
       currentIndex = 0;
+      lastBackupMilestone = 0;
+      completeReminded = false;
       renderAll();
     });
     $("note-cancel").addEventListener("click", closeModal);
@@ -861,6 +991,7 @@
       if (e.target.id === "note-modal") closeModal();
     });
     document.addEventListener("keydown", (e) => {
+      if (!$("gate").classList.contains("hidden")) return;
       if (e.key === "Escape") closeModal();
       if ($("note-modal").classList.contains("hidden") === false) return;
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
@@ -869,23 +1000,63 @@
     });
   }
 
+  function tryEnter(raw) {
+    const code = normalizeCode(raw);
+    const meta = packByCode(code);
+    if (!meta) {
+      $("gate-err").textContent = "代號不正確。";
+      return;
+    }
+    localStorage.setItem(CODE_KEY, code);
+    enterSession(code);
+  }
+
+  async function enterSession(code) {
+    packCode = code;
+    packMeta = packByCode(code);
+    annotator = code;
+    $("annotator").value = code;
+    overlapIds = overlapSetFor(code);
+    library = tasksForPack(packMeta, code);
+    currentIndex = 0;
+    reviews = {};
+    lastBackupMilestone = 0;
+    completeReminded = false;
+    $("pack-chip").textContent = packCode + " · " + (packMeta.label || "");
+    $("admin-import-wrap").classList.toggle("hidden", packMeta.role !== "admin");
+    progressDb = packMeta.role === "admin" ? null : openDb(code);
+    if (progressDb) {
+      const saved = await progressDb.getItem("progress");
+      if (saved && (saved.reviews || saved.tasks)) applyProgress(saved);
+    }
+    $("gate").classList.add("hidden");
+    renderAll();
+  }
+
   async function boot() {
     wire();
-    const res = await fetch("data/library.json?v=20260910s");
-    if (!res.ok) throw new Error("無法載入 data/library.json");
-    const doc = await res.json();
-    library = doc.tasks || [];
+    const [libRes, asgRes] = await Promise.all([
+      fetch("data/library.json?v=20260910s"),
+      fetch("data/assignments.json?v=20260910p")
+    ]);
+    if (!libRes.ok) throw new Error("無法載入 data/library.json");
+    if (!asgRes.ok) throw new Error("無法載入 data/assignments.json");
+    const doc = await libRes.json();
+    assignments = await asgRes.json();
+    allTasks = doc.tasks || [];
     if (Array.isArray(doc.tagSet) && doc.tagSet.length) TAG_SET = doc.tagSet;
-    if (!library.length) throw new Error("作業庫是空的");
-    const saved = await localforage.getItem(STORE);
-    if (saved && saved.reviews) {
-      if (confirm("發現上次未完成的暫存，是否恢復？")) applyProgress(saved);
+    if (!allTasks.length) throw new Error("作業庫是空的");
+    const savedCode = normalizeCode(localStorage.getItem(CODE_KEY) || "");
+    if (packByCode(savedCode)) {
+      await enterSession(savedCode);
+    } else {
+      $("gate-code").focus();
     }
-    renderAll();
   }
 
   boot().catch((err) => {
     $("pane").innerHTML = `<p class="desc">載入失敗：${escapeHtml(err.message)}。請用本機伺服器或 GitHub Pages 開啟，不要直接雙擊 HTML。</p>`;
+    $("gate").classList.add("hidden");
   });
 </script>
 </body>
