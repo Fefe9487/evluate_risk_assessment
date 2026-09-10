@@ -235,7 +235,7 @@
       <div id="taskList"></div>
     </aside>
     <main class="pane" id="pane">
-      <p class="desc">載入現用庫作業後，即可開始審查。</p>
+      <p class="desc">載入專家版作業後，即可開始審查。</p>
     </main>
     <section class="review" id="review"></section>
   </div>
@@ -495,7 +495,7 @@
           ${srcHtml ? `<div class="s-pills" style="margin-bottom:8px">${srcHtml}（類型 S 為最高值，不是加總）</div>` : ""}
           <div class="list-title">核心理由（點一下可標問題）</div>
           ${renderReason(task, g, gIdx)}
-          <div class="list-title">危害情境（左側為原始 S，無分數顯示 —）</div>
+          <div class="list-title">危害情境（左側為該條 S）</div>
           ${renderLines(task, g, gIdx, "hazardItems")}
           <div class="list-title">改善項目</div>
           ${renderLines(task, g, gIdx, "AvoidItems")}
@@ -549,7 +549,7 @@
       const sBtn = field === "hazardItems"
         ? (score
           ? `<button type="button" class="s-pill${sevFlag ? " flagged" : ""}" data-g="${gIdx}" data-field="severitylevel" data-i="${i}" title="點此標註這條 S 不適當">${escapeHtml(score)}</button>`
-          : `<span class="s-pill miss" title="這條對不到 Map 原文，未發明分數">—</span>`)
+          : `<span class="s-pill miss" title="尚無分數">—</span>`)
         : "";
       return `<li class="${flagged ? "flagged" : ""}"><div class="line-row">${sBtn}<span class="line-text" data-g="${gIdx}" data-field="${field}" data-i="${i}">${escapeHtml(text)}</span></div></li>`;
     }).join("");
@@ -747,7 +747,7 @@
       incomplete,
       formatNotes: [
         "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處",
-        "severitylevel 為類型 S（各情境最高，不是加總）；hazardSeverities 為各情境原始 S"
+        "severitylevel 為類型 S（各情境最高，不是加總）；hazardSeverities 為各情境 S（Map 對得到的沿用原始分，對不到的依表十補評）"
       ],
       tasks
     };
@@ -871,7 +871,7 @@
 
   async function boot() {
     wire();
-    const res = await fetch("data/library.json?v=20260910");
+    const res = await fetch("data/library.json?v=20260910s");
     if (!res.ok) throw new Error("無法載入 data/library.json");
     const doc = await res.json();
     library = doc.tasks || [];

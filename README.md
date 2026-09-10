@@ -2,9 +2,9 @@
 
 線上位置：https://fefe9487.github.io/evluate_risk_assessment/
 
-這站給外部專家標 **現用庫作業**（含十業新掛的三張卡）。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。引用背景來自正式 `industryMapping.json`。
+這站給外部專家標 **專家版作業正文**（Phase 1 `writeback_full`，含十業新掛的三張卡）。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。引用背景來自正式 `industryMapping.json`。
 
-只讀對照 **Fat 原版**：[fat.html](fat.html)。這頁不寫審查、不改 slim。六張後來才進 slim 的辦公／文書卡沒有 fat。
+只讀對照 **Fat 原版**：[fat.html](fat.html)。這頁不寫審查、不改審查正文。六張後來才進庫的辦公／文書卡沒有 fat。
 
 只讀對照 **專業版底稿**：[full.html](full.html)（Phase 1 第 1 階段 `writeback_full`，尚未做第 2 階段掃讀壓縮）。原批次 170 張；後來才進庫的三張（廳舍修繕、道路維護、高處繩索接近）已後補進去，頁面會標「後補」。
 
@@ -37,7 +37,7 @@
 
 每組危害類型另有 **不適當之處** 欄位（`unsuitableNotes`），不必套標籤。綜合意見也不必用這些標籤。
 
-危害情境左側顯示該條 **原始 S**（對不到 Map 原文時為 —，不發明分數）。組頭 **類型 S** 是該類型各情境原始 S 的最高值，不是加總。組內也會列出 Map 列序的原始 S。
+危害情境左側顯示該條 **S**（能對到 Map 原文者沿用原始分；對不到者依表十 Person／Scope 取高補評）。組頭 **類型 S** 是該類型各情境 S 的最高值，不是加總。組內也會列出 Map 列序的原始 S。
 
 ## 匯出格式
 
@@ -76,7 +76,7 @@
 
 ## 維護者
 
-- 作業正文：`data/library.json`（與 TOIRA 公開庫同步；`核心重點_existing` 是庫內旗，專家不要照抄）
+- 作業正文：`data/library.json`（專家版 writeback_full；`核心重點_existing` 是庫內旗，專家不要照抄）
 - Fat 原版（只讀）：`data/library_fat.json` + `fat.html`
 - 專業版底稿（只讀）：`data/library_full.json` + `full.html`（170 張 writeback_full + 後補三張）
 - 行業掛載：`data/industryMapping.json`（與 TOIRA／給璞藝同一份）
