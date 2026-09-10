@@ -110,7 +110,21 @@
       background: #e8eeee; color: var(--muted);
     }
     .badge.core { background: var(--core); color: #fff; }
-    .badge.s { background: #ffeaa7; color: #9a5b12; }
+    .badge.s, .s-pill {
+      background: #ffeaa7; color: #9a5b12; border: 0; cursor: pointer;
+      font: inherit; font-size: 11px; font-weight: 650; padding: 2px 8px; border-radius: 999px;
+    }
+    .s-pill.miss { background: #e8eeee; color: var(--muted); cursor: default; }
+    .s-pill.flagged, .badge.s.flagged { background: var(--flag-soft); color: var(--flag); }
+    .s-pills { font-size: 12px; color: var(--muted); font-weight: 400; }
+    .s-pills b { color: #9a5b12; }
+    .line-row {
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .line-row .line-text { flex: 1; min-width: 0; }
+    .unsuitable-box { margin-top: 10px; }
+    .unsuitable-box .list-title { margin-top: 0; }
+    .unsuitable-box textarea { min-height: 72px; font-size: 13px; background: #fff; }
     .card-b { padding: 12px 14px 14px; }
     .list-title { font-size: 13px; font-weight: 650; margin: 10px 0 6px; }
     ol.lines { margin: 0; padding-left: 22px; }
@@ -118,7 +132,8 @@
       margin: 0 0 6px; padding: 6px 8px; border-radius: 8px; cursor: pointer;
       border: 1px solid transparent;
     }
-    ol.lines li:hover, .reason-block:hover { background: var(--brand-soft); }
+    ol.lines li:hover, .reason-block:hover, .line-text:hover { background: var(--brand-soft); }
+    .line-text { cursor: pointer; border-radius: 6px; padding: 2px 4px; }
     ol.lines li.flagged, .reason-block.flagged {
       background: var(--flag-soft); border-color: #f5c6c2;
     }
@@ -188,7 +203,7 @@
   <header>
     <div>
       <h1>作業本身審查</h1>
-      <div class="meta">勾五分鐘核心、點句子標問題；綜合意見不限格式</div>
+      <div class="meta">勾五分鐘核心、點句子或 S 標問題；每組可寫不適當之處</div>
     </div>
     <div class="grow"></div>
     <div class="hdr-acts">
@@ -241,7 +256,7 @@
     </div>
   </div>
 <script>
-  const TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長", "文風改良"];
+  let TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長", "文風改良", "不適當"];
   const TAG_HELP = {
     "漏提": "該有的情境或對策沒寫",
     "空泛": "寫了但現場做不到",
@@ -249,8 +264,10 @@
     "寫反": "把誘發條件或禁令寫成對策，或對策與描述衝突",
     "跨類複製": "這句應屬別的危害組",
     "過長": "可刪可併的重複句",
-    "文風改良": "寫得太機械、像套話，不像現場會講的話"
+    "文風改良": "寫得太機械、像套話，不像現場會講的話",
+    "不適當": "S 評分、情境或對策不適當"
   };
+  const NOTE_FIELDS = ["hazardItems", "AvoidItems", "核心理由", "severitylevel"];
   const STORE = "ra-phase1-expert-v1";
   localforage.config({
     driver: localforage.INDEXEDDB,
@@ -281,7 +298,7 @@
   }
 
   function emptyReview() {
-    return { coreSet: [], itemNotes: [], overallComment: "" };
+    return { coreSet: [], itemNotes: [], overallComment: "", unsuitableNotes: {} };
   }
 
   function getReview(taskId) {
@@ -290,6 +307,9 @@
     r.coreSet = Array.isArray(r.coreSet) ? r.coreSet : [];
     r.itemNotes = Array.isArray(r.itemNotes) ? r.itemNotes : [];
     r.overallComment = typeof r.overallComment === "string" ? r.overallComment : "";
+    r.unsuitableNotes = (r.unsuitableNotes && typeof r.unsuitableNotes === "object" && !Array.isArray(r.unsuitableNotes))
+      ? r.unsuitableNotes
+      : {};
     return r;
   }
 
@@ -304,7 +324,7 @@
       if (!names.has(n)) errs.push(`核心不在本作業：${n}`);
     }
     for (const note of review.itemNotes || []) {
-      if (!["hazardItems", "AvoidItems", "核心理由"].includes(note.field)) {
+      if (!NOTE_FIELDS.includes(note.field)) {
         errs.push("欄位不合法");
       }
       const tags = note.tags || [];
@@ -321,9 +341,12 @@
 
   function isStarted(task) {
     const r = getReview(task.taskId);
+    const notes = r.unsuitableNotes || {};
+    const hasUnsuitable = Object.values(notes).some((v) => String(v || "").trim());
     return (r.coreSet && r.coreSet.length > 0)
       || (r.itemNotes && r.itemNotes.length > 0)
-      || String(r.overallComment || "").trim().length > 0;
+      || String(r.overallComment || "").trim().length > 0
+      || hasUnsuitable;
   }
 
   function statusOf(task) {
@@ -416,7 +439,9 @@
       if (filter === "done" && st !== "done") return;
       if (filter === "noted") {
         const r = getReview(task.taskId);
-        if (!r.itemNotes.length && !String(r.overallComment || "").trim()) return;
+        const uns = r.unsuitableNotes || {};
+        const hasUnsuitable = Object.values(uns).some((v) => String(v || "").trim());
+        if (!r.itemNotes.length && !String(r.overallComment || "").trim() && !hasUnsuitable) return;
       }
       if (q && !task.taskName.includes(q) && !String(idx + 1).includes(q)) return;
       const btn = document.createElement("button");
@@ -452,21 +477,32 @@
     (task.hazardGroups || []).forEach((g, gIdx) => {
       const coreOn = review.coreSet.includes(g.groupName);
       const libCore = !!g["核心重點_existing"];
+      const typeFlag = !!findNote(review, { groupName: g.groupName, field: "severitylevel", index: null });
+      const src = (g.sourceSeverities || []).filter(Boolean);
+      const srcHtml = src.length
+        ? `<span class="s-pills">各情境原始 ${src.map((s) => `<b>${escapeHtml(s)}</b>`).join(" · ")}</span>`
+        : "";
+      const uns = review.unsuitableNotes[g.groupName] || "";
       groups += `<article class="card${coreOn ? " core" : ""}" id="g-${gIdx}">
         <div class="card-h">
           <span>${escapeHtml(g.groupName)}</span>
           <span>
             ${libCore ? '<span class="badge core">庫內核心</span>' : ""}
-            <span class="badge s">${escapeHtml(g.severitylevel || "")}</span>
+            <button type="button" class="badge s${typeFlag ? " flagged" : ""}" data-g="${gIdx}" data-field="severitylevel" data-i="" title="點此標註類型 S 不適當">類型 ${escapeHtml(g.severitylevel || "—")}</button>
           </span>
         </div>
         <div class="card-b">
+          ${srcHtml ? `<div class="s-pills" style="margin-bottom:8px">${srcHtml}（類型 S 為最高值，不是加總）</div>` : ""}
           <div class="list-title">核心理由（點一下可標問題）</div>
           ${renderReason(task, g, gIdx)}
-          <div class="list-title">危害情境</div>
+          <div class="list-title">危害情境（左側為原始 S，無分數顯示 —）</div>
           ${renderLines(task, g, gIdx, "hazardItems")}
           <div class="list-title">改善項目</div>
           ${renderLines(task, g, gIdx, "AvoidItems")}
+          <div class="unsuitable-box">
+            <div class="list-title">不適當之處（選填）</div>
+            <textarea data-unsuitable="${gIdx}" placeholder="S 評分、情境或對策有哪裡不適當，寫在這裡。沒有可不填。">${escapeHtml(uns)}</textarea>
+          </div>
           <div class="missing-row">
             <button type="button" class="ghost" data-miss="1" data-g="${gIdx}" data-field="hazardItems">整組缺危害情境</button>
             <button type="button" class="ghost" data-miss="1" data-g="${gIdx}" data-field="AvoidItems">整組缺改善項目</button>
@@ -485,6 +521,14 @@
     pane.querySelectorAll("[data-field]").forEach((el) => {
       el.addEventListener("click", () => openNoteFromEl(el));
     });
+    pane.querySelectorAll("[data-unsuitable]").forEach((el) => {
+      el.addEventListener("input", () => {
+        const g = task.hazardGroups[Number(el.getAttribute("data-unsuitable"))];
+        getReview(task.taskId).unsuitableNotes[g.groupName] = el.value;
+        persist();
+        renderList();
+      });
+    });
   }
 
   function renderReason(task, group, gIdx) {
@@ -497,9 +541,17 @@
     const review = getReview(task.taskId);
     const items = group[field] || [];
     if (!items.length) return `<p class="empty">無</p>`;
+    const scores = field === "hazardItems" ? (group.hazardSeverities || []) : [];
     const lis = items.map((text, i) => {
       const flagged = !!findNote(review, { groupName: group.groupName, field, index: i });
-      return `<li class="${flagged ? "flagged" : ""}" data-g="${gIdx}" data-field="${field}" data-i="${i}">${escapeHtml(text)}</li>`;
+      const sevFlag = field === "hazardItems" && !!findNote(review, { groupName: group.groupName, field: "severitylevel", index: i });
+      const score = scores[i] || "";
+      const sBtn = field === "hazardItems"
+        ? (score
+          ? `<button type="button" class="s-pill${sevFlag ? " flagged" : ""}" data-g="${gIdx}" data-field="severitylevel" data-i="${i}" title="點此標註這條 S 不適當">${escapeHtml(score)}</button>`
+          : `<span class="s-pill miss" title="這條對不到 Map 原文，未發明分數">—</span>`)
+        : "";
+      return `<li class="${flagged ? "flagged" : ""}"><div class="line-row">${sBtn}<span class="line-text" data-g="${gIdx}" data-field="${field}" data-i="${i}">${escapeHtml(text)}</span></div></li>`;
     }).join("");
     return `<ol class="lines">${lis}</ol>`;
   }
@@ -517,7 +569,7 @@
     }).join("");
     const notes = (review.itemNotes || []).map((n, i) => {
       const loc = n.index === null ? "整組缺條" : `#${n.index}`;
-      const fieldLabel = n.field === "hazardItems" ? "危害情境" : n.field === "AvoidItems" ? "改善項目" : "核心理由";
+      const fieldLabel = fieldLabelOf(n.field);
       const tags = (n.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("");
       return `<article class="note" data-edit="${i}">
         <div><b>${escapeHtml(n.groupName)}</b> · ${fieldLabel} ${loc}</div>
@@ -534,8 +586,8 @@
       <p class="hint">不受標籤、條數或核心勾選限制。可寫整體好壞、缺什麼、現場能不能用。</p>
       <textarea id="overall-comment" placeholder="自由書寫即可，不必套左側的逐條標註規則。">${escapeHtml(review.overallComment || "")}</textarea>
       <div class="rev-h">已標問題（${review.itemNotes.length}）</div>
-      <p class="hint">點左側句子或核心理由即可新增。沒問題的句子不必標。</p>
-      ${notes || '<p class="empty">尚未標任何句子。若只想寫整體看法，用上面的綜合意見即可。</p>'}`;
+      <p class="hint">點左側句子、S 分數或核心理由即可新增。每組「不適當之處」會一併匯出。沒問題可不標。</p>
+      ${notes || '<p class="empty">尚未標任何句子。若只想寫整體看法，用上面的綜合意見或各組不適當欄即可。</p>'}`;
     const overall = $("overall-comment");
     if (overall) {
       overall.addEventListener("input", () => {
@@ -566,8 +618,21 @@
     $("btn-next").disabled = currentIndex >= library.length - 1;
   }
 
+  function fieldLabelOf(field) {
+    if (field === "hazardItems") return "危害情境";
+    if (field === "AvoidItems") return "改善項目";
+    if (field === "severitylevel") return "嚴重性S";
+    return "核心理由";
+  }
+
   function quoteFrom(task, gIdx, field, index) {
     const g = task.hazardGroups[gIdx];
+    if (field === "severitylevel") {
+      if (index === null) return "類型 " + (g.severitylevel || "");
+      const s = (g.hazardSeverities || [])[index] || "—";
+      const text = (g.hazardItems || [])[index] || "";
+      return s + (text ? "｜" + text : "");
+    }
     if (index === null) return "";
     if (field === "核心理由") return g["核心理由"] || "";
     return (g[field] || [])[index] || "";
@@ -601,8 +666,10 @@
       problem: note.problem || "",
       isEdit
     };
-    const fieldLabel = note.field === "hazardItems" ? "危害情境" : note.field === "AvoidItems" ? "改善項目" : "核心理由";
-    const loc = draftNote.index === null ? "無法對到既有句子（整組缺條）" : `第 ${draftNote.index} 條`;
+    const fieldLabel = fieldLabelOf(note.field);
+    const loc = draftNote.index === null
+      ? (draftNote.field === "severitylevel" ? "類型 S" : "無法對到既有句子（整組缺條）")
+      : `第 ${draftNote.index} 條`;
     $("note-meta").textContent = `${note.groupName} · ${fieldLabel} · ${loc}`;
     $("note-quote").textContent = draftNote.quote || "（無對應原文）";
     $("note-problem").value = draftNote.problem;
@@ -658,6 +725,7 @@
         taskName: task.taskName,
         coreSet: [...review.coreSet],
         overallComment: String(review.overallComment || "").trim(),
+        unsuitableNotes: { ...(review.unsuitableNotes || {}) },
         itemNotes: review.itemNotes.map((n) => ({
           groupName: n.groupName,
           field: n.field,
@@ -678,7 +746,8 @@
       nComplete: library.length - incomplete.length,
       incomplete,
       formatNotes: [
-        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見，不套標籤詞表"
+        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處",
+        "severitylevel 為類型 S（各情境最高，不是加總）；hazardSeverities 為各情境原始 S"
       ],
       tasks
     };
@@ -711,7 +780,8 @@
         reviews[t.taskId] = {
           coreSet: t.coreSet || [],
           itemNotes: t.itemNotes || [],
-          overallComment: typeof t.overallComment === "string" ? t.overallComment : ""
+          overallComment: typeof t.overallComment === "string" ? t.overallComment : "",
+          unsuitableNotes: (t.unsuitableNotes && typeof t.unsuitableNotes === "object") ? t.unsuitableNotes : {}
         };
       });
     } else {
@@ -801,10 +871,11 @@
 
   async function boot() {
     wire();
-    const res = await fetch("data/library.json?v=20260909");
+    const res = await fetch("data/library.json?v=20260910");
     if (!res.ok) throw new Error("無法載入 data/library.json");
     const doc = await res.json();
     library = doc.tasks || [];
+    if (Array.isArray(doc.tagSet) && doc.tagSet.length) TAG_SET = doc.tagSet;
     if (!library.length) throw new Error("作業庫是空的");
     const saved = await localforage.getItem(STORE);
     if (saved && saved.reviews) {
