@@ -1036,8 +1036,8 @@
   async function boot() {
     wire();
     const [libRes, asgRes] = await Promise.all([
-      fetch("data/library.json?v=20260915c"),
-      fetch("data/assignments.json?v=20260915c")
+      fetch("data/library.json?v=20260915d"),
+      fetch("data/assignments.json?v=20260915d")
     ]);
     if (!libRes.ok) throw new Error("無法載入 data/library.json");
     if (!asgRes.ok) throw new Error("無法載入 data/assignments.json");
