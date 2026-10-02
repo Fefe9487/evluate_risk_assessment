@@ -159,7 +159,7 @@
     .lane { margin-top: 2px; font-size: 12px; font-weight: 650; color: #3f5b5e; }
     .lane.eng { color: var(--brand-2); }
     .lane.ppe { color: var(--core); }
-    .no-link { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+    .no-link, .unlink-reason { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
     ol.lines li.flagged, .reason-block.flagged {
       background: var(--flag-soft); border-color: #f5c6c2;
     }
@@ -333,6 +333,7 @@
   const BACKUP_MARKS = [20, 40, 60];
 
   let scenarioLinks = {};
+  let unlinkedLinks = {};
   let library = [];
   let allTasks = [];
   let assignments = null;
@@ -728,6 +729,38 @@
     return byTask[group.groupName] || [];
   }
 
+  function indexScenarioMaps(doc) {
+    const byTask = {};
+    const unlinked = {};
+    (doc.maps || []).forEach((map) => {
+      const taskName = map.taskName || "";
+      const groupName = map.groupName || "";
+      if (!taskName || !groupName) return;
+      const rows = (map.hazardControlMap || []).map((row) => {
+        const cores = new Set((row.coreControlRefs || []).map((id) => String(id || "").trim()).filter(Boolean));
+        const controls = (row.controlRefs || []).map((ref) => {
+          if (!ref || typeof ref !== "object") return null;
+          const text = String(ref.text || "").trim();
+          if (!text) return null;
+          const cid = String(ref.controlId || "").trim();
+          return { text, core: ref.role === "core" || cores.has(cid) };
+        }).filter(Boolean);
+        return {
+          hazardItem: String(row.hazardItem || "").trim(),
+          severity: row.severity,
+          controls
+        };
+      }).filter((row) => row.hazardItem);
+      (byTask[taskName] || (byTask[taskName] = {}))[groupName] = rows;
+      const loose = (map.unlinkedControls || []).map((item) => ({
+        text: String((item && item.text) || "").trim(),
+        reason: String((item && item.reason) || "").trim()
+      })).filter((item) => item.text);
+      if (loose.length) (unlinked[taskName] || (unlinked[taskName] = {}))[groupName] = loose;
+    });
+    return { byTask, unlinked };
+  }
+
   function normalizeControl(item) {
     if (item && typeof item === "object") {
       return { text: String(item.text || ""), core: !!item.core };
@@ -807,13 +840,20 @@
     scenarioBlocks(task, group).forEach((block) => {
       (block.controls || []).forEach((ctrl) => linked.add(ctrl.text));
     });
+    const noted = ((unlinkedLinks[task.taskName] || {})[group.groupName] || []);
+    const reasonOf = {};
+    noted.forEach((item) => { reasonOf[item.text] = item.reason || ""; });
     const rest = (group.AvoidItems || []).filter((text) => !linked.has(text));
+    noted.forEach((item) => {
+      if (!linked.has(item.text) && rest.indexOf(item.text) < 0) rest.push(item.text);
+    });
     if (!rest.length) return "";
     const review = getReview(task.taskId);
     const lis = rest.map((text) => {
       const idx = (group.AvoidItems || []).indexOf(text);
       const flagged = !!findNote(review, { groupName: group.groupName, field: "AvoidItems", index: idx });
-      return `<li class="${flagged ? "flagged" : ""}"><div class="line-row"><span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${idx}">${escapeHtml(text)}</span></div></li>`;
+      const reason = reasonOf[text] ? `<div class="unlink-reason">${escapeHtml(reasonOf[text])}</div>` : "";
+      return `<li class="${flagged ? "flagged" : ""}"><div class="line-row"><span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${idx >= 0 ? idx : ""}">${escapeHtml(text)}</span></div>${reason}</li>`;
     }).join("");
     return `<div class="list-title">未掛上的改善項目</div><ol class="lines">${lis}</ol>`;
   }
@@ -1211,16 +1251,16 @@
     const [libRes, asgRes, linkRes] = await Promise.all([
       fetch("data/library.json?v=20260915d"),
       fetch("data/assignments.json?v=20260915d"),
-      fetch("data/scenarioLinks.json?v=20261002b")
+      fetch("scenarioMaps.json?v=20261002j")
     ]);
     if (!libRes.ok) throw new Error("無法載入 data/library.json");
     if (!asgRes.ok) throw new Error("無法載入 data/assignments.json");
+    if (!linkRes.ok) throw new Error("無法載入 scenarioMaps.json");
     const doc = await libRes.json();
     assignments = await asgRes.json();
-    if (linkRes.ok) {
-      const linkDoc = await linkRes.json();
-      scenarioLinks = linkDoc.byTask || {};
-    }
+    const indexed = indexScenarioMaps(await linkRes.json());
+    scenarioLinks = indexed.byTask;
+    unlinkedLinks = indexed.unlinked;
     allTasks = doc.tasks || [];
     if (Array.isArray(doc.tagSet) && doc.tagSet.length) TAG_SET = doc.tagSet;
     if (!allTasks.length) throw new Error("作業庫是空的");
