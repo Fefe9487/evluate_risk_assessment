@@ -141,10 +141,16 @@
       display: grid; gap: 4px;
     }
     ul.linked > li {
-      display: grid; grid-template-columns: 72px 76px 88px minmax(0, 1fr);
+      display: grid; grid-template-columns: 72px 76px 88px minmax(0, 1fr) auto;
       gap: 8px; align-items: start; margin: 0; padding: 4px 6px;
       border-radius: 8px; cursor: default;
     }
+    .revise-btn {
+      margin-top: 1px; font: inherit; font-size: 12px; font-weight: 650;
+      padding: 2px 8px; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--core); background: var(--core-soft); color: #8a4e08;
+    }
+    .revised-from { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--muted); }
     .core-slot { min-width: 0; }
     .core-slot .badge { display: inline-block; white-space: nowrap; }
     ul.linked > li.dropped .line-text {
@@ -235,7 +241,7 @@
       width: 100%; padding: 10px 12px; border: 1px solid var(--line);
       border-radius: 8px; font: inherit; font-size: 16px; margin-bottom: 12px;
     }
-    .gate-card .err { color: var(--flag); font-size: 13px; min-height: 1.2em; margin: 0 0 10px; }
+    .gate-card .err, .modal .err { color: var(--flag); font-size: 13px; min-height: 1.2em; margin: 8px 0 0; }
     .chip.overlap { background: #fff4e4; color: var(--core); }
     .pack-chip {
       font-size: 12px; padding: 4px 10px; border-radius: 999px;
@@ -316,6 +322,21 @@
       </div>
     </div>
   </div>
+  <div id="revise-modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card">
+      <h3>修訂核心措施</h3>
+      <div class="hint" id="revise-meta"></div>
+      <div class="note"><div class="q" id="revise-original"></div></div>
+      <div class="rev-h">修訂後的措施（只改這一則）</div>
+      <textarea id="revise-text" placeholder="改寫這一則情境上的核心措施。其他情境的同一句不會跟著改。"></textarea>
+      <p class="err" id="revise-err"></p>
+      <div class="modal-actions">
+        <button type="button" class="ghost" id="revise-cancel">取消</button>
+        <button type="button" class="danger" id="revise-drop">刪掉這一則</button>
+        <button type="button" class="primary" id="revise-save">儲存修訂</button>
+      </div>
+    </div>
+  </div>
 <script>
   let TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長", "文風改良", "不適當"];
   const TAG_HELP = {
@@ -348,6 +369,7 @@
   let annotator = "";
   let citedOpen = false;
   let draftNote = null;
+  let draftRevise = null;
 
   const $ = (id) => document.getElementById(id);
 
@@ -401,7 +423,7 @@
   }
 
   function emptyReview() {
-    return { coreSet: [], itemNotes: [], overallComment: "", unsuitableNotes: {}, droppedLinks: [] };
+    return { coreSet: [], itemNotes: [], overallComment: "", unsuitableNotes: {}, droppedLinks: [], coreRevisions: [] };
   }
 
   function getReview(taskId) {
@@ -414,6 +436,9 @@
       ? r.unsuitableNotes
       : {};
     r.droppedLinks = Array.isArray(r.droppedLinks) ? r.droppedLinks : [];
+    r.coreRevisions = Array.isArray(r.coreRevisions)
+      ? r.coreRevisions.filter((item) => item && item.groupName && item.hazardItem && item.from && item.to)
+      : [];
     return r;
   }
 
@@ -450,6 +475,7 @@
     return (r.coreSet && r.coreSet.length > 0)
       || (r.itemNotes && r.itemNotes.length > 0)
       || (r.droppedLinks && r.droppedLinks.length > 0)
+      || (r.coreRevisions && r.coreRevisions.length > 0)
       || String(r.overallComment || "").trim().length > 0
       || hasUnsuitable;
   }
@@ -652,7 +678,7 @@
     pane.innerHTML = `
       <h2>${escapeHtml(task.taskName)}</h2>
       <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
-      <p class="hint">每一則情境下面是它掛上的措施。標「核心措施」的是評估頁計分用的那幾條。勾選「刪掉」只拿掉這一則。點句子會開啟標記。</p>
+      <p class="hint">每一則情境下面是它掛上的措施。核心措施可勾「刪掉」或按「修訂」改寫，都只動這一則。點句子會開啟標記。</p>
       <div class="list-title">引用背景（只供判斷泛用或製程綁定，不要據此建議拿掉模板）</div>
       <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
       ${groups}`;
@@ -660,6 +686,12 @@
     if (moreBtn) moreBtn.addEventListener("click", () => { citedOpen = !citedOpen; renderPane(); });
     pane.querySelectorAll("[data-field]").forEach((el) => {
       el.addEventListener("click", () => openNoteFromEl(el));
+    });
+    pane.querySelectorAll("[data-revise]").forEach((el) => {
+      el.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        openRevise(task, el);
+      });
     });
     pane.querySelectorAll("[data-drop]").forEach((el) => {
       el.addEventListener("click", (ev) => ev.stopPropagation());
@@ -712,6 +744,24 @@
 
   function isDropped(review, groupName, hazardItem, controlText) {
     return (review.droppedLinks || []).includes(dropKey(groupName, hazardItem, controlText));
+  }
+
+  function coreRevisionOf(review, groupName, hazardItem, from) {
+    const hit = (review.coreRevisions || []).find((item) =>
+      item.groupName === groupName && item.hazardItem === hazardItem && item.from === from
+    );
+    return hit ? String(hit.to || "") : "";
+  }
+
+  function setCoreRevision(taskId, groupName, hazardItem, from, to) {
+    const r = getReview(taskId);
+    const next = (r.coreRevisions || []).filter((item) =>
+      !(item.groupName === groupName && item.hazardItem === hazardItem && item.from === from)
+    );
+    const clean = String(to || "").trim();
+    if (clean && clean !== from) next.push({ groupName, hazardItem, from, to: clean });
+    r.coreRevisions = next;
+    persist();
   }
 
   function toggleDrop(taskId, groupName, hazardItem, controlText, on) {
@@ -814,14 +864,21 @@
       const controls = (block.controls || []).map((ctrl) => {
         const text = ctrl.text;
         const dropped = isDropped(review, group.groupName, block.text, text);
-        const tag = laneOf(text);
+        const revised = ctrl.core ? coreRevisionOf(review, group.groupName, block.text, text) : "";
+        const shown = revised || text;
+        const tag = laneOf(shown) || laneOf(text);
         const avoidIdx = (group.AvoidItems || []).indexOf(text);
         const mark = ctrl.core ? '<span class="badge core">核心措施</span>' : "";
+        const fromNote = revised ? `<span class="revised-from">原文：${escapeHtml(text)}</span>` : "";
+        const reviseBtn = ctrl.core
+          ? `<button type="button" class="revise-btn" data-revise="1" data-group="${escapeHtml(group.groupName)}" data-hazard="${escapeHtml(block.text)}" data-from="${escapeHtml(text)}">修訂</button>`
+          : "<span></span>";
         return `<li class="${dropped ? "dropped" : ""}">
           <label class="drop-check"><input type="checkbox" data-drop="1" data-group="${escapeHtml(group.groupName)}" data-hazard="${escapeHtml(block.text)}" data-control="${escapeHtml(text)}" ${dropped ? "checked" : ""}>刪掉</label>
           <span class="core-slot">${mark}</span>
           <span class="lane ${laneClass(tag)}">${escapeHtml(tag || "措施")}</span>
-          <span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${avoidIdx >= 0 ? avoidIdx : ""}" data-quote="${escapeHtml(text)}">${escapeHtml(text)}</span>
+          <span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${avoidIdx >= 0 ? avoidIdx : ""}" data-quote="${escapeHtml(shown)}">${escapeHtml(shown)}${fromNote}</span>
+          ${reviseBtn}
         </li>`;
       }).join("");
       const body = controls
@@ -1020,6 +1077,75 @@
     draftNote = null;
   }
 
+  function openRevise(task, el) {
+    const groupName = el.getAttribute("data-group") || "";
+    const hazardItem = el.getAttribute("data-hazard") || "";
+    const from = el.getAttribute("data-from") || "";
+    const review = getReview(task.taskId);
+    const revised = coreRevisionOf(review, groupName, hazardItem, from);
+    draftRevise = { taskId: task.taskId, groupName, hazardItem, from, row: el.closest("li") };
+    $("revise-meta").textContent = groupName + " · 只改這一則情境";
+    $("revise-original").textContent = from;
+    $("revise-text").value = revised || from;
+    $("revise-err").textContent = "";
+    const dropped = isDropped(review, groupName, hazardItem, from);
+    $("revise-drop").textContent = dropped ? "恢復這一則" : "刪掉這一則";
+    $("revise-modal").classList.remove("hidden");
+    $("revise-modal").setAttribute("aria-hidden", "false");
+    $("revise-text").focus();
+  }
+
+  function closeRevise() {
+    $("revise-modal").classList.add("hidden");
+    $("revise-modal").setAttribute("aria-hidden", "true");
+    draftRevise = null;
+  }
+
+  function paintRevisedRow(row, from, shown, dropped) {
+    if (!row) return;
+    row.classList.toggle("dropped", dropped);
+    const box = row.querySelector("input[data-drop]");
+    if (box) box.checked = dropped;
+    const dropBtn = $("revise-drop");
+    if (dropBtn && draftRevise) dropBtn.textContent = dropped ? "恢復這一則" : "刪掉這一則";
+    const span = row.querySelector(".line-text");
+    if (span) {
+      const note = shown !== from ? `<span class="revised-from">原文：${escapeHtml(from)}</span>` : "";
+      span.innerHTML = `${escapeHtml(shown)}${note}`;
+      span.setAttribute("data-quote", shown);
+    }
+    const lane = row.querySelector(".lane");
+    if (lane) {
+      const tag = laneOf(shown) || laneOf(from);
+      lane.textContent = tag || "措施";
+      lane.className = "lane " + laneClass(tag);
+    }
+  }
+
+  function saveRevise() {
+    if (!draftRevise) return;
+    const text = $("revise-text").value.trim();
+    if (!text) {
+      $("revise-err").textContent = "請寫修訂後的措施，或按「刪掉這一則」。";
+      return;
+    }
+    setCoreRevision(draftRevise.taskId, draftRevise.groupName, draftRevise.hazardItem, draftRevise.from, text);
+    const dropped = isDropped(getReview(draftRevise.taskId), draftRevise.groupName, draftRevise.hazardItem, draftRevise.from);
+    paintRevisedRow(draftRevise.row, draftRevise.from, text, dropped);
+    closeRevise();
+    renderList();
+  }
+
+  function toggleReviseDrop() {
+    if (!draftRevise) return;
+    const review = getReview(draftRevise.taskId);
+    const on = !isDropped(review, draftRevise.groupName, draftRevise.hazardItem, draftRevise.from);
+    toggleDrop(draftRevise.taskId, draftRevise.groupName, draftRevise.hazardItem, draftRevise.from, on);
+    const saved = coreRevisionOf(getReview(draftRevise.taskId), draftRevise.groupName, draftRevise.hazardItem, draftRevise.from);
+    paintRevisedRow(draftRevise.row, draftRevise.from, saved || draftRevise.from, on);
+    renderList();
+  }
+
   function saveDraftNote() {
     if (!draftNote) return;
     const problem = $("note-problem").value.trim();
@@ -1044,6 +1170,12 @@
         overallComment: String(review.overallComment || "").trim(),
         unsuitableNotes: { ...(review.unsuitableNotes || {}) },
         droppedLinks: [...(review.droppedLinks || [])],
+        coreRevisions: (review.coreRevisions || []).map((item) => ({
+          groupName: item.groupName,
+          hazardItem: item.hazardItem,
+          from: item.from,
+          to: item.to
+        })),
         itemNotes: review.itemNotes.map((n) => ({
           groupName: n.groupName,
           field: n.field,
@@ -1066,7 +1198,7 @@
       nComplete: library.length - incomplete.length,
       incomplete,
       formatNotes: [
-        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處；droppedLinks 為某一則情境上被刪掉的措施",
+        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處；droppedLinks 為某一則情境上被刪掉的措施；coreRevisions 為某一則情境上改寫過的核心措施（from 原文、to 修訂文）",
         "severitylevel 為類型 S（各情境最高，不是加總）；hazardSeverities 為各情境 S（Map 對得到的沿用原始分，對不到的依表十補評）"
       ],
       tasks
@@ -1104,7 +1236,8 @@
           itemNotes: t.itemNotes || [],
           overallComment: typeof t.overallComment === "string" ? t.overallComment : "",
           unsuitableNotes: (t.unsuitableNotes && typeof t.unsuitableNotes === "object") ? t.unsuitableNotes : {},
-          droppedLinks: Array.isArray(t.droppedLinks) ? t.droppedLinks : []
+          droppedLinks: Array.isArray(t.droppedLinks) ? t.droppedLinks : [],
+          coreRevisions: Array.isArray(t.coreRevisions) ? t.coreRevisions : []
         };
       });
     } else {
@@ -1203,10 +1336,20 @@
     $("note-modal").addEventListener("click", (e) => {
       if (e.target.id === "note-modal") closeModal();
     });
+    $("revise-cancel").addEventListener("click", closeRevise);
+    $("revise-save").addEventListener("click", saveRevise);
+    $("revise-drop").addEventListener("click", toggleReviseDrop);
+    $("revise-modal").addEventListener("click", (e) => {
+      if (e.target.id === "revise-modal") closeRevise();
+    });
     document.addEventListener("keydown", (e) => {
       if (!$("gate").classList.contains("hidden")) return;
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") {
+        if (!$("revise-modal").classList.contains("hidden")) closeRevise();
+        else closeModal();
+      }
       if ($("note-modal").classList.contains("hidden") === false) return;
+      if ($("revise-modal").classList.contains("hidden") === false) return;
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
       if (e.key === "ArrowLeft") $("btn-prev").click();
       if (e.key === "ArrowRight") $("btn-next").click();
