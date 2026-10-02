@@ -267,6 +267,7 @@
   <header>
     <div>
       <h1>作業本身審查</h1>
+      <p class="desc">審查正文已與目前風險評估原型同步。既有標註保留，文字變更後請核對適用性。<a href="SYNC_POLICY.md" target="_blank" rel="noopener">同步說明與原文對照</a></p>
       <div class="meta">情境底下掛著對上的措施，勾刪掉；點句子開啟標記</div>
     </div>
     <div class="grow"></div>
@@ -338,6 +339,7 @@
     </div>
   </div>
 <script>
+  const DATA_VER = "20261002n";
   let TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長", "文風改良", "不適當"];
   const TAG_HELP = {
     "漏提": "該有的情境或對策沒寫",
@@ -419,7 +421,15 @@
 
   function noteKey(note) {
     const idx = note.index === null || note.index === undefined ? "null" : String(note.index);
-    return `${note.groupName}||${note.field}||${idx}`;
+    const identity = note.quote ? "quote:" + note.quote : "index:" + idx;
+    return JSON.stringify([note.groupName, note.field, identity]);
+  }
+
+  function resolveNoteQuote(partial) {
+    if (Object.prototype.hasOwnProperty.call(partial, "quote")) return partial;
+    const task = currentTask();
+    const gIdx = task ? task.hazardGroups.findIndex((g) => g.groupName === partial.groupName) : -1;
+    return gIdx >= 0 ? { ...partial, quote: quoteFrom(task, gIdx, partial.field, partial.index) } : partial;
   }
 
   function emptyReview() {
@@ -487,7 +497,7 @@
   }
 
   function findNote(review, partial) {
-    const key = noteKey(partial);
+    const key = noteKey(resolveNoteQuote(partial));
     return (review.itemNotes || []).find((n) => noteKey(n) === key) || null;
   }
 
@@ -559,6 +569,7 @@
     }
     const payload = {
       schema: "ra-task-judge-phase1-expert-progress",
+      dataVersion: DATA_VER,
       annotator,
       packCode,
       lastIndex: currentIndex,
@@ -742,21 +753,33 @@
     return [groupName, hazardItem, controlText].join("\u001f");
   }
 
+  function originalControlText(groupName, hazardItem, text) {
+    const task = currentTask();
+    if (!task) return "";
+    const row = mapRowsFor(task, { groupName }).find((item) => item.hazardItem === hazardItem);
+    const control = row && (row.controls || []).find((item) => item.text === text);
+    return control ? String(control.originalText || "") : "";
+  }
+
   function isDropped(review, groupName, hazardItem, controlText) {
-    return (review.droppedLinks || []).includes(dropKey(groupName, hazardItem, controlText));
+    const keys = review.droppedLinks || [];
+    const original = originalControlText(groupName, hazardItem, controlText);
+    return keys.includes(dropKey(groupName, hazardItem, controlText))
+      || (!!original && keys.includes(dropKey(groupName, hazardItem, original)));
   }
 
   function coreRevisionOf(review, groupName, hazardItem, from) {
-    const hit = (review.coreRevisions || []).find((item) =>
-      item.groupName === groupName && item.hazardItem === hazardItem && item.from === from
-    );
+    const original = originalControlText(groupName, hazardItem, from);
+    const items = review.coreRevisions || [];
+    const matches = (item, text) => item.groupName === groupName && item.hazardItem === hazardItem && item.from === text;
+    const hit = items.find((item) => matches(item, from)) || (original && items.find((item) => matches(item, original)));
     return hit ? String(hit.to || "") : "";
   }
 
   function setCoreRevision(taskId, groupName, hazardItem, from, to) {
     const r = getReview(taskId);
     const next = (r.coreRevisions || []).filter((item) =>
-      !(item.groupName === groupName && item.hazardItem === hazardItem && item.from === from)
+      !(item.groupName === groupName && item.hazardItem === hazardItem && (item.from === from || item.from === originalControlText(groupName, hazardItem, from)))
     );
     const clean = String(to || "").trim();
     if (clean && clean !== from) next.push({ groupName, hazardItem, from, to: clean });
@@ -768,6 +791,15 @@
     const r = getReview(taskId);
     const key = dropKey(groupName, hazardItem, controlText);
     const set = new Set(r.droppedLinks);
+    const original = originalControlText(groupName, hazardItem, controlText);
+    const originalKey = original ? dropKey(groupName, hazardItem, original) : "";
+    if (originalKey && set.has(originalKey)) {
+      const row = mapRowsFor(currentTask(), { groupName }).find((item) => item.hazardItem === hazardItem);
+      (row && row.controls || []).filter((item) => item.originalText === original).forEach((item) => {
+        set.add(dropKey(groupName, hazardItem, item.text));
+      });
+      set.delete(originalKey);
+    }
     if (on) set.add(key);
     else set.delete(key);
     r.droppedLinks = [...set];
@@ -793,7 +825,7 @@
           const text = String(ref.text || "").trim();
           if (!text) return null;
           const cid = String(ref.controlId || "").trim();
-          return { text, core: ref.role === "core" || cores.has(cid) };
+          return { text, originalText: String(ref.originalText || ""), core: ref.role === "core" || cores.has(cid) };
         }).filter(Boolean);
         return {
           hazardItem: String(row.hazardItem || "").trim(),
@@ -813,7 +845,7 @@
 
   function normalizeControl(item) {
     if (item && typeof item === "object") {
-      return { text: String(item.text || ""), core: !!item.core };
+      return { text: String(item.text || ""), originalText: String(item.originalText || ""), core: !!item.core };
     }
     return { text: String(item || ""), core: false };
   }
@@ -1189,6 +1221,7 @@
     });
     const doc = {
       schema: "ra-task-judge-phase1",
+      dataVersion: DATA_VER,
       phase: 1,
       annotator: "expert:" + packCode,
       packCode,
@@ -1213,6 +1246,7 @@
   function exportProgress() {
     downloadJson(`phase1_expert_progress_${packCode}_${new Date().toISOString().slice(0, 10)}.json`, {
       schema: "ra-task-judge-phase1-expert-progress",
+      dataVersion: DATA_VER,
       annotator,
       packCode,
       lastIndex: currentIndex,
@@ -1392,9 +1426,9 @@
   async function boot() {
     wire();
     const [libRes, asgRes, linkRes] = await Promise.all([
-      fetch("data/library.json?v=20260915d"),
+      fetch(`data/library.json?v=${DATA_VER}`),
       fetch("data/assignments.json?v=20260915d"),
-      fetch("scenarioMaps.json?v=20261002j")
+      fetch(`scenarioMaps.json?v=${DATA_VER}`)
     ]);
     if (!libRes.ok) throw new Error("無法載入 data/library.json");
     if (!asgRes.ok) throw new Error("無法載入 data/assignments.json");

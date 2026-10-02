@@ -2,7 +2,9 @@
 
 線上位置：https://fefe9487.github.io/evluate_risk_assessment/
 
-這站給外部專家標 **專家版作業正文**（Phase 1 `writeback_full`，含十業新掛的三張卡）。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。引用背景來自正式 `industryMapping.json`。
+這站給外部專家標 **目前原型作業正文**（`prototype_snapshot`，資料版本 `20261002n`，174項作業）。每一筆可勾五分鐘核心、點句子標問題，也可另寫**綜合意見**（不限格式、不套標籤詞表）。引用背景來自正式 `industryMapping.json`。
+
+同步方針見 [SYNC_POLICY.md](SYNC_POLICY.md)，原文對照見 [CONTROL_TEXT_REVISIONS.json](CONTROL_TEXT_REVISIONS.json)，待審清單見 [CONTROL_REVIEW_QUEUE.md](CONTROL_REVIEW_QUEUE.md)。
 
 只讀對照 **Fat 原版**：[fat.html](fat.html)。這頁不寫審查、不改審查正文。六張後來才進庫的辦公／文書卡沒有 fat。
 
@@ -16,7 +18,7 @@
 2. 右上角會顯示你的審查代號（第一次進站輸入後會留在這台電腦，不必每次重填）。
 3. 每一筆可做三件事（可只做其中幾項）：
    - 勾五分鐘核心危害：**至少 2 類，沒有上限**（不要照抄「庫內核心」）。
-   - 每一則危害情境下面是評估頁對上的措施（`scenarioMaps.json?v=20261002j`）。標「核心措施」的是這一則的核心控制。勾「刪掉」只拿掉這一則；按「修訂」只改寫這一則，原文會留在底下。掛不上的措施會附上原因。
+   - 每一則危害情境下面是評估頁對上的措施（`scenarioMaps.json?v=20261002n`）。標「核心措施」的是這一則的核心控制。勾「刪掉」只拿掉這一則；按「修訂」只改寫這一則，原文會留在底下。掛不上的措施會附上原因。
    - 點有問題的危害情境、措施、核心理由或 **S 分數**，選標籤並用句子說明。沒問題的句子不必標。
    - 在各危害類型底下的 **不適當之處** 寫這組哪裡不適當（S、情境或對策皆可）；也可在右側寫**綜合意見**。
 4. 定期按「備份進度」。全部或告一段落後按「匯出結果」，把 JSON 寄回。
@@ -38,7 +40,7 @@
 
 每組危害類型另有 **不適當之處** 欄位（`unsuitableNotes`），不必套標籤。綜合意見也不必用這些標籤。
 
-危害情境左側顯示該條 **S**（能對到 Map 原文者沿用原始分；對不到者依表十 Person／Scope 取高補評）。組頭 **類型 S** 是該類型各情境 S 的最高值，不是加總。組內也會列出 Map 列序的原始 S。
+危害情境左側顯示該條 **S**（能對到 Map 原文者沿用原始分；對不到者沿用原型群組 S，並在資料中標明 groupFallback）。組頭 **類型 S** 是該類型各情境 S 的最高值，不是加總。組內也會列出 Map 列序的原始 S。
 
 ## 匯出格式
 
@@ -77,7 +79,7 @@
 
 ## 維護者
 
-- 作業正文：`data/library.json`（專家版 writeback_full；`核心重點_existing` 是庫內旗，專家不要照抄）
+- 作業正文：`data/library.json`（目前原型 prototype_snapshot；`核心重點_existing` 是庫內旗，專家不要照抄）
 - 題包分發：`data/assignments.json`（A01 營造 70 題、A02／A03 各 70 題；`superpower` 看全庫）
 - Fat 原版（只讀）：`data/library_fat.json` + `fat.html`
 - 專業版底稿（只讀）：`data/library_full.json` + `full.html`（170 張 writeback_full + 後補三張）
