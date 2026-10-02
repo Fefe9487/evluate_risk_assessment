@@ -128,12 +128,36 @@
     .card-b { padding: 12px 14px 14px; }
     .list-title { font-size: 13px; font-weight: 650; margin: 10px 0 6px; }
     ol.lines { margin: 0; padding-left: 22px; }
-    ol.lines li, .reason-block {
-      margin: 0 0 6px; padding: 6px 8px; border-radius: 8px; cursor: pointer;
+    ol.lines > li, .reason-block {
+      margin: 0 0 6px; padding: 6px 8px; border-radius: 8px;
       border: 1px solid transparent;
     }
-    ol.lines li:hover, .reason-block:hover, .line-text:hover { background: var(--brand-soft); }
+    ol.lines > li.scenario { cursor: default; }
+    .reason-block { cursor: pointer; }
+    .reason-block:hover, .line-text:hover { background: var(--brand-soft); }
     .line-text { cursor: pointer; border-radius: 6px; padding: 2px 4px; }
+    ul.linked {
+      list-style: none; margin: 6px 0 2px; padding: 0 0 0 4px;
+      display: grid; gap: 4px;
+    }
+    ul.linked > li {
+      display: grid; grid-template-columns: 72px 88px minmax(0, 1fr);
+      gap: 8px; align-items: start; margin: 0; padding: 4px 6px;
+      border-radius: 8px; cursor: default;
+    }
+    ul.linked > li.dropped .line-text {
+      text-decoration: line-through; color: var(--muted); background: var(--flag-soft);
+    }
+    .drop-check {
+      display: flex; align-items: center; gap: 4px; margin-top: 2px;
+      font-size: 12px; font-weight: 650; color: var(--muted); cursor: pointer; user-select: none;
+    }
+    .drop-check input { width: 16px; height: 16px; margin: 0; accent-color: var(--flag); }
+    ul.linked > li.dropped .drop-check { color: var(--flag); }
+    .lane { margin-top: 2px; font-size: 12px; font-weight: 650; color: #3f5b5e; }
+    .lane.eng { color: var(--brand-2); }
+    .lane.ppe { color: var(--core); }
+    .no-link { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
     ol.lines li.flagged, .reason-block.flagged {
       background: var(--flag-soft); border-color: #f5c6c2;
     }
@@ -235,7 +259,7 @@
   <header>
     <div>
       <h1>作業本身審查</h1>
-      <div class="meta">勾五分鐘核心、點句子或 S 標問題；每組可寫不適當之處</div>
+      <div class="meta">情境底下掛著對上的措施，勾刪掉；點句子開啟標記</div>
     </div>
     <div class="grow"></div>
     <div class="hdr-acts">
@@ -306,6 +330,7 @@
   const CODE_KEY = "ra-phase1-expert-code";
   const BACKUP_MARKS = [20, 40, 60];
 
+  let scenarioLinks = {};
   let library = [];
   let allTasks = [];
   let assignments = null;
@@ -373,7 +398,7 @@
   }
 
   function emptyReview() {
-    return { coreSet: [], itemNotes: [], overallComment: "", unsuitableNotes: {} };
+    return { coreSet: [], itemNotes: [], overallComment: "", unsuitableNotes: {}, droppedLinks: [] };
   }
 
   function getReview(taskId) {
@@ -385,6 +410,7 @@
     r.unsuitableNotes = (r.unsuitableNotes && typeof r.unsuitableNotes === "object" && !Array.isArray(r.unsuitableNotes))
       ? r.unsuitableNotes
       : {};
+    r.droppedLinks = Array.isArray(r.droppedLinks) ? r.droppedLinks : [];
     return r;
   }
 
@@ -420,6 +446,7 @@
     const hasUnsuitable = Object.values(notes).some((v) => String(v || "").trim());
     return (r.coreSet && r.coreSet.length > 0)
       || (r.itemNotes && r.itemNotes.length > 0)
+      || (r.droppedLinks && r.droppedLinks.length > 0)
       || String(r.overallComment || "").trim().length > 0
       || hasUnsuitable;
   }
@@ -605,10 +632,9 @@
           ${srcHtml ? `<div class="s-pills" style="margin-bottom:8px">${srcHtml}（類型 S 為最高值，不是加總）</div>` : ""}
           <div class="list-title">核心理由（點一下可標問題）</div>
           ${renderReason(task, g, gIdx)}
-          <div class="list-title">危害情境（左側為該條 S）</div>
-          ${renderLines(task, g, gIdx, "hazardItems")}
-          <div class="list-title">改善項目</div>
-          ${renderLines(task, g, gIdx, "AvoidItems")}
+          <div class="list-title">危害情境與對上的措施</div>
+          ${renderScenarios(task, g, gIdx)}
+          ${renderUnlinked(task, g, gIdx)}
           <div class="unsuitable-box">
             <div class="list-title">不適當之處（選填）</div>
             <textarea data-unsuitable="${gIdx}" placeholder="S 評分、情境或對策有哪裡不適當，寫在這裡。沒有可不填。">${escapeHtml(uns)}</textarea>
@@ -623,6 +649,7 @@
     pane.innerHTML = `
       <h2>${escapeHtml(task.taskName)}</h2>
       <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
+      <p class="hint">每一則情境下面是它掛上的措施。勾選「刪掉」只拿掉這一則。點句子會開啟標記。</p>
       <div class="list-title">引用背景（只供判斷泛用或製程綁定，不要據此建議拿掉模板）</div>
       <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
       ${groups}`;
@@ -630,6 +657,22 @@
     if (moreBtn) moreBtn.addEventListener("click", () => { citedOpen = !citedOpen; renderPane(); });
     pane.querySelectorAll("[data-field]").forEach((el) => {
       el.addEventListener("click", () => openNoteFromEl(el));
+    });
+    pane.querySelectorAll("[data-drop]").forEach((el) => {
+      el.addEventListener("click", (ev) => ev.stopPropagation());
+      el.addEventListener("change", () => {
+        const on = el.checked;
+        toggleDrop(
+          task.taskId,
+          el.getAttribute("data-group"),
+          el.getAttribute("data-hazard"),
+          el.getAttribute("data-control"),
+          on
+        );
+        const row = el.closest("li");
+        if (row) row.classList.toggle("dropped", on);
+        renderList();
+      });
     });
     pane.querySelectorAll("[data-unsuitable]").forEach((el) => {
       el.addEventListener("input", () => {
@@ -645,6 +688,121 @@
     const review = getReview(task.taskId);
     const flagged = !!findNote(review, { groupName: group.groupName, field: "核心理由", index: 0 });
     return `<div class="reason-block${flagged ? " flagged" : ""}" data-g="${gIdx}" data-field="核心理由" data-i="0">${escapeHtml(group["核心理由"] || "（無）")}</div>`;
+  }
+
+  const LANE_RE = /[（(【]\s*(消除|取代|工程改善|工程控制|行政管理|管理控制|個人防護具|個人防護)\s*[）)】]\s*$/;
+
+  function laneOf(text) {
+    const m = String(text || "").match(LANE_RE);
+    return m ? m[1] : "";
+  }
+
+  function laneClass(tag) {
+    if (tag === "工程改善" || tag === "消除" || tag === "取代" || tag === "工程控制") return "eng";
+    if (tag === "個人防護" || tag === "個人防護具") return "ppe";
+    return "";
+  }
+
+  function dropKey(groupName, hazardItem, controlText) {
+    return [groupName, hazardItem, controlText].join("\u001f");
+  }
+
+  function isDropped(review, groupName, hazardItem, controlText) {
+    return (review.droppedLinks || []).includes(dropKey(groupName, hazardItem, controlText));
+  }
+
+  function toggleDrop(taskId, groupName, hazardItem, controlText, on) {
+    const r = getReview(taskId);
+    const key = dropKey(groupName, hazardItem, controlText);
+    const set = new Set(r.droppedLinks);
+    if (on) set.add(key);
+    else set.delete(key);
+    r.droppedLinks = [...set];
+    persist();
+  }
+
+  function mapRowsFor(task, group) {
+    const byTask = scenarioLinks[task.taskName] || {};
+    return byTask[group.groupName] || [];
+  }
+
+  function scenarioBlocks(task, group) {
+    const mapped = mapRowsFor(task, group);
+    const used = new Set();
+    const libItems = group.hazardItems || [];
+    const blocks = libItems.map((text, i) => {
+      const hit = mapped.find((row) => row.hazardItem === text);
+      if (hit) used.add(hit);
+      return {
+        text,
+        index: i,
+        severity: (group.hazardSeverities || [])[i] || "",
+        controls: hit ? (hit.controls || []) : [],
+        linked: !!hit
+      };
+    });
+    let extra = 0;
+    mapped.forEach((row) => {
+      if (used.has(row)) return;
+      extra += 1;
+      const sev = Number(row.severity);
+      blocks.push({
+        text: row.hazardItem || "",
+        index: -extra,
+        severity: sev >= 1 && sev <= 5 ? "S" + sev : "",
+        controls: row.controls || [],
+        linked: true
+      });
+    });
+    return blocks;
+  }
+
+  function renderScenarios(task, group, gIdx) {
+    const review = getReview(task.taskId);
+    const blocks = scenarioBlocks(task, group);
+    if (!blocks.length) return `<p class="empty">無</p>`;
+    const lis = blocks.map((block) => {
+      const inLibrary = block.index !== null && block.index >= 0;
+      const flagged = inLibrary && !!findNote(review, { groupName: group.groupName, field: "hazardItems", index: block.index });
+      const sevFlag = inLibrary && !!findNote(review, { groupName: group.groupName, field: "severitylevel", index: block.index });
+      const sBtn = inLibrary && block.severity
+        ? `<button type="button" class="s-pill${sevFlag ? " flagged" : ""}" data-g="${gIdx}" data-field="severitylevel" data-i="${block.index}" title="點此標註這條 S 不適當">${escapeHtml(block.severity)}</button>`
+        : `<span class="s-pill miss">${escapeHtml(block.severity || "—")}</span>`;
+      const controls = (block.controls || []).map((text) => {
+        const dropped = isDropped(review, group.groupName, block.text, text);
+        const tag = laneOf(text);
+        const avoidIdx = (group.AvoidItems || []).indexOf(text);
+        return `<li class="${dropped ? "dropped" : ""}">
+          <label class="drop-check"><input type="checkbox" data-drop="1" data-group="${escapeHtml(group.groupName)}" data-hazard="${escapeHtml(block.text)}" data-control="${escapeHtml(text)}" ${dropped ? "checked" : ""}>刪掉</label>
+          <span class="lane ${laneClass(tag)}">${escapeHtml(tag || "措施")}</span>
+          <span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${avoidIdx >= 0 ? avoidIdx : ""}" data-quote="${escapeHtml(text)}">${escapeHtml(text)}</span>
+        </li>`;
+      }).join("");
+      const body = controls
+        ? `<ul class="linked">${controls}</ul>`
+        : `<p class="no-link">這則沒有對上的措施</p>`;
+      return `<li class="scenario${flagged ? " flagged" : ""}">
+        <div class="line-row">${sBtn}<span class="line-text" data-g="${gIdx}" data-field="hazardItems" data-i="${block.index}" data-quote="${escapeHtml(block.text)}">${escapeHtml(block.text)}</span></div>
+        ${body}
+      </li>`;
+    }).join("");
+    return `<ol class="lines">${lis}</ol>`;
+  }
+
+  function renderUnlinked(task, group, gIdx) {
+    const linked = new Set();
+    scenarioBlocks(task, group).forEach((block) => {
+      (block.controls || []).forEach((text) => linked.add(text));
+    });
+    const rest = (group.AvoidItems || []).filter((text) => !linked.has(text));
+    if (!rest.length) return "";
+    const review = getReview(task.taskId);
+    const lis = rest.map((text) => {
+      const idx = (group.AvoidItems || []).indexOf(text);
+      const flagged = !!findNote(review, { groupName: group.groupName, field: "AvoidItems", index: idx });
+      return `<li class="${flagged ? "flagged" : ""}"><div class="line-row"><span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${idx}">${escapeHtml(text)}</span></div></li>`;
+    }).join("");
+    return `<div class="list-title">未掛上的改善項目</div><ol class="lines">${lis}</ol>`;
   }
 
   function renderLines(task, group, gIdx, field) {
@@ -759,7 +917,7 @@
       groupName: group.groupName,
       field,
       index,
-      quote: quoteFrom(task, gIdx, field, index)
+      quote: el.hasAttribute("data-quote") ? el.getAttribute("data-quote") : quoteFrom(task, gIdx, field, index)
     };
     const existing = findNote(getReview(task.taskId), partial);
     openNoteEditor(task, existing || partial, !!existing);
@@ -832,6 +990,7 @@
         coreSet: [...review.coreSet],
         overallComment: String(review.overallComment || "").trim(),
         unsuitableNotes: { ...(review.unsuitableNotes || {}) },
+        droppedLinks: [...(review.droppedLinks || [])],
         itemNotes: review.itemNotes.map((n) => ({
           groupName: n.groupName,
           field: n.field,
@@ -854,7 +1013,7 @@
       nComplete: library.length - incomplete.length,
       incomplete,
       formatNotes: [
-        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處",
+        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處；droppedLinks 為某一則情境上被刪掉的措施",
         "severitylevel 為類型 S（各情境最高，不是加總）；hazardSeverities 為各情境 S（Map 對得到的沿用原始分，對不到的依表十補評）"
       ],
       tasks
@@ -891,7 +1050,8 @@
           coreSet: t.coreSet || [],
           itemNotes: t.itemNotes || [],
           overallComment: typeof t.overallComment === "string" ? t.overallComment : "",
-          unsuitableNotes: (t.unsuitableNotes && typeof t.unsuitableNotes === "object") ? t.unsuitableNotes : {}
+          unsuitableNotes: (t.unsuitableNotes && typeof t.unsuitableNotes === "object") ? t.unsuitableNotes : {},
+          droppedLinks: Array.isArray(t.droppedLinks) ? t.droppedLinks : []
         };
       });
     } else {
@@ -1035,14 +1195,19 @@
 
   async function boot() {
     wire();
-    const [libRes, asgRes] = await Promise.all([
+    const [libRes, asgRes, linkRes] = await Promise.all([
       fetch("data/library.json?v=20260915d"),
-      fetch("data/assignments.json?v=20260915d")
+      fetch("data/assignments.json?v=20260915d"),
+      fetch("data/scenarioLinks.json?v=20261002a")
     ]);
     if (!libRes.ok) throw new Error("無法載入 data/library.json");
     if (!asgRes.ok) throw new Error("無法載入 data/assignments.json");
     const doc = await libRes.json();
     assignments = await asgRes.json();
+    if (linkRes.ok) {
+      const linkDoc = await linkRes.json();
+      scenarioLinks = linkDoc.byTask || {};
+    }
     allTasks = doc.tasks || [];
     if (Array.isArray(doc.tagSet) && doc.tagSet.length) TAG_SET = doc.tagSet;
     if (!allTasks.length) throw new Error("作業庫是空的");
