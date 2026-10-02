@@ -141,10 +141,12 @@
       display: grid; gap: 4px;
     }
     ul.linked > li {
-      display: grid; grid-template-columns: 72px 88px minmax(0, 1fr);
+      display: grid; grid-template-columns: 72px 76px 88px minmax(0, 1fr);
       gap: 8px; align-items: start; margin: 0; padding: 4px 6px;
       border-radius: 8px; cursor: default;
     }
+    .core-slot { min-width: 0; }
+    .core-slot .badge { display: inline-block; white-space: nowrap; }
     ul.linked > li.dropped .line-text {
       text-decoration: line-through; color: var(--muted); background: var(--flag-soft);
     }
@@ -649,7 +651,7 @@
     pane.innerHTML = `
       <h2>${escapeHtml(task.taskName)}</h2>
       <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
-      <p class="hint">每一則情境下面是它掛上的措施。勾選「刪掉」只拿掉這一則。點句子會開啟標記。</p>
+      <p class="hint">每一則情境下面是它掛上的措施。標「核心措施」的是評估頁計分用的那幾條。勾選「刪掉」只拿掉這一則。點句子會開啟標記。</p>
       <div class="list-title">引用背景（只供判斷泛用或製程綁定，不要據此建議拿掉模板）</div>
       <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
       ${groups}`;
@@ -726,10 +728,18 @@
     return byTask[group.groupName] || [];
   }
 
+  function normalizeControl(item) {
+    if (item && typeof item === "object") {
+      return { text: String(item.text || ""), core: !!item.core };
+    }
+    return { text: String(item || ""), core: false };
+  }
+
   function scenarioBlocks(task, group) {
     const mapped = mapRowsFor(task, group);
     const used = new Set();
     const libItems = group.hazardItems || [];
+    const controlsOf = (row) => (row && row.controls ? row.controls : []).map(normalizeControl).filter((c) => c.text);
     const blocks = libItems.map((text, i) => {
       const hit = mapped.find((row) => row.hazardItem === text);
       if (hit) used.add(hit);
@@ -737,7 +747,7 @@
         text,
         index: i,
         severity: (group.hazardSeverities || [])[i] || "",
-        controls: hit ? (hit.controls || []) : [],
+        controls: controlsOf(hit),
         linked: !!hit
       };
     });
@@ -750,7 +760,7 @@
         text: row.hazardItem || "",
         index: -extra,
         severity: sev >= 1 && sev <= 5 ? "S" + sev : "",
-        controls: row.controls || [],
+        controls: controlsOf(row),
         linked: true
       });
     });
@@ -768,12 +778,15 @@
       const sBtn = inLibrary && block.severity
         ? `<button type="button" class="s-pill${sevFlag ? " flagged" : ""}" data-g="${gIdx}" data-field="severitylevel" data-i="${block.index}" title="點此標註這條 S 不適當">${escapeHtml(block.severity)}</button>`
         : `<span class="s-pill miss">${escapeHtml(block.severity || "—")}</span>`;
-      const controls = (block.controls || []).map((text) => {
+      const controls = (block.controls || []).map((ctrl) => {
+        const text = ctrl.text;
         const dropped = isDropped(review, group.groupName, block.text, text);
         const tag = laneOf(text);
         const avoidIdx = (group.AvoidItems || []).indexOf(text);
+        const mark = ctrl.core ? '<span class="badge core">核心措施</span>' : "";
         return `<li class="${dropped ? "dropped" : ""}">
           <label class="drop-check"><input type="checkbox" data-drop="1" data-group="${escapeHtml(group.groupName)}" data-hazard="${escapeHtml(block.text)}" data-control="${escapeHtml(text)}" ${dropped ? "checked" : ""}>刪掉</label>
+          <span class="core-slot">${mark}</span>
           <span class="lane ${laneClass(tag)}">${escapeHtml(tag || "措施")}</span>
           <span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${avoidIdx >= 0 ? avoidIdx : ""}" data-quote="${escapeHtml(text)}">${escapeHtml(text)}</span>
         </li>`;
@@ -792,7 +805,7 @@
   function renderUnlinked(task, group, gIdx) {
     const linked = new Set();
     scenarioBlocks(task, group).forEach((block) => {
-      (block.controls || []).forEach((text) => linked.add(text));
+      (block.controls || []).forEach((ctrl) => linked.add(ctrl.text));
     });
     const rest = (group.AvoidItems || []).filter((text) => !linked.has(text));
     if (!rest.length) return "";
@@ -1198,7 +1211,7 @@
     const [libRes, asgRes, linkRes] = await Promise.all([
       fetch("data/library.json?v=20260915d"),
       fetch("data/assignments.json?v=20260915d"),
-      fetch("data/scenarioLinks.json?v=20261002a")
+      fetch("data/scenarioLinks.json?v=20261002b")
     ]);
     if (!libRes.ok) throw new Error("無法載入 data/library.json");
     if (!asgRes.ok) throw new Error("無法載入 data/assignments.json");
