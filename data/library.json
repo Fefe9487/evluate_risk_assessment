@@ -41884,7 +41884,7 @@
           "hazardSeverities": [
             "S2",
             "S2",
-            "Snull"
+            "S2"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -41894,7 +41894,7 @@
           "sourceSeverities": [
             "S2",
             "S2",
-            "Snull"
+            "S2"
           ]
         },
         {
@@ -41917,10 +41917,10 @@
           "核心理由": "管路切換、泵浦及自動閥操作若隔離或防止回動不完整，可能造成手部夾傷或肢體捲入。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S5",
+            "S5",
+            "S4",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -41929,10 +41929,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S5",
+            "S5",
+            "S4",
+            "S5"
           ]
         },
         {
@@ -41960,7 +41960,7 @@
           "hazardSeverities": [
             "S4",
             "S4",
-            "Snull",
+            "S4",
             "S3"
           ],
           "severitySources": [
@@ -41972,7 +41972,7 @@
           "sourceSeverities": [
             "S4",
             "S4",
-            "Snull",
+            "S4",
             "S3"
           ]
         },
@@ -41998,11 +41998,11 @@
           "核心理由": "設備管路蓄熱或高溫介質在巡檢、拆接及洩壓時可能造成接觸性燙傷或熱液燙傷。",
           "核心重點_existing": true,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
             "S4",
-            "Snull",
-            "Snull"
+            "S3",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -42012,11 +42012,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
             "S4",
-            "Snull",
-            "Snull"
+            "S3",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -42055,7 +42055,7 @@
         },
         {
           "groupName": "物體破裂",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "清洗前管路配置、流向或閥位錯誤，封閉段、盲端或隔離不當遭加壓，可能造成管路、閥件、軟管或接頭破裂。",
             "管路、軟管或接頭因高溫劣化、腐蝕減薄、脆化、墊片失效或反覆壓力循環，於循環清洗時破裂並噴出清洗液。",
@@ -42074,11 +42074,11 @@
           "核心理由": "管路或軟管因誤加壓、腐蝕或接頭失效破裂時傷害嚴重，但通常屬特定失效條件，發生頻率低於日常接觸與滑倒。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -42088,11 +42088,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -42115,7 +42115,7 @@
           "核心理由": "拆檢濾網、噴頭及管件時可能被毛邊或工具割傷，但多屬局部拆裝階段且頻率低於化學噴濺與滑倒。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
+            "S3",
             "S3",
             "S3",
             "S2"
@@ -42127,7 +42127,7 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
+            "S3",
             "S3",
             "S3",
             "S2"
@@ -42154,11 +42154,11 @@
           "核心理由": "潮濕環境或未落實驗電可能造成感電，但須同時具備帶電及防護失效條件，並非本作業最常見傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S5",
+            "S5",
+            "S5",
+            "S5",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -42168,11 +42168,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S5",
+            "S5",
+            "S5",
+            "S5",
+            "S5"
           ]
         },
         {
@@ -42193,9 +42193,9 @@
           "核心理由": "搬運藥桶、軟管及重型零件可能造成肌肉骨骼傷害，但通常為累積性或拉扭傷。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
             "S3",
-            "Snull"
+            "S3",
+            "S3"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -42203,9 +42203,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
             "S3",
-            "Snull"
+            "S3",
+            "S3"
           ]
         },
         {
@@ -52294,7 +52294,7 @@
             "S5",
             "S5",
             "S5",
-            "Snull"
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -52306,7 +52306,7 @@
             "S5",
             "S5",
             "S5",
-            "Snull"
+            "S5"
           ]
         },
         {
@@ -58143,9 +58143,9 @@
           "核心理由": "平台及地面可能滑倒或絆倒。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
-            "Snull"
+            "S3",
+            "S3",
+            "S3"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -58153,9 +58153,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
-            "Snull"
+            "S3",
+            "S3",
+            "S3"
           ]
         },
         {
@@ -58207,9 +58207,9 @@
           "核心理由": "接近架空線或帶電設備時可能致命，但需有特定電氣環境，並非所有高空作業車作業的主要常見危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
-            "Snull"
+            "S5",
+            "S5",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -58217,9 +58217,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
-            "Snull"
+            "S5",
+            "S5",
+            "S5"
           ]
         },
         {
@@ -58240,11 +58240,11 @@
           "核心理由": "高溫平台或設備可能造成燙傷，但發生頻率及通常傷勢相對低於墜落、撞擊與物體飛落。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S2",
+            "S3",
+            "S3",
+            "S4",
+            "S2"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -58254,16 +58254,16 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S2",
+            "S3",
+            "S3",
+            "S4",
+            "S2"
           ]
         },
         {
           "groupName": "不當動作",
-          "severitylevel": "S2",
+          "severitylevel": "S3",
           "hazardItems": [
             "作業人員在狹小平台內徒手搬運過重工具、材料或零件，可能因瞬間用力不當造成腰部、肌肉或手部扭傷。",
             "控制器配置不良或操作阻力過大時，反覆操作可能使手腕長期維持不自然角度，造成腕部疼痛或上肢傷害。",
@@ -58280,10 +58280,10 @@
           "核心理由": "搬運及操作姿勢不當可能造成肌肉骨骼傷害，但通常不如高處作業的撞擊或墜落急迫。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S3",
+            "S2",
+            "S3",
+            "S2"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -58292,10 +58292,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
-            "Snull",
-            "Snull"
+            "S3",
+            "S2",
+            "S3",
+            "S2"
           ]
         }
       ]
@@ -60874,8 +60874,8 @@
           "核心理由": "越邊、下降及轉位時接近裸露電線或帶電設備，人體、繩索或金屬工具碰觸帶電體可能造成電擊、灼傷或致命傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "Snull",
-            "Snull",
+            "S5",
+            "S5",
             "S5"
           ],
           "severitySources": [
@@ -60884,8 +60884,8 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "Snull",
-            "Snull",
+            "S5",
+            "S5",
             "S5"
           ]
         }
