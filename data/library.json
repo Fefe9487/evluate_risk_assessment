@@ -281,7 +281,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "破碎機運轉及鄰近作業區長期暴露於高噪音，隔音或聽力防護不足，可能造成噪音性聽力損失。",
             "投料口、出料端、集塵清理及清掃時，塑膠破碎粉塵或木塵揚散，經吸入或接觸造成呼吸道、皮膚及眼部刺激或慢性健康危害。",
@@ -305,8 +305,8 @@
           "hazardSeverities": [
             "S5",
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -317,8 +317,8 @@
           "sourceSeverities": [
             "S5",
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -614,7 +614,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "中控值班長時間在低照度環境注視高對比、多分割監視畫面，可能造成視覺疲勞、眼睛乾澀、頭痛與注意力下降。",
             "久坐、固定姿勢、反覆使用鍵鼠，以及巡檢、疏散與道具復位的久站久走、搬抬推拉，可能造成頸肩腕、腰背及上下肢累積性肌肉骨骼傷害。",
@@ -636,11 +636,11 @@
           "核心理由": "長時間監看與固定姿勢確有累積性視覺及肌肉骨骼負荷，但通常較慢性且不如跌倒、碰撞優先。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S2",
-            "S3",
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -650,11 +650,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
-            "S3",
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -1001,7 +1001,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "使用砂輪機、衝擊工具及柴油設備時，長時間暴露於高噪音，造成噪音性聽力損失。",
             "搬運鋼索、銷軸及重型零件，或進行高處對孔、鎖固及張力調整時，因反覆彎腰扭轉、仰頭伸臂、蹲跪及固定不良姿勢，造成慢性肌肉骨骼傷害。",
@@ -1025,10 +1025,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
-            "S3",
-            "S3",
-            "S5"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -1039,10 +1039,10 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
-            "S3",
-            "S3",
-            "S5"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -1279,6 +1279,10 @@
             "groupFallback"
           ],
           "sourceSeverities": [
+            "S4",
+            "S4",
+            "S4",
+            "S4",
             "S4"
           ]
         },
@@ -1769,7 +1773,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長時間或反覆暴露於冷凍、冷藏及低溫製程環境，未控制暴露或安排回溫，可能造成末梢循環障礙、雷諾氏現象及手足麻木。",
             "吸入寒冷乾燥空氣或頻繁進出高低溫區，未經適應且缺乏回溫休息，可能引發呼吸道不適、氣喘惡化及心血管負荷。",
@@ -1786,8 +1790,8 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -1796,8 +1800,8 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -2096,7 +2100,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "作業人員長期反覆徒手搬抬重物且未依重量分級配置人力或輔具，腰部持續過度負荷可能形成下背痛、椎間盤突出等肌肉骨骼職業病。",
             "作業人員長期在狹小車廂口彎腰、扭轉、側身重複整理料件，可能因姿勢負荷形成肩頸痠痛、肌腱炎或慢性關節傷害。",
@@ -2117,12 +2121,12 @@
           "核心理由": "樓層口反覆彎腰、扭轉裝卸，加上推車推拉，腰背和手腕是慢慢累出來的。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
-            "S3",
-            "S3",
-            "S3"
+            "S5",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -2133,6 +2137,11 @@
             "groupFallback"
           ],
           "sourceSeverities": [
+            "S5",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
             "S4"
           ]
         }
@@ -2715,7 +2724,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "徒手搬運、推拉手推車及低高位堆疊時反覆彎腰、扭轉或伸取，可能造成下背、肩頸及上肢肌肉骨骼傷害。",
             "備料區及升降機周邊長期暴露於設備運轉或警報噪音，可能造成噪音性聽力損失。",
@@ -2734,9 +2743,9 @@
           "核心理由": "反覆搬料加上機台噪音，腰背肌肉骨骼和聽力是長期累積的。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
-            "S4",
+            "S5",
+            "S5",
             "S4"
           ],
           "severitySources": [
@@ -2746,9 +2755,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S4",
+            "S5",
+            "S5",
             "S4"
           ]
         },
@@ -3108,10 +3117,10 @@
           "核心理由": "姿勢負荷與清洗劑接觸可能造成累積性肌肉骨骼或健康危害，但通常不是本次作業最先發生的急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
-            "S4",
-            "S4"
+            "S5",
+            "S5",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -3120,10 +3129,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S4",
-            "S4"
+            "S5",
+            "S5",
+            "S5"
           ]
         },
         {
@@ -3432,7 +3441,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "粉體投料、混合、分離或排料時，密閉、集塵或局部排氣失效造成粉塵逸散，長期吸入可能導致職業性氣喘、慢性呼吸道疾病或肺功能下降。",
             "使用溶劑型清洗劑或刺激性化學品時，密閉、通風或防護失效造成蒸氣吸入及皮膚接觸，長期暴露可能導致神經、肝腎或職業性皮膚疾病。",
@@ -3453,9 +3462,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -3465,9 +3474,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ]
         }
       ]
@@ -3837,7 +3846,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "揮發性溶劑、酸鹼或高毒、致敏化學品於入料、接管、取樣、拆管及卸料時逸散，長期吸入蒸氣、霧滴或氣膠可能造成呼吸道、神經、肝腎及致敏性健康危害。",
             "粉狀化學品拆袋、投料或轉運時，密閉輸送或集塵失效會使粉塵被吸入，造成慢性咳嗽、喘鳴及肺功能下降。",
@@ -3861,11 +3870,11 @@
           "核心理由": "長期吸入蒸氣、粉塵或霧滴可能造成職業病，但通常為累積性健康影響，不是短時間內最常需處理的傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
-            "S3",
+            "S5",
+            "S5",
             "S4",
             "S5",
-            "S3",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -3877,10 +3886,12 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S4",
-            "S3",
             "S5",
-            "S3"
+            "S5",
+            "S4",
+            "S5",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -4269,7 +4280,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "使用含有機溶劑的清潔劑、油墨或潤滑材料時，通風不足或成分未辨識造成長期吸入蒸氣或霧滴，導致慢性中毒、呼吸道刺激或職業性氣喘。",
             "清潔除墨、潤滑及零件保養反覆接觸油墨、清潔劑、潤滑材料或添加劑，造成接觸性皮膚炎、皮膚龜裂或致敏。",
@@ -4286,10 +4297,10 @@
           "核心理由": "長期化學暴露可能造成皮膚炎或呼吸道疾病，但通常累積發生且非本次作業最先需處理的急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -4298,9 +4309,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -4473,7 +4485,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "紙材點收、捆包、貼標、堆疊及暫存搬運若長時間徒手搬抬、重複抓取或採彎腰扭轉等姿勢，可能造成下背、肩頸及上肢累積性肌肉骨骼傷病。",
             "以手推車或油壓拖板車搬運紙材及棧板時，若載重或推拉力超出能力、路面或車況不良，長期可能造成腰背、肩臂及下肢累積性肌肉骨骼負荷。"
@@ -4486,14 +4498,15 @@
           "核心理由": "搬抬與推拉造成的肌肉骨骼負荷可能常見，但多為累積性傷病，先列為次要觀察項目。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
             "groupFallback"
           ],
           "sourceSeverities": [
+            "S4",
             "S4"
           ]
         }
@@ -4761,7 +4774,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "調墨、清洗、換墨及廢液處理時，油墨、稀釋劑與清洗劑長期或反覆逸散，可能造成有機溶劑吸入暴露，引發慢性神經或肝功能危害。",
             "油墨、稀釋劑、清洗劑及去漬劑反覆接觸皮膚或濺入眼睛，可能造成接觸性皮膚炎、過敏、龜裂或眼部傷害。",
@@ -4778,10 +4791,10 @@
           "核心理由": "反覆接觸化學品可能造成慢性職業病，但通常不是本作業最常立即造成停工或就醫的危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -4790,9 +4803,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -5064,11 +5078,11 @@
           "核心理由": "月台柴油廢氣與揚塵天天吸，呼吸道是慢慢壞的，熱天還有熱負荷。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S4",
             "S5",
             "S4",
-            "S3",
             "S5",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -5078,11 +5092,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S4",
             "S5",
             "S4",
-            "S3",
             "S5",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -5375,7 +5389,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "粉體原料開放倒料、拆封或移送時形成可吸入粉塵，反覆吸入可能造成慢性呼吸道疾病或塵肺病。",
             "含有機溶劑或其他揮發性原料在通風不足、接管洩漏或投料時產生蒸氣暴露，可能造成慢性中毒及器官傷害。",
@@ -5396,7 +5410,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S4",
             "S5"
           ],
@@ -5407,6 +5421,7 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S5",
             "S4",
             "S5"
@@ -5754,7 +5769,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "拆封、秤量、倒料、投料及殘料清除時，粉塵或有機溶劑蒸氣長期逸散，可能造成呼吸道疾病及神經、肝腎等慢性健康損害。",
             "反覆接觸原料、殘料及污染容器且清潔不足時，可能造成皮膚刺激、過敏或職業性皮膚炎。",
@@ -5774,11 +5789,11 @@
           "核心理由": "粉塵、溶劑及原料長期暴露可能造成職業病，但多屬慢性累積傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
-            "S4",
-            "S3",
             "S5",
-            "S5"
+            "S4",
+            "S4",
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -5789,9 +5804,10 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S4",
+            "S4",
             "S5",
-            "S5"
+            "S4"
           ]
         }
       ]
@@ -5994,10 +6010,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S4",
             "S5",
-            "S5",
-            "S3",
-            "S5"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -6008,10 +6024,10 @@
           ],
           "sourceSeverities": [
             "S5",
+            "S4",
             "S5",
-            "S5",
-            "S3",
-            "S5"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -6411,7 +6427,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "長期接觸清潔劑、消毒劑蒸氣或原料汁液，可能造成皮膚炎及慢性呼吸道不適。",
             "長期從事手工去皮、抓握、分裝及搬運，可能造成肩頸、上肢、下背或下肢肌肉骨骼疾病。",
@@ -6433,8 +6449,8 @@
           "hazardSeverities": [
             "S4",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -6445,8 +6461,8 @@
           "sourceSeverities": [
             "S4",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -6764,11 +6780,11 @@
           "核心理由": "進入爐內刮除與化學清洗會反覆暴露殘留物與清洗劑，並疊加設備噪音與高熱負荷。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S4",
+            "S4",
+            "S4",
             "S5",
-            "S5",
-            "S3",
-            "S5",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -6779,9 +6795,10 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3",
+            "S4",
+            "S4",
             "S5",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -7149,7 +7166,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "液位計、法蘭或排氣點持續微量逸散，可燃性化學蒸氣長期吸入可能造成慢性職業性疾病。",
             "接觸受污染的閥件、視鏡、手套或擦拭物，污染物經皮膚接觸可能造成接觸性皮膚炎。",
@@ -7168,10 +7185,10 @@
           "核心理由": "長期微量蒸氣或污染物接觸可能造成慢性疾病，但通常不是本次作業最先需要處理的急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
+            "S4",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -7181,8 +7198,9 @@
           ],
           "sourceSeverities": [
             "S4",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -7453,7 +7471,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "人員長期在合梯上仰頭伸手進行燈具安裝、天花板配線或高處清潔，頸肩長時間維持不自然姿勢而引發肌肉骨骼傷病。",
             "合梯高度選用不當，人員經常踮腳、過度抬臂或側身完成工作，長期累積造成下背痛、肩部及手臂不適。",
@@ -7474,12 +7492,12 @@
           "核心理由": "反覆扛梯、仰頭登梯和長時間固定姿勢，肩頸腰背是這個工種最常請假的原因。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
-            "S3",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -7490,6 +7508,11 @@
             "groupFallback"
           ],
           "sourceSeverities": [
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
             "S4"
           ]
         },
@@ -7898,7 +7921,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "於鑄造或熔煉區反覆暴露於高溫輻射及環境熱負荷，熱適應、補水或冷卻休息不足時可能造成熱衰竭、熱中暑或心血管負荷增加。",
             "熔融金屬煙霧及含錳、鉻、鎳等金屬微粒未有效控制而被反覆吸入，可能造成慢性呼吸道、肺部或神經健康損害。",
@@ -7920,10 +7943,10 @@
           "核心理由": "高溫與金屬煙霧的長期暴露可能造成職業病，但不是單次吊運最先處理的傷害類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S4",
             "S5",
             "S5",
-            "S5",
-            "S3",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -7934,10 +7957,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S4",
             "S5",
             "S5",
-            "S5",
-            "S3",
+            "S4",
             "S4"
           ]
         }
@@ -8092,7 +8115,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "吊籠內長時間或反覆採仰頭、前傾、扭轉、側身伸取等不良姿勢，並搬運工具、零件及材料，可能造成頸肩、上肢及下背肌肉骨骼疾病。",
             "於吊籠內使用溶劑型塗料、清潔劑或除鏽劑時，蒸氣逸散控制不足可能造成有機溶劑暴露及神經、肝腎或呼吸系統健康損害。",
@@ -8116,11 +8139,11 @@
           "核心理由": "吊籠裡長時間受限姿勢，加上作業中的化學蒸氣與噪音，骨骼肌肉和呼吸道是慢慢累的。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
-            "S4",
-            "S4",
-            "S4"
+            "S5",
+            "S5",
+            "S5",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -8130,11 +8153,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S4",
-            "S4",
-            "S4"
+            "S5",
+            "S5",
+            "S5",
+            "S5"
           ]
         },
         {
@@ -8480,7 +8503,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "封口機、輸送設備及空壓元件長時間運轉，未控制噪音可能造成噪音性聽力損失或耳鳴。",
             "使用黏著劑或清潔劑時吸入揮發物，或液體反覆接觸皮膚，可能造成呼吸道刺激或接觸性皮膚炎。",
@@ -8500,8 +8523,8 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -8510,8 +8533,8 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -8748,7 +8771,7 @@
             "S5",
             "S4",
             "S5",
-            "S3",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -8764,7 +8787,7 @@
             "S5",
             "S4",
             "S5",
-            "S3",
+            "S4",
             "S4"
           ]
         },
@@ -9493,8 +9516,8 @@
           "hazardSeverities": [
             "S5",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -9505,8 +9528,8 @@
           "sourceSeverities": [
             "S5",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -10046,7 +10069,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "粉料、填充料或色母粒倒料及清掃時，粉塵控制或呼吸防護失效，長期吸入可能造成慢性呼吸道疾病。",
             "含殘留單體、增塑劑、刺激性或致敏性成分的原料於拆封、倒料或清理時反覆吸入或接觸，可能造成職業性皮膚炎、過敏及慢性黏膜傷害。",
@@ -10062,7 +10085,7 @@
           "核心理由": "每天倒袋拍袋吸粉、噪音一直在旁，鼻炎、氣喘或聽力損失要幾年才顯現，排氣與呼吸防護不能省。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5"
           ],
@@ -10072,7 +10095,7 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5"
           ]
@@ -10333,7 +10356,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "反覆攀爬、扭轉鎖固、過肩施力、搬運及長時間手臂振動，可能造成下背與上肢肌肉骨骼傷害及手臂振動症候群。",
             "柴油引擎廢氣及構件油脂暴露，可能引起呼吸道或皮膚刺激、慢性呼吸道疾病及接觸性皮膚炎。",
@@ -10356,7 +10379,7 @@
             "S5",
             "S5",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -10368,7 +10391,7 @@
             "S5",
             "S5",
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -10746,7 +10769,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "外牆基面清理及鑽孔時，電鑽或研磨設備產生粉塵、噪音及振動，長時間暴露可能造成呼吸道、聽力及肌肉骨骼傷害。",
             "植栽配置及介質填充時，介質粉塵、肥料、藥劑、黴菌、花粉及昆蟲可能造成皮膚、眼睛或呼吸道過敏。",
@@ -10766,8 +10789,8 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -10776,8 +10799,8 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -11532,7 +11555,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "木材鋸切、送料、出料及清掃產生木粉塵，集塵或通風不足及清掃揚塵造成長期吸入，可能引發呼吸道過敏、慢性肺部疾病及鼻腔鼻竇癌。",
             "接觸木粉塵或含樹脂、防腐劑及其他刺激性成分的木材，未清潔皮膚、眼睛及污染衣物，可能造成皮膚炎、乾裂或眼部刺激。",
@@ -11552,10 +11575,10 @@
           "核心理由": "木粉塵天天進呼吸道、眼睛和皮膚，機台噪音也在傷聽力，是慢慢累積的。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
+            "S5",
             "S4",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -11566,7 +11589,8 @@
           "sourceSeverities": [
             "S5",
             "S4",
-            "S3"
+            "S5",
+            "S4"
           ]
         }
       ]
@@ -12347,10 +12371,10 @@
           "核心理由": "長期照明不足或接觸藥劑可能造成慢性不適，但通常不是本次作業最先需要處理的急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S2",
             "S4",
-            "S3",
-            "S2",
+            "S4",
+            "S4",
+            "S4",
             "S5"
           ],
           "severitySources": [
@@ -12361,10 +12385,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
             "S4",
-            "S3",
-            "S2",
+            "S4",
+            "S4",
+            "S4",
             "S5"
           ]
         },
@@ -12697,7 +12721,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S2",
+          "severitylevel": "S5",
           "hazardItems": [
             "長時間站立、彎腰、伸手、固定姿勢及裝箱搬運，可能造成下背、肩頸與下肢肌肉骨骼疾病。",
             "高重複捏持、剪切、手腕偏轉及施力修邊，可能造成腕隧道症候群、肌腱炎或其他上肢肌肉骨骼疾病。",
@@ -12718,12 +12742,12 @@
           "核心理由": "肌肉骨骼疾病可能因長時間重複修邊與搬運逐步形成，需持續改善但不是最常見的立即性受傷類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S2",
-            "S2",
-            "S2",
-            "S2",
-            "S2",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -12738,7 +12762,8 @@
             "S4",
             "S4",
             "S4",
-            "S3"
+            "S4",
+            "S5"
           ]
         }
       ]
@@ -13149,7 +13174,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "取件後輕修毛邊時若有粉屑飛散，長期吸入可能造成呼吸道刺激。",
             "射出機、輸送設備及搬運設備長時間運轉產生噪音，可能造成噪音性聽力損失。",
@@ -13167,10 +13192,10 @@
           "核心理由": "彎腰搬箱、扭身堆疊加上現場粉塵，腰背和呼吸道是慢慢累的，當班不一定見血。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S2",
+            "S4",
             "S5",
-            "S2",
-            "S2"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -13179,10 +13204,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
+            "S4",
             "S5",
-            "S2",
-            "S2"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -13624,7 +13649,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "塑膠原料高溫塑化、換料、清模、試模及故障排除時，熱裂解煙霧、揮發性有機物、清模劑、脫模劑或添加劑可能逸散或接觸，造成呼吸道、眼部及皮膚刺激、過敏或慢性健康影響。",
             "投料、色母添加及粉碎回收再生料時，塑膠粉塵可能逸散並被吸入，造成鼻咽刺激、慢性支氣管炎或肺功能下降。",
@@ -13660,12 +13685,12 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
+            "S5",
+            "S5",
             "S4",
             "S4",
             "S4",
-            "S4",
-            "S3",
-            "S4",
+            "S5",
             "S4",
             "S4",
             "S4"
@@ -13683,12 +13708,16 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S2",
             "S4",
-            "S4",
-            "S3",
             "S5",
-            "S3"
+            "S5",
+            "S4",
+            "S4",
+            "S4",
+            "S5",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -13990,7 +14019,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "塑膠加熱、裂解、異常成型及清模時產生煙霧、揮發性物質或清潔劑蒸氣，排氣不足或人員長時間停留時，可能造成急慢性呼吸道危害。",
             "接觸脫模劑、清模劑、擦拭劑、液壓油及塑膠添加劑時，因洩漏、飛濺或污染擴散，可能造成接觸性皮膚炎。",
@@ -14015,8 +14044,8 @@
             "S4",
             "S4",
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -14027,9 +14056,10 @@
           ],
           "sourceSeverities": [
             "S4",
+            "S4",
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -14342,7 +14372,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "拆裝螺栓、管線與模具定位時反覆彎腰、蹲跪、伸手及施力，長期造成下背、肩頸及上肢肌肉骨骼傷害。",
             "試模、脫模、清潔及油路作業長期暴露於煙霧、油霧或溶劑蒸氣，可能造成慢性呼吸道疾病或皮膚炎。",
@@ -14361,11 +14391,11 @@
           "核心理由": "反覆彎腰、施力及煙霧暴露主要造成長期累積性傷害，不是本次模具更換最急迫的立即傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
             "S5",
-            "S3",
-            "S2"
+            "S5",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -14375,11 +14405,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
             "S5",
-            "S3",
-            "S2"
+            "S5",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -14953,17 +14983,17 @@
           "核心理由": "反覆暴露或焊接燻煙可能造成職業病，但通常不是本次進入作業最先需處理的急性重傷危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S5",
+            "S4",
             "S5",
             "S4",
             "S5",
+            "S4",
+            "S4",
             "S5",
+            "S4",
+            "S4",
             "S5",
-            "S5",
-            "S5",
-            "S5",
-            "S5",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -14980,13 +15010,16 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S4",
             "S5",
             "S4",
             "S5",
+            "S4",
+            "S4",
             "S5",
-            "S3",
-            "S5"
+            "S4",
+            "S4",
+            "S5",
+            "S4"
           ]
         },
         {
@@ -15459,7 +15492,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "車輛進場、停等及卸載時長時間怠速，若位於密閉或通風不良區域，可能造成柴油廢氣累積及健康危害。",
             "拆包、卸料、搬運及清掃時產生或揚起粉塵，可能造成長期吸入暴露及呼吸系統職業病。",
@@ -15479,10 +15512,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S3",
+            "S4",
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -15493,10 +15526,10 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3",
+            "S4",
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -15891,7 +15924,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "平軋機長時間運轉及板材加工產生高噪音，暴露控制不足可能造成噪音性聽力損失或耳鳴。",
             "反覆上料、扶料、導正、量測及下料涉及負重、彎腰、扭轉及不良工作高度，長期可能造成下背、肩頸及上肢肌肉骨骼傷害。",
@@ -15915,10 +15948,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S3",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -15929,10 +15962,10 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S3",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -16187,7 +16220,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "於爐渣翻動、鏟裝、轉移及清理時，粉塵與含鉛、錳、鎳、鉻、矽質或金屬氧化物微粒逸散，致吸入或經手口攝入，造成呼吸系統、神經系統或腎臟慢性損害。",
             "於撈渣、鏟裝、轉移及殘渣清理時接觸鹼性爐渣及含金屬粉塵，因眼面、皮膚防護或污染清除不足，造成眼刺激、接觸性皮膚炎或慢性皮膚損害。",
@@ -16212,9 +16245,9 @@
           "核心理由": "撈渣、敲渣時的金屬與矽質粉塵，加上高溫和敲擊振動，呼吸道、聽力和手部是長期暴露出來的。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S5",
             "S4",
             "S4",
-            "S3",
             "S5",
             "S5"
           ],
@@ -16227,7 +16260,8 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S4",
+            "S4",
             "S5",
             "S5"
           ]
@@ -16490,10 +16524,10 @@
           "hazardSeverities": [
             "S4",
             "S5",
-            "S3",
-            "S2",
-            "S5",
-            "S5"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -16506,10 +16540,10 @@
           "sourceSeverities": [
             "S4",
             "S5",
-            "S3",
-            "S2",
-            "S5",
-            "S5"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -16835,7 +16869,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "天花板開啟及上方查驗時，保溫棉、玻璃纖維與積塵受擾動飄散，在狹窄或通風不足處吸入或接觸，可能造成呼吸道、眼部及皮膚不適。",
             "鑽孔及支架固定時，粉塵、噪音與手臂振動暴露，長時間操作可能增加聽力及手臂振動傷害風險。",
@@ -16854,9 +16888,9 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -16864,10 +16898,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
-            "S5",
-            "S5",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -17240,7 +17273,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "長時間以高重複、高用力或不良姿勢操作銼刀、刮刀、手鋸、扳手及鉗具，可能造成上肢及下背肌肉骨骼疾病。",
             "長時間使用手錘敲擊時，振動與握持負荷未受控制，可能造成手部麻木、循環障礙或手臂振動症候群。",
@@ -17259,10 +17292,10 @@
           "核心理由": "手錘反覆敲擊的振動、鋸切噪音和修整粉塵，手腕、聽力和呼吸道是慢慢壞的。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S5",
-            "S5",
             "S4",
+            "S5",
+            "S5",
+            "S5",
             "S4"
           ],
           "severitySources": [
@@ -17273,10 +17306,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S5",
-            "S5",
             "S4",
+            "S5",
+            "S5",
+            "S5",
             "S4"
           ]
         }
@@ -17574,7 +17607,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "研磨金屬、石材、塗層或特殊合金時產生粉塵及煙霧，若材質危害未辨識或集塵不足，長期吸入可能造成呼吸道及系統性傷害。",
             "手持式研磨機長時間產生高噪音，若未控制暴露時間或使用有效聽力防護，可能造成噪音性聽力損失或耳鳴。",
@@ -17597,9 +17630,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
+            "S5",
+            "S5",
             "S4",
-            "S4",
-            "S3",
             "S4"
           ],
           "severitySources": [
@@ -17610,10 +17643,11 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
+            "S5",
+            "S5",
             "S4",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -17941,15 +17975,15 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
             "S5",
-            "S5",
-            "S5",
-            "S5",
-            "S5",
-            "S5",
-            "S5",
-            "S5",
-            "S5",
+            "S4",
+            "S4",
             "S5"
           ],
           "severitySources": [
@@ -17967,10 +18001,14 @@
           ],
           "sourceSeverities": [
             "S5",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
             "S5",
             "S4",
-            "S4",
-            "S3",
             "S4",
             "S5"
           ]
@@ -18530,9 +18568,9 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -18540,9 +18578,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -18811,7 +18849,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "料件重量、尺寸、搬運距離或推拉阻力超出能力，長期以彎腰、扭轉及反覆搬抬推拉方式作業，可能造成腰背、肩肘腕等累積性肌肉骨骼傷害。",
             "料架、工作台及取放位置高度不當，長期過肩、低位、伸臂或蹲跪取物，可能造成頸肩、上肢及膝部慢性負荷。",
@@ -18833,7 +18871,7 @@
             "S4",
             "S4",
             "S4",
-            "S4"
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -18842,7 +18880,10 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S4"
+            "S4",
+            "S4",
+            "S4",
+            "S5"
           ]
         },
         {
@@ -19325,7 +19366,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "研磨粉塵及含金屬或塗層成分的粉塵控制不足，長期吸入或發生二次揚塵可能造成呼吸道及肺部健康損害。",
             "研磨設備噪音長期超過容許暴露量，可能造成噪音性聽力損失或耳鳴。",
@@ -19357,17 +19398,17 @@
           "核心理由": "乾磨金屬粉塵、長時間高噪音和手持機振動是累積出來的，要靠集塵、輪替與健檢管。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S5",
+            "S5",
             "S4",
             "S4",
             "S4",
+            "S5",
+            "S5",
+            "S5",
+            "S5",
             "S4",
-            "S4",
-            "S4",
-            "S4",
-            "S4",
-            "S4",
-            "S4",
-            "S4"
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -19383,10 +19424,17 @@
             "groupFallback"
           ],
           "sourceSeverities": [
+            "S5",
+            "S5",
             "S4",
             "S4",
-            "S3",
-            "S4"
+            "S4",
+            "S5",
+            "S5",
+            "S5",
+            "S5",
+            "S4",
+            "S5"
           ]
         },
         {
@@ -19742,10 +19790,10 @@
           "hazardSeverities": [
             "S5",
             "S5",
-            "S4",
-            "S3",
             "S5",
-            "S3"
+            "S4",
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -19757,11 +19805,11 @@
           ],
           "sourceSeverities": [
             "S5",
+            "S5",
+            "S5",
             "S4",
-            "S3",
             "S5",
-            "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -20300,7 +20348,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "施工架組拆的材料搬運、扣件鎖固及高處安裝涉及重物搬運、重複施力與彎腰、過肩、扭轉等不良姿勢，長期暴露可能造成下背、肩頸及上肢肌肉骨骼慢性傷害。",
             "使用電動或氣動工具進行鑽孔、切割及扣件作業時，長時間手臂振動暴露可能造成手臂振動症候群及周邊神經肌肉骨骼傷害。",
@@ -20321,10 +20369,10 @@
           "核心理由": "反覆搬架管、不良姿勢加上切割鑽孔的振動與粉塵，腰背、聽力和呼吸道是整段工期累積出來的。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -20333,10 +20381,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S5",
+            "S4"
           ]
         },
         {
@@ -20663,7 +20711,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "使用衝擊扳手、砂輪機及切割機時長時間暴露於噪音及手臂振動，造成聽力損失、手臂振動傷害及肌肉骨骼不適。",
             "長時間搬運、鎖固及高處作業採不良姿勢，造成腰背及上肢累積性肌肉骨骼負荷。",
@@ -20681,7 +20729,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -20691,7 +20739,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4"
           ]
         },
@@ -20998,7 +21046,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "調漆、稀釋、分裝、清洗或回收廢液時，長期吸入累積的溶劑蒸氣可能造成神經、肝腎或其他慢性健康危害。",
             "噴塗、刷塗及漆霧清理時，長期吸入漆霧與揮發性有機物可能造成呼吸道刺激、職業性氣喘或肺功能下降。",
@@ -21016,8 +21064,8 @@
           "核心理由": "長期暴露可能造成慢性健康危害，但通常不是單次作業立即發生，列次要持續管控。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
-            "S4",
+            "S5",
+            "S5",
             "S4",
             "S4"
           ],
@@ -21028,7 +21076,10 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S5"
+            "S5",
+            "S5",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -21265,7 +21316,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "木材卸收、拖拉及清掃時，木粉塵或發霉木材孢子逸散，抑塵與通風不足可能造成呼吸道刺激或職業性氣喘。",
             "柴油車輛在收料區長時間怠速或作業區通風不良，作業人員吸入柴油微粒與廢氣，可能造成慢性呼吸道傷害。",
@@ -21298,13 +21349,13 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
+            "S5",
+            "S5",
             "S4",
             "S4",
-            "S3",
             "S4",
             "S4",
-            "S4",
-            "S4"
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -21318,11 +21369,13 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S4",
+            "S5",
             "S5",
             "S4",
-            "S3",
-            "S4"
+            "S4",
+            "S4",
+            "S4",
+            "S5"
           ]
         },
         {
@@ -21656,7 +21709,7 @@
           "hazardSeverities": [
             "S5",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -21666,7 +21719,7 @@
           "sourceSeverities": [
             "S5",
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -22111,7 +22164,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "碎紙、落料、輸送及集塵維護時，密閉或局部排氣、集塵系統失效，或清掃擾動造成木漿粉塵逸散，長期暴露可能引發呼吸道疾病、鼻炎及眼部刺激。",
             "碎紙機、風車、輸送機及集塵設備長時間運轉產生高噪音，長期暴露可能造成噪音性聽力損失或耳鳴。",
@@ -22132,7 +22185,7 @@
           "hazardSeverities": [
             "S4",
             "S5",
-            "S3",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -22144,7 +22197,7 @@
           "sourceSeverities": [
             "S4",
             "S5",
-            "S3",
+            "S4",
             "S4"
           ]
         }
@@ -22380,9 +22433,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S4",
             "S5",
-            "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -22391,10 +22444,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -22695,7 +22748,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "木竹材料裝訂、補料及清潔時產生粉塵，集塵不足或以壓縮空氣吹掃會使粉塵再懸浮，長期吸入可能引起呼吸道刺激、過敏或肺功能下降。",
             "裝訂機連續運轉產生噪音，長時間暴露可能造成耳鳴、聽閾上升及永久聽力損失。",
@@ -22730,7 +22783,8 @@
           "sourceSeverities": [
             "S5",
             "S5",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -23115,7 +23169,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "泥漿添加材料開袋及投料時粉塵或氣霧逸散，長時間暴露可能造成呼吸道、皮膚及眼睛傷害。",
             "攪拌機、除砂機、泵浦及成槽設備持續運轉產生噪音，長時間暴露可能造成聽力損失。",
@@ -23136,10 +23190,10 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
+            "S4",
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -23148,10 +23202,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
+            "S4",
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -23523,7 +23577,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "操作鑽穴機、夯實機、挖土機時長時間暴露於噪音及手臂振動，可能造成聽力及周邊神經肌肉傷害。",
             "場地清除、挖穴及機械整地時粉塵、土壤微粒、柴油廢氣及揚塵可能在呼吸區累積。",
@@ -23544,7 +23598,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4",
             "S4"
           ],
@@ -23556,7 +23610,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4",
             "S4"
           ]
@@ -23926,7 +23980,7 @@
           "hazardSeverities": [
             "S5",
             "S4",
-            "S4"
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -23936,7 +23990,7 @@
           "sourceSeverities": [
             "S5",
             "S4",
-            "S4"
+            "S5"
           ]
         },
         {
@@ -24239,7 +24293,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "拆卸含有害、揮發性或致癌及致突變物料的管線時，殘液或蒸氣經吸入或皮膚接觸，長期可能造成呼吸、神經、肝腎或皮膚健康損害。",
             "反覆搬運卸料軟管、法蘭及盲板時，負重過大、姿勢不良或缺乏輪替可能造成下背、肩部及腕部肌肉骨骼傷害。",
@@ -24257,8 +24311,8 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -24267,8 +24321,8 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -24706,10 +24760,10 @@
           "核心理由": "長期在通風不良的卸料站聞蒸氣、手套滲透反覆接觸，會累成呼吸道與皮膚問題。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -24718,10 +24772,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -24913,7 +24967,7 @@
           "hazardSeverities": [
             "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -24923,7 +24977,7 @@
           "sourceSeverities": [
             "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -25374,7 +25428,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "鑽掘、打樁、樁頭破除及發電設備產生高噪音與手臂振動，長期暴露可能造成聽力損失及振動相關傷害。",
             "鑽掘、清孔、泥漿添加劑調製、廢土清運及破除產生粉塵，吸入可能造成呼吸道危害。",
@@ -25397,9 +25451,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -25409,9 +25463,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -25753,7 +25807,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "清洗、除鏽及防鏽作業使用有機溶劑或揮發性化學品，局部排氣不足或暴露未受監測時，長期吸入蒸氣可能造成慢性健康危害。",
             "長期接觸清洗劑、除鏽劑、防鏽油及油污，化學防護與清潔更衣不足時，可能造成接觸性皮膚炎、龜裂或過敏。",
@@ -25772,11 +25826,11 @@
           "核心理由": "長期化學品暴露可能造成慢性皮膚或呼吸健康危害，但不是本作業最常見的立即性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -25788,9 +25842,9 @@
           "sourceSeverities": [
             "S4",
             "S4",
-            "S3",
-            "S5",
-            "S4"
+            "S4",
+            "S4",
+            "S5"
           ]
         }
       ]
@@ -26002,10 +26056,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S4",
             "S5",
             "S5",
-            "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -26015,10 +26069,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S4",
             "S5",
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -26397,7 +26452,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "維修使用溶劑、清洗劑、潤滑油、切削液或電池電解液時，若揮發、飛濺或皮膚接觸未受控制而反覆暴露，可能造成呼吸道或接觸性皮膚疾病。",
             "清理機台積塵、金屬粉塵、碳粉、油霧或清潔噴霧時，若密閉、集塵或呼吸防護不足而持續吸入，可能造成慢性呼吸道疾病。",
@@ -26420,9 +26475,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S4",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
+            "S5",
             "S4"
           ],
           "severitySources": [
@@ -26434,9 +26489,9 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S4",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
+            "S5",
             "S4"
           ]
         },
@@ -27027,7 +27082,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "使用清洗劑、潤滑產品、密封膠或接觸油霧、微粒及污染濾芯時，通風與暴露控制不足可能造成長期呼吸道及全身性健康危害。",
             "進行壓縮空氣吹除、漏氣檢修或送氣試車時，噪音暴露過高或時間過長可能造成噪音性聽力損失。",
@@ -27048,7 +27103,7 @@
           "hazardSeverities": [
             "S4",
             "S5",
-            "S3",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -27060,7 +27115,8 @@
           "sourceSeverities": [
             "S4",
             "S5",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -27291,7 +27347,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "局部排氣或整體通風不足，長期吸入焊接煙霧、金屬氧化物及燃燒分解產物，可能造成慢性呼吸道疾病。",
             "焊接鍍鋅、含鉛、塗裝或不明材質工件時產生有害金屬或塗層分解物，可能造成呼吸道及全身性健康損害。",
@@ -27312,10 +27368,10 @@
           "核心理由": "焊煙和金屬分解物天天吸，呼吸道是慢慢壞的，當班不一定有感覺。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
-            "S3",
+            "S5",
+            "S4",
+            "S4",
+            "S4",
             "S4",
             "S5"
           ],
@@ -27328,9 +27384,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S4",
-            "S3",
-            "S3",
+            "S4",
+            "S4",
             "S4",
             "S5"
           ]
@@ -27652,10 +27709,10 @@
           "hazardSeverities": [
             "S5",
             "S5",
-            "S3",
             "S4",
             "S4",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -27668,10 +27725,10 @@
           "sourceSeverities": [
             "S5",
             "S5",
-            "S3",
             "S4",
             "S4",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -28008,10 +28065,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S2",
-            "S3",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -28022,10 +28079,10 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S2",
-            "S3",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -28457,7 +28514,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "開桶、調配、攪拌、清洗、轉注或暫存時，溶劑蒸氣與霧滴可能因容器開口、接頭洩漏或排氣失效而造成長期吸入暴露。",
             "溶劑清洗、分裝及廢液轉注時發生飛濺、滲漏或污染物接觸，可能造成皮膚炎、過敏、龜裂或眼部傷害。",
@@ -28480,7 +28537,7 @@
             "S4",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -28490,8 +28547,9 @@
           ],
           "sourceSeverities": [
             "S4",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -28813,7 +28871,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "物料重量或尺寸、平台與樓層高差及控制器位置不當，造成超負荷搬運、彎腰扭轉、伸臂及跨越動作，長期可能引發肌肉骨骼傷害。",
             "平台長時間站立、震動或啟停衝擊，且油壓泵浦、導向或減振系統異常未改善，可能造成下肢疲勞及腰背慢性傷害。",
@@ -28837,7 +28895,7 @@
             "S4",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -28846,9 +28904,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
+            "S4",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -29211,7 +29270,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "於地下室、機房或天花板上方清潔除塵時，吸入粉塵、黴菌及清潔劑揮發物，可能引發呼吸道刺激、過敏或氣喘。",
             "處理清潔劑、電池滲漏物及滅火藥劑殘留時，皮膚或眼部接觸污染物，可能造成皮膚炎或化學傷害。",
@@ -29229,10 +29288,10 @@
           "核心理由": "粉塵、黴菌及清潔劑可能造成呼吸道或皮膚問題，但多屬累積性或接觸性危害，非優先急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -29241,10 +29300,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -29623,7 +29682,7 @@
           "核心理由": "反覆搬運與不良姿勢可能造成肌肉骨骼傷害，但通常屬累積性危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
+            "S4",
             "S4",
             "S4",
             "S4"
@@ -29635,7 +29694,9 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S3",
+            "S4",
+            "S4",
+            "S4",
             "S4"
           ]
         },
@@ -29778,7 +29839,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "人員在鄰近照射設備處長時間作業，可能反覆接受外部游離輻射曝露並累積年劑量與慢性傷害。",
             "個人劑量計未佩戴、佩戴位置錯誤或逾期未校正，可能使累積曝露無法正確監測，異常超量也無法及時發現。",
@@ -29799,11 +29860,11 @@
           "核心理由": "長時間或反覆曝露可能累積慢性傷害，應優先確認個人劑量監測、體內污染管制與孕期工作調整。",
           "核心重點_existing": true,
           "hazardSeverities": [
+            "S5",
             "S4",
             "S4",
             "S4",
-            "S4",
-            "S4"
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -29813,6 +29874,10 @@
             "groupFallback"
           ],
           "sourceSeverities": [
+            "S5",
+            "S4",
+            "S4",
+            "S4",
             "S5"
           ]
         },
@@ -30170,7 +30235,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "加工、清屑或設備清潔產生及再懸浮金屬粉塵、塑膠或橡膠微粒及油霧時，通風或集塵不足可能造成長期吸入危害。",
             "設備運轉噪音長期超過可接受暴露時，可能造成噪音性聽力損失或耳鳴。",
@@ -30198,8 +30263,8 @@
             "S4",
             "S5",
             "S4",
-            "S3",
-            "S5"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -30212,8 +30277,8 @@
             "S4",
             "S5",
             "S4",
-            "S3",
-            "S5"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -30498,7 +30563,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "滾輪、鍛轤及周邊設備長時間運轉產生高噪音，隔音減噪或聽力防護不足時，長期暴露可能造成噪音性聽力損失。",
             "潤滑油霧、橡塑加工煙霧、金屬粉塵及清潔或切削化學品蒸氣於控制不足時長期暴露，可能造成呼吸道、皮膚或全身性健康危害。",
@@ -30523,10 +30588,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S3",
-            "S5"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -30537,10 +30602,10 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S3",
-            "S5"
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -30721,7 +30786,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "熱處理爐燃燒廢氣、金屬煙霧及氧化皮粉塵逸散，通風排氣或污染源控制失效可能造成長期吸入暴露及呼吸道危害。",
             "使用有機溶劑清洗工件或保養設備時，揮發物控制或皮膚隔離失效，可能造成溶劑吸入及皮膚傷害。",
@@ -30742,9 +30807,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S3",
-            "S3",
-            "S4"
+            "S4",
+            "S4",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -30754,9 +30819,9 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3",
-            "S3",
-            "S4"
+            "S4",
+            "S4",
+            "S5"
           ]
         },
         {
@@ -31151,7 +31216,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S5"
           ],
           "severitySources": [
@@ -31161,7 +31226,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S5"
           ]
         },
@@ -31365,8 +31430,8 @@
           "核心理由": "特定化學物質長期由粉塵、酸鹼霧、蒸氣或殘留物暴露，常見造成呼吸道疾病、皮膚炎或致敏性氣喘，需確認通風與密閉。",
           "核心重點_existing": true,
           "hazardSeverities": [
-            "S4",
-            "S4",
+            "S5",
+            "S5",
             "S5",
             "S5"
           ],
@@ -31377,8 +31442,8 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
-            "S4",
+            "S5",
+            "S5",
             "S5",
             "S5"
           ]
@@ -31785,7 +31850,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "人工搬抬、推拉、扶正及重複整理紙材時，因搬運重量、工作高度或動線不當而長時間彎腰、扭轉或前伸，造成肌肉骨骼過度負荷及慢性傷害。",
             "複瓦機及周邊設備長時間運轉產生噪音，作業人員持續暴露可能造成聽力下降或噪音性聽力損失。",
@@ -31802,9 +31867,9 @@
           "核心理由": "搬運及重複整理可能造成肌肉骨骼負荷，設備噪音也可能造成聽力影響，但通常屬累積性危害，非本作業最先處理的急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -31812,9 +31877,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -32068,7 +32133,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "複瓦機、傳動及輸送設備長時間運轉產生噪音，持續暴露可能造成噪音性聽力損失。",
             "原紙捲、物料及成品搬運伴隨長時間站立與重複調整，可能造成下背、肩頸及上肢肌肉骨骼傷病。",
@@ -32092,10 +32157,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
             "S4",
+            "S5",
             "S4",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -32106,10 +32171,10 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
             "S4",
+            "S5",
             "S4",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -32360,7 +32425,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "裁切、壓線及清掃產生紙屑與細微粉塵時，集塵失效或使用壓縮空氣吹掃可能造成呼吸道刺激及接觸性皮膚炎。",
             "使用含有機溶劑清潔劑時，通風不足或皮膚防護失效可能造成蒸氣吸入及皮膚接觸傷害。",
@@ -32380,10 +32445,10 @@
           "核心理由": "紙屑粉塵及清潔劑可能造成呼吸或皮膚不適，但通常不是本作業最常見且需立即處理的主要傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
+            "S4",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -32392,10 +32457,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S3",
+            "S4",
+            "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -32660,7 +32725,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "複瓦機、裁切及抽風設備持續產生高噪音，長期暴露可能造成噪音性聽力損失、耳鳴或注意力下降。",
             "紙材輸送、裁切及清理會產生紙粉，局部排氣不足或乾掃揚塵時長期吸入可能引發呼吸道刺激、過敏或慢性不適。",
@@ -32681,7 +32746,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S2",
+            "S4",
             "S4",
             "S4",
             "S4"
@@ -32695,7 +32760,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S2",
+            "S4",
+            "S4",
+            "S4",
             "S4"
           ]
         },
@@ -33159,7 +33226,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "反覆使用清潔劑時，若通風不足或連續暴露時間過長，可能造成呼吸道刺激、皮膚炎或其他化學性健康損害。",
             "乾式清掃或以壓縮空氣吹掃造成粉塵揚散，長期吸入可能引發鼻炎、慢性咳嗽或其他呼吸道疾病。",
@@ -33176,10 +33243,10 @@
           "核心理由": "清潔劑與粉塵暴露可能造成健康損害，但多屬累積性或較少立即造成停工就醫的傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
+            "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -33188,10 +33255,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S3",
+            "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -33603,7 +33670,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "生產設備長時間運轉造成高噪音，巡檢人員暴露時間過長或聽力防護不足，可能導致聽力損失、耳鳴及職業性聽覺障礙。",
             "乾式清掃或清除設備積塵時缺乏濕式清潔、吸塵或局部排氣，反覆吸入粉塵可能造成慢性呼吸道疾病。",
@@ -33626,10 +33693,10 @@
           "核心理由": "噪音及粉塵主要造成長期職業健康影響，通常不是本作業最常見的立即性受傷類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
-            "S4",
-            "S4",
             "S5",
+            "S5",
+            "S4",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -33640,10 +33707,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
-            "S4",
-            "S4",
             "S5",
+            "S5",
+            "S4",
+            "S4",
             "S4"
           ]
         },
@@ -33768,9 +33835,9 @@
           "核心重點_existing": true,
           "hazardSeverities": [
             "S5",
+            "S4",
             "S5",
-            "S5",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -33780,8 +33847,9 @@
           ],
           "sourceSeverities": [
             "S5",
+            "S4",
             "S5",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -34213,11 +34281,11 @@
           "核心理由": "歲修清洗、除鏽焊補及機具使用造成的溶劑、粉塵、噪音、振動及熱暴露屬長期健康風險，應以輪替、監測與健康追蹤管理。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S5",
-            "S5",
-            "S5",
             "S4",
-            "S5"
+            "S5",
+            "S5",
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -34227,11 +34295,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S5",
-            "S5",
-            "S5",
             "S4",
-            "S5"
+            "S5",
+            "S5",
+            "S5",
+            "S4"
           ]
         },
         {
@@ -34886,9 +34954,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S4",
             "S5",
-            "S5",
-            "S5",
+            "S4",
             "S5"
           ],
           "severitySources": [
@@ -34900,9 +34968,9 @@
           ],
           "sourceSeverities": [
             "S5",
+            "S4",
             "S5",
-            "S5",
-            "S5",
+            "S4",
             "S5"
           ]
         },
@@ -35179,7 +35247,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "投料、混練、射砂、修整及清掃時粉塵逸散，長期吸入可能造成矽肺、慢性呼吸道發炎或肺功能下降。",
             "樹脂、硬化劑、甲醛、酚類及清潔劑造成吸入或皮膚暴露，長期可能引發職業性氣喘、慢性皮膚炎或其他化學性健康危害。",
@@ -35524,7 +35592,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "研磨金屬或含鉻、鎳、錳等材料時，粉塵、磨料及金屬煙霧因局部排氣或集塵不足，或清掃揚塵而被長期吸入，可能造成呼吸道疾病、職業性氣喘或金屬致敏。",
             "研磨設備持續產生高噪音，作業人員長時間暴露且未降低暴露量，可能造成噪音性聽力損失或耳鳴。",
@@ -35545,10 +35613,10 @@
           "核心理由": "粉塵、金屬煙霧與噪音暴露可能造成長期職業傷害，但通常不是本作業最先發生的急性受傷類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
             "S5",
-            "S4",
-            "S3"
+            "S5",
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -35557,10 +35625,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
             "S5",
-            "S4",
-            "S3"
+            "S5",
+            "S5",
+            "S4"
           ]
         },
         {
@@ -35938,7 +36006,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長時間反覆彎腰黏貼座位標籤、裁切膠帶及調整導覽牌，手腕、肩頸與下背持續重複施力，可能促發肌腱炎或肌肉骨骼疾病而需醫療處置。",
             "密集搬運與排列桌椅、設備箱及材料，長期暴露於抬舉、推拉及不良姿勢，可能造成慢性下背痛、肩部疾病或工作能力下降。",
@@ -35959,12 +36027,12 @@
           "核心理由": "反覆搬運桌椅、彎腰貼標及鋪設線材，肩頸下背肌肉骨骼負荷屬佈置作業的主要累積性危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
-            "S2",
-            "S3",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -35975,10 +36043,12 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S2",
-            "S3",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -36615,7 +36685,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "管線、閥室、地下表箱或設備周邊的化學蒸氣、酸鹼霧滴、溶劑、柴油廢氣及粉塵逸散，長期吸入可能造成呼吸道及全身性傷害。",
             "泵浦、壓縮機、蒸汽洩放區、設備間及道路旁長時間噪音暴露，可能造成噪音性聽力損失。",
@@ -36642,10 +36712,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S4",
-            "S3",
+            "S5",
             "S4",
             "S5",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -36658,10 +36728,10 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S4",
-            "S3",
+            "S5",
             "S4",
             "S5",
+            "S4",
             "S4"
           ]
         }
@@ -36975,7 +37045,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "焊接、切割及拆除保溫材或鏽蝕管件時產生焊煙、金屬氧化物或粉塵，長期吸入可能造成慢性呼吸道疾病；疑似石綿暴露可能造成嚴重職業健康危害。",
             "於夾層、機房等通風不良處使用清潔劑、黏著劑或塗佈材料，蒸氣累積或皮膚反覆接觸可能造成中毒、器官損害或皮膚疾病。",
@@ -36998,11 +37068,11 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S5",
+            "S5",
             "S4",
-            "S5",
-            "S3",
-            "S5",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -37014,11 +37084,11 @@
           ],
           "sourceSeverities": [
             "S5",
+            "S5",
+            "S5",
             "S4",
-            "S5",
-            "S3",
-            "S5",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -37344,7 +37414,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "投料、轉運、攪拌、研磨、篩分及包裝時，原料或接口漏料且密閉及捕集不足，含游離二氧化矽、致敏性或其他高危害粉體長期進入呼吸帶，可能導致塵肺、矽肺、肺纖維化或職業性氣喘。",
             "濾袋更換、堵料排除、設備保養或清理時，殘留粉塵在開啟、排堵或拆卸過程中大量揚散，可能造成高濃度吸入。",
@@ -37360,9 +37430,9 @@
           "核心理由": "長期吸入高危害粉體可能導致塵肺、肺纖維化或職業性氣喘，但屬累積性健康危害，非現場最常見的即時傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3"
+            "S5",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -37370,7 +37440,9 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S5"
+            "S5",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -37471,7 +37543,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "印刷、裁切、摺頁、裝訂及打釘設備長時間運轉產生高噪音，暴露控制不足時可能造成噪音性聽力損失或耳鳴。",
             "油墨、稀釋劑、清洗劑及膠料於調配、補充、清洗或轉移時產生蒸氣或皮膚接觸，可能造成頭暈、器官損害或接觸性皮膚炎。",
@@ -37499,9 +37571,9 @@
           "核心重點_existing": true,
           "hazardSeverities": [
             "S5",
-            "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -37511,9 +37583,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -37773,7 +37845,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "修邊、清掃及廢料處理時，紙粉塵長期暴露可能造成慢性呼吸道發炎、過敏或其他職業性呼吸系統疾病。",
             "清潔或維修時反覆接觸刺激性清潔劑、紙粉塵或受污染物料，可能造成慢性接觸性皮膚炎或皮膚過敏。",
@@ -37790,10 +37862,10 @@
           "核心理由": "粉塵與重複作業可能造成慢性呼吸道或肌肉骨骼疾病，但多為長期累積，非本作業最先處理的急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -37802,10 +37874,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -38446,7 +38518,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "紙材搬運、餵紙、整紙及檢查時長時間搬舉、重複施力或採不良姿勢，可能造成下背、肩頸及上肢肌肉骨骼疾病。",
             "摺紙機、膠裝機、壓合機及裁紙機持續運轉產生噪音，長時間暴露可能造成噪音性聽力損失。",
@@ -38470,9 +38542,9 @@
           "核心理由": "搬運、餵紙及重複施力可能造成肌肉骨骼傷害，但多屬累積性危害，列為次要檢視。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
+            "S4",
             "S5",
-            "S3",
+            "S4",
             "S4",
             "S4"
           ],
@@ -38484,9 +38556,10 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S3",
+            "S4",
             "S5",
-            "S3",
+            "S4",
+            "S4",
             "S4"
           ]
         }
@@ -38798,7 +38871,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "運轉監控、取樣及開門作業時，紫外線遮蔽、門禁聯鎖或觀察窗失效，且人員反覆或長時間暴露於逸散紫外線，可能造成眼睛及皮膚累積性傷害。",
             "紫外線乾燥與烘烤期間，塗料、油墨、膠材或樹脂持續揮發有機蒸氣，排風不足、開口逸散或材料熱分解時，作業人員於長時間操作及取樣中反覆吸入，可能造成慢性健康危害。",
@@ -39347,9 +39420,9 @@
           "核心重點_existing": true,
           "hazardSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S4"
+            "S5",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -39359,9 +39432,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S4"
+            "S5",
+            "S5"
           ]
         },
         {
@@ -39739,7 +39812,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "長期在昏暗、眩光或近距離精密維修環境下辨識線路與監看螢幕，可能造成眼睛疲勞、乾澀及頭痛。",
             "焊煙、助焊劑、粉塵及清潔溶劑蒸氣長期逸散，經吸入或皮膚接觸可能造成呼吸道刺激、過敏及皮膚炎。",
@@ -39759,11 +39832,11 @@
           "核心理由": "長期焊煙、粉塵及溶劑暴露可能造成職業病，但通常不是本作業最先需要處理的急性傷害類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S2",
             "S4",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -39773,11 +39846,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
             "S4",
             "S4",
-            "S4",
-            "S3"
+            "S5",
+            "S5",
+            "S4"
           ]
         },
         {
@@ -39946,7 +40019,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "刨削及清掃產生木粉塵，集塵失效或清理沉積粉塵時，作業員可能長時間或短時間高濃度吸入而引起呼吸道、眼鼻或皮膚刺激。",
             "加工含膠合板、塗裝或防腐處理木材時，木粉塵可能夾帶甲醛、揮發性物質或處理藥劑，造成眼鼻喉刺激、皮膚過敏或慢性呼吸危害。",
@@ -39966,10 +40039,10 @@
           "核心理由": "刨削與清掃會持續產生木粉塵，集塵失效時容易造成呼吸道、眼鼻或皮膚危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
             "S4",
-            "S3"
+            "S4",
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -39980,7 +40053,8 @@
           "sourceSeverities": [
             "S4",
             "S4",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -40319,7 +40393,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "油煙、油霧及燃燒廢氣因排煙不良或燃燒異常長期暴露，可能造成慢性呼吸道刺激、心肺負荷或一氧化碳健康危害。",
             "長時間站立、反覆搬運食材或油桶及不良工作姿勢，可能造成下背、肩頸及上肢肌肉骨骼傷害。",
@@ -40338,8 +40412,8 @@
           "核心理由": "油煙、燃燒廢氣及高溫環境主要造成長期健康影響，通常不是本作業最先處理的急性傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S5",
-            "S3",
+            "S4",
+            "S4",
             "S4",
             "S5"
           ],
@@ -40350,8 +40424,8 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S5",
-            "S3",
+            "S4",
+            "S4",
             "S4",
             "S5"
           ]
@@ -40539,7 +40613,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長時間檢視字體過小或照明不足的紙本檔案，眼睛持續近距離聚焦，可能造成疲勞、乾澀及頭痛。",
             "桌面、座椅或文件高度不合適，作業人員長時間低頭、聳肩或彎腰分類文件，可能引發頸肩及下背不適。",
@@ -40561,12 +40635,12 @@
           "核心理由": "長時間低頭檢視、裝訂及近距離用眼，頸肩與視覺疲勞屬檔案整理的主要累積性危害。",
           "核心重點_existing": true,
           "hazardSeverities": [
-            "S2",
-            "S3",
-            "S3",
-            "S3",
-            "S2",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -40577,10 +40651,12 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
-            "S3",
-            "S2",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -40966,7 +41042,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長時間低頭核對、分類及編號登錄，頸部前傾與近距離用眼造成頸肩痠痛及視覺疲勞。",
             "反覆搬抬裝滿檔案的紙箱，或由低處取放物料，因彎腰、扭轉及施力造成肌肉骨骼傷病。",
@@ -40988,12 +41064,12 @@
           "核心理由": "長時間低頭核對、分類及登錄，頸肩痠痛與視覺疲勞屬歸檔銷毀的主要累積性危害。",
           "核心重點_existing": true,
           "hazardSeverities": [
-            "S2",
-            "S3",
-            "S3",
-            "S3",
-            "S2",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -41004,10 +41080,12 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
-            "S3",
-            "S2",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -41233,7 +41311,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "衝床及周邊設備長時間運轉產生高噪音，持續暴露可能造成噪音性聽力損失或耳鳴。",
             "加工、打磨及清理產生油霧、金屬粉塵與細微碎屑，排氣或集塵不足時長期吸入可能造成呼吸道刺激或慢性不適。",
@@ -41256,9 +41334,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S2",
-            "S2",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -41268,9 +41346,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S2",
-            "S2",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -42132,7 +42210,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "清洗藥液準備與接管時，酸、鹼或含氯藥液及其霧滴逸散，通風不足或接管、投加未密閉，作業人員反覆吸入或接觸污染防護具，可能造成呼吸道疾病及接觸性皮膚炎。",
             "循環監控、取樣與補藥時，取樣閥、補藥接頭或容器逸散藥霧，巡檢人員長時間近距離暴露，可能造成呼吸道刺激、慢性呼吸道疾病及皮膚炎。",
@@ -42153,9 +42231,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -42166,7 +42244,8 @@
           "sourceSeverities": [
             "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4"
           ]
         }
       ]
@@ -42596,7 +42675,7 @@
             "S4",
             "S5",
             "S5",
-            "S4",
+            "S5",
             "S5"
           ],
           "severitySources": [
@@ -42610,7 +42689,7 @@
             "S4",
             "S5",
             "S5",
-            "S4",
+            "S5",
             "S5"
           ]
         },
@@ -42969,7 +43048,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "重複鎖固、對心、取放及搬運作業若長時間彎腰、蹲跪、上舉或站立，可能累積下背、肩頸、上肢及膝部肌肉骨骼傷害。",
             "衝擊扳手、砂輪、敲擊工具及試轉設備產生的振動若暴露時間過長，可能造成手臂或全身振動相關傷害。",
@@ -42989,11 +43068,11 @@
           "核心理由": "重複作業及振動可能造成累積性肌肉骨骼傷害，但需較長時間暴露，列為次要。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
+            "S4",
             "S4",
             "S5",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -43003,11 +43082,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
+            "S4",
             "S4",
             "S5",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -43269,7 +43348,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "車床、銑床及刀具長時間運轉產生高噪音，暴露控制不足可能造成噪音性聽力損失或耳鳴。",
             "切削液油霧、金屬粉塵及清洗劑揮發物未有效捕集，長期吸入可能引起呼吸道刺激、氣喘或其他健康危害。",
@@ -43290,7 +43369,7 @@
             "S5",
             "S4",
             "S4",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -43301,8 +43380,8 @@
           "sourceSeverities": [
             "S5",
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -43722,7 +43801,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "大量汰換或故障搶修期間工時過長、休息不足，可能造成疲勞累積與注意力下降。",
             "昏暗環境、局部強光或閃爍光源下長時間檢查，可能造成眼睛疲勞與頭痛。",
@@ -43737,9 +43816,9 @@
           "核心理由": "",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S2",
-            "S2",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -43747,9 +43826,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S2",
-            "S2",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -44035,7 +44114,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長時間站立、反覆擦拭、彎腰擰拖把、推拉設備或提拿垃圾袋，可能造成肌肉骨骼傷害。",
             "清潔劑日常低量、長時間或反覆使用，可能因皮膚潮濕及累積暴露引發皮膚炎、眼睛或呼吸道刺激。",
@@ -44054,9 +44133,9 @@
           "核心理由": "",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -44064,9 +44143,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -44445,7 +44524,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長時間打字、點擊滑鼠及使用觸控板，手腕與手指反覆施力、前臂缺乏支撐且缺乏休息，可能引發腕隧道症候群、肌腱炎或上肢疾病。",
             "桌面、鍵盤、滑鼠及座椅高度未依身型調整，長期駝背、聳肩、頸部前傾或腰背彎曲，可能造成頸肩腰背慢性疼痛。",
@@ -44470,14 +44549,14 @@
           "核心理由": "",
           "核心重點_existing": true,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
-            "S3",
-            "S2",
-            "S3",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -44490,10 +44569,14 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S3",
-            "S2",
-            "S2",
-            "S3"
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -44820,7 +44903,7 @@
             "S5",
             "S4",
             "S4",
-            "S2"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -44834,7 +44917,7 @@
             "S5",
             "S4",
             "S4",
-            "S2"
+            "S4"
           ]
         },
         {
@@ -45181,7 +45264,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "收料、搬運、接管抽送、開蓋取樣、設備清洗及排放時，若管線或閥件反覆洩漏或通風不足，可能長期暴露於酸鹼霧、蒸氣及霧滴。",
             "酸鹼殘液污染手套、防護衣、鞋具、設備表面或地面時，若未及時除污及分流管理，可能造成長時間皮膚接觸與污染帶出。",
@@ -45195,9 +45278,9 @@
           "核心理由": "酸鹼霧、蒸氣或反應副產物的長期暴露需管制。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -45206,7 +45289,8 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -45533,7 +45617,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "使用衝擊扳手、砂輪機、敲擊工具及設備試運轉時，噪音暴露過高且控制不足，可能造成噪音性聽力損失。",
             "長時間使用振動工具、承受設備振動，或以彎腰、跪姿、過肩及高舉姿勢搬拆重件，可能造成手臂振動及肌肉骨骼傷害。",
@@ -45561,9 +45645,9 @@
             "S5",
             "S4",
             "S4",
-            "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -45577,9 +45661,9 @@
             "S5",
             "S4",
             "S4",
-            "S5",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -45916,12 +46000,12 @@
           "核心理由": "焊煙、粉塵及噪音屬重要長期暴露危害，但通常不是單次作業立即造成需處理傷害的主要類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S5",
+            "S5",
             "S4",
             "S4",
-            "S3",
-            "S3",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -45932,12 +46016,12 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
+            "S5",
             "S4",
             "S4",
-            "S3",
-            "S3",
-            "S4",
-            "S3"
+            "S5",
+            "S4"
           ]
         },
         {
@@ -46122,7 +46206,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "釘車釘合與打孔沖孔產生衝擊及連續噪音，長時間暴露可能造成耳鳴、聽力退化或噪音性聽力損失。",
             "長時間重複取放料、踩踏、定位及搬運，伴隨彎腰、扭轉、過度用力與設備振動，可能造成腰背、肩頸及上肢肌肉骨骼傷害。",
@@ -46142,8 +46226,8 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
-            "S2"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -46152,8 +46236,8 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
-            "S2"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -46514,7 +46598,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "鋼構定位、翻轉、臨時支撐及拆解堆置時長時間站立、彎腰、扭轉或承受局部高負荷，可能造成下背、肩頸及上肢肌肉骨骼傷害。",
             "使用衝擊扳手、打磨及焊接切割時，作業人員可能暴露於噪音、手傳振動、焊煙、金屬粉塵及作業氣體，長時間暴露可能造成聽力、振動及呼吸系統危害。",
@@ -46534,9 +46618,9 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -46544,9 +46628,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -47104,7 +47188,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "起重機警報器、指揮口令及鋼筋碰撞聲在吊運期間反覆暴露，可能造成聽力損失或耳鳴。",
             "操作員承受起重機運轉及迴轉振動，長期暴露可能造成肩頸、腰背或手臂不適。",
@@ -47124,9 +47208,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
-            "S3",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -47136,9 +47220,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
-            "S3",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -47894,7 +47978,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "塗料或稀釋劑調配、刷塗、噴塗、浸塗、烘乾取件及工具清洗時，蒸氣、霧滴或受熱分解物逸散，長期吸入造成呼吸道刺激、職業性氣喘或全身性健康危害。",
             "刷塗、浸塗、噴塗、補塗、清洗及搬運時化學品沾染皮膚或眼睛，造成接觸性皮膚炎、眼部刺激或經皮吸收危害。",
@@ -47914,7 +47998,7 @@
           "hazardSeverities": [
             "S4",
             "S4",
-            "S3"
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -47923,7 +48007,8 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3"
+            "S4",
+            "S5"
           ]
         }
       ]
@@ -48402,7 +48487,7 @@
             "S5",
             "S4",
             "S4",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -48418,7 +48503,7 @@
             "S5",
             "S4",
             "S4",
-            "S5"
+            "S4"
           ]
         }
       ]
@@ -48725,7 +48810,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "落砂、清砂及修整作業產生含游離二氧化矽的可吸入粉塵，逸散控制不足時長期吸入可能造成矽肺症及其他呼吸系統疾病。",
             "熔解、扒渣、澆注、燃燒設備及樹脂砂或塗模劑熱分解產生金屬煙霧、一氧化碳及有機蒸氣，排氣或燃燒控制失效時可能造成中毒、過敏或肺功能損害。",
@@ -48748,7 +48833,7 @@
             "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -48762,7 +48847,7 @@
             "S5",
             "S4",
             "S5",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -49017,10 +49102,10 @@
           "核心理由": "一整班彎腰抬錠加爐前熱，累出來的是腰、肩和熱負荷，當天不一定倒但拖久了會。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
+            "S4",
             "S5",
             "S4",
-            "S2"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -49029,10 +49114,10 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
+            "S4",
             "S5",
             "S4",
-            "S2"
+            "S4"
           ]
         }
       ]
@@ -49272,7 +49357,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "鑽孔機及加工過程持續產生噪音，長期暴露可能造成噪音性聽力損失、耳鳴或聽覺疲勞。",
             "切削液油霧控制不良或局部排氣不足，長時間吸入可能引起呼吸道刺激或職業性呼吸疾病。",
@@ -49298,10 +49383,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
             "S4",
-            "S3",
-            "S3"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -49314,7 +49399,8 @@
             "S5",
             "S4",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -49594,12 +49680,12 @@
           "核心理由": "粉塵、噪音、振動與戶外熱傷害屬長期暴露，可能造成聽力、呼吸或肌肉骨骼等職業病。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S5",
+            "S4",
+            "S4",
             "S5",
             "S5",
             "S4",
-            "S3",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -49610,11 +49696,12 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S4",
+            "S4",
             "S5",
             "S5",
             "S4",
-            "S3",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -50127,7 +50214,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "鑽孔、切割及研磨產生金屬粉塵、飛散物及噪音，長時間暴露可能造成呼吸道、眼部及聽力危害。",
             "電鑽、砂輪機及拉線機長時間連續操作或維護不良，可能造成手臂振動及上肢肌肉骨骼危害。"
@@ -50143,16 +50230,16 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -50481,7 +50568,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長時間駕駛於不平整路面，車體振動經座椅傳遞至人體，可能造成下背痛及肌肉骨骼傷害。",
             "長時間扭轉身體、伸手觀察或重複握持轉向，可能造成肩頸、腰背、手腕及上肢肌肉骨骼傷害。",
@@ -50499,9 +50586,9 @@
           "核心理由": "長時間振動與不良姿勢可能造成累積性肌肉骨骼傷害，但通常不是本作業最先需處理的急性危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
+            "S4",
+            "S4",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -50511,8 +50598,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S3",
+            "S4",
+            "S4",
+            "S4",
             "S4"
           ]
         },
@@ -50768,7 +50856,7 @@
           "hazardSeverities": [
             "S5",
             "S5",
-            "S3",
+            "S4",
             "S5"
           ],
           "severitySources": [
@@ -50780,7 +50868,7 @@
           "sourceSeverities": [
             "S5",
             "S5",
-            "S3",
+            "S4",
             "S5"
           ]
         },
@@ -51274,7 +51362,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "鑽孔、研磨、切割、清掃及撤場產生粉塵與金屬碎屑，可能造成呼吸道、眼部及皮膚長期暴露。",
             "焊接及切割產生焊煙與金屬煙霧，多人同時或長時間作業時可能增加吸入暴露。",
@@ -51292,9 +51380,9 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
+            "S4",
+            "S4",
+            "S4",
             "S5"
           ],
           "severitySources": [
@@ -51304,9 +51392,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S3",
+            "S4",
+            "S4",
             "S5"
           ]
         }
@@ -51695,7 +51783,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "電氣室、發電機房、變壓器及送風設備長時間產生高噪音，可能造成噪音性聽力損失或耳鳴。",
             "盤內、線槽及老舊設備拆修產生粉塵，未採濕式清潔或吸塵時反覆吸入，可能造成慢性呼吸道疾病。",
@@ -51714,9 +51802,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
+            "S5",
             "S4",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -51726,9 +51814,9 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S5",
             "S4",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -52077,11 +52165,11 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S5",
-            "S4",
             "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -52092,11 +52180,12 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
-            "S4",
+            "S5",
             "S4",
             "S5",
-            "S3"
+            "S5",
+            "S4",
+            "S4"
           ]
         },
         {
@@ -52523,9 +52612,9 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S5",
-            "S5"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -52533,9 +52622,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
-            "S5",
-            "S5"
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -52936,7 +53025,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "風扇、排氣設備及托盤碰撞形成持續噪音，長期暴露可能造成噪音性聽力損失或耳鳴。",
             "配製、使用及清潔消毒藥劑時，刺激性或腐蝕性物質在通風不足下長期暴露，可能造成皮膚炎、眼部傷害或呼吸道疾病。",
@@ -52953,11 +53042,11 @@
           "核心理由": "高溫與噪音長期暴露可能造成職業病，但通常不是本作業最先發生且需立即處理的傷害。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S5",
             "S4",
+            "S5",
             "S4",
-            "S4",
-            "S3",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -52967,11 +53056,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S4",
+            "S5",
             "S4",
-            "S4",
-            "S3",
-            "S3"
+            "S4"
           ]
         }
       ]
@@ -53078,7 +53167,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S4",
+          "severitylevel": "S5",
           "hazardItems": [
             "包裝工位高度、產線節拍或作業安排不當，作業員長時間彎腰、過度伸手、重複取放或久站，造成下背、肩頸、上肢及下肢肌肉骨骼傷害。",
             "成品箱過重或搬運方式不當，作業員扭腰、偏載、單手或高舉搬運，造成腰椎、肌肉或肩部慢性傷害。",
@@ -53105,7 +53194,7 @@
           "hazardSeverities": [
             "S4",
             "S4",
-            "S4",
+            "S5",
             "S5"
           ],
           "severitySources": [
@@ -53115,8 +53204,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
+            "S4",
+            "S5",
             "S5"
           ]
         },
@@ -53504,7 +53594,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "拆袋、秤量、過篩、投料及清潔時，粉塵與致敏原若持續逸散，可能造成職業性鼻炎、氣喘、支氣管炎或皮膚炎。",
             "使用酒精、清潔劑及其他揮發性化學品時，若通風不足、稀釋錯誤或混用，可能造成黏膜刺激、皮膚屏障受損或接觸性皮膚炎。",
@@ -53524,9 +53614,9 @@
           "核心理由": "天天吸粉、換線清潔用酒精，幾年後才出現鼻炎、氣喘或皮膚炎，早期症狀要回報。",
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S5",
             "S4",
             "S4",
-            "S3",
             "S5",
             "S4"
           ],
@@ -53538,9 +53628,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S4",
             "S4",
-            "S3",
             "S5",
             "S4"
           ]
@@ -53807,7 +53897,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "粉體投料及清潔消毒產生的粉塵、氣霧或揮發物長期被吸入，可能造成職業性氣喘、鼻炎或慢性呼吸道疾病。",
             "反覆搬運、彎腰扭轉投料、清槽及長時間站立作業，可能造成下背痛、肩頸與肌腱傷害。",
@@ -53826,7 +53916,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4",
             "S5"
           ],
@@ -53838,7 +53928,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4",
             "S5"
           ]
@@ -54120,7 +54210,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "長期在高節拍下重複抓取、分裝、封口、貼標、裝箱、堆疊及久站，可能造成上肢、肩頸、腰背及下肢肌肉骨骼疾病。",
             "長期於冷藏或冷凍區作業且低溫暴露、保暖或休息不足，可能造成末梢循環不良、肌肉僵硬及關節疼痛。",
@@ -54141,9 +54231,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S3",
-            "S3",
-            "S3",
+            "S4",
+            "S4",
+            "S5",
             "S5"
           ],
           "severitySources": [
@@ -54155,8 +54245,9 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3",
             "S4",
+            "S4",
+            "S5",
             "S5"
           ]
         }
@@ -54409,7 +54500,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S5",
+          "severitylevel": "S4",
           "hazardItems": [
             "曝曬區高溫、高濕及強日照或反射光長時間暴露，熱負荷未受控可能造成熱傷害及眼睛、皮膚光照傷害。",
             "反覆濕作業並接觸醃漬液、清潔劑及消毒劑，可能造成刺激性或過敏性接觸性皮膚炎。",
@@ -54427,9 +54518,9 @@
           "核心理由": "高溫曝曬及清洗消毒劑接觸可能造成熱傷害或皮膚炎，但通常不是本作業最常見的立即重傷類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S5",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -54437,9 +54528,9 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S5",
             "S4",
-            "S3"
+            "S4",
+            "S4"
           ]
         },
         {
@@ -54827,9 +54918,9 @@
           "核心理由": "低溫、重複施力及久站可能累積肌肉骨骼與疲勞問題，但屬長期累積，先看急性滑倒、夾捲與割傷。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S5",
+            "S4",
+            "S4",
+            "S4",
             "S5"
           ],
           "severitySources": [
@@ -54839,9 +54930,10 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S3",
-            "S3",
-            "S4"
+            "S4",
+            "S4",
+            "S4",
+            "S5"
           ]
         },
         {
@@ -55149,7 +55241,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "長期高頻率切配、抓握及腕部偏轉，若缺乏工作調整，可能造成上肢肌腱炎或腕隧道症候群。",
             "長時間彎腰、低頭、久站或於硬質地面作業，可能造成下背、肩頸及下肢慢性肌肉骨骼不適。",
@@ -55165,10 +55257,10 @@
           "核心理由": "高頻率切配、彎腰洗菜和久站，手腕和腰背是這個工種最常請假的原因。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
-            "S3",
             "S4",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "groupFallback",
@@ -55179,7 +55271,8 @@
           "sourceSeverities": [
             "S4",
             "S4",
-            "S2"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -55571,7 +55664,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "油煙罩或燃燒設備排氣、通風失效，長期吸入烹調油煙、細懸浮微粒及燃燒廢氣，造成呼吸道與心肺影響。",
             "清潔、消毒、除垢及濕作業中長時間接觸化學品揮發物、霧滴與水分，造成職業性氣喘或皮膚炎。",
@@ -55592,7 +55685,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S4",
+            "S5",
             "S4",
             "S4",
             "S5"
@@ -55606,7 +55699,7 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S4",
+            "S5",
             "S4",
             "S4",
             "S5"
@@ -55717,7 +55810,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "空壓機、發電機、沖壓機、鼓風機或研磨設備長時間運轉，作業人員整班停留監看與巡檢，耳部持續暴露於高噪音，可能造成聽力損失或耳鳴。",
             "耳塞或耳罩配戴方式錯誤、密合不足，作業人員在設備旁抄表、調整或上下料時反覆暴露於高聲壓，可能造成永久性聽力受損。",
@@ -55736,11 +55829,11 @@
           "核心理由": "作業長時間處於高噪音環境且反覆巡檢操作，聽力損失或耳鳴是本作業最具代表性的職業傷害。",
           "核心重點_existing": true,
           "hazardSeverities": [
-            "S3",
-            "S3",
-            "S3",
-            "S3",
-            "S3"
+            "S5",
+            "S5",
+            "S5",
+            "S5",
+            "S5"
           ],
           "severitySources": [
             "groupFallback",
@@ -55750,6 +55843,10 @@
             "groupFallback"
           ],
           "sourceSeverities": [
+            "S5",
+            "S5",
+            "S5",
+            "S5",
             "S5"
           ]
         },
@@ -56309,7 +56406,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S4",
           "hazardItems": [
             "供氣、洩壓、吹掃或檢修時有害氣體反覆逸散，通風或隔離不足可能造成慢性呼吸、皮膚及眼部傷害。",
             "長期搬運、推拉及拆裝鋼瓶與管線，若持續重複施力或採不良姿勢，可能造成下背、肩頸及上肢肌肉骨骼傷害。",
@@ -56328,9 +56425,9 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S3",
-            "S2",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -56340,9 +56437,9 @@
           ],
           "sourceSeverities": [
             "S4",
-            "S3",
-            "S2",
-            "S2"
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -56584,8 +56681,8 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S5",
-            "S3"
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -56594,8 +56691,8 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S5",
-            "S3"
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -57191,11 +57288,11 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S3",
             "S4",
-            "S3",
-            "S5",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -57205,11 +57302,11 @@
             "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S3",
             "S4",
-            "S3",
-            "S5",
-            "S2"
+            "S4",
+            "S4",
+            "S4",
+            "S4"
           ]
         }
       ]
@@ -57685,7 +57782,7 @@
         },
         {
           "groupName": "職業病",
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "hazardItems": [
             "開爐門、取放高溫工件或近距離操作時承受強熱輻射，長期暴露可能造成眼睛及皮膚慢性傷害。",
             "鍋爐、燃燒器、風機及乾燥設備產生高噪音，長期暴露可能造成噪音性聽力損失。",
@@ -57708,10 +57805,10 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
+            "S5",
+            "S5",
             "S4",
-            "S5",
-            "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -57722,10 +57819,10 @@
           ],
           "sourceSeverities": [
             "S4",
+            "S5",
+            "S5",
             "S4",
-            "S5",
-            "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -58081,7 +58178,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -58089,7 +58186,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3"
+            "S4"
           ]
         },
         {
@@ -58523,7 +58620,7 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4"
           ],
           "severitySources": [
@@ -58533,7 +58630,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S3",
+            "S4",
             "S4"
           ]
         }
@@ -59023,11 +59120,11 @@
           "CommonAvoidItems": [],
           "核心重點_existing": false,
           "hazardSeverities": [
+            "S4",
+            "S4",
             "S5",
             "S5",
-            "S5",
-            "S5",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -59037,7 +59134,8 @@
             "groupFallback"
           ],
           "sourceSeverities": [
-            "S5",
+            "S4",
+            "S4",
             "S5",
             "S5",
             "S4"
@@ -60467,16 +60565,16 @@
             "作業人員依暴露性質配戴耳塞或耳罩、呼吸防護具或防振手套，破損或失效時立即更換。(個人防護)"
           ],
           "CommonAvoidItems": [],
-          "severitylevel": "S3",
+          "severitylevel": "S5",
           "優先評估": false,
           "核心理由": "長期刨切夯實的噪音與手工具振動，加上瀝青煙與粉塵，會把聽力、手麻與呼吸道磨壞。",
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S5",
             "S4",
-            "S3",
             "S4",
-            "S3"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
@@ -60487,10 +60585,10 @@
           ],
           "sourceSeverities": [
             "S5",
+            "S5",
             "S4",
-            "S3",
             "S4",
-            "S3"
+            "S4"
           ]
         }
       ]
