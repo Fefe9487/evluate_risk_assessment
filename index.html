@@ -222,7 +222,15 @@
       border-radius: 8px; font: inherit; font-size: 14px; resize: vertical;
     }
     #overall-comment { min-height: 140px; background: #fff; }
-    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+    .necessary-toggle {
+      display: flex; align-items: flex-start; gap: 8px;
+      margin: 12px 0; padding: 10px 12px;
+      border: 1px solid #e8c07a; border-radius: 10px;
+      background: var(--core-soft); font-size: 14px; font-weight: 650; color: #8a4e08;
+    }
+    .necessary-toggle.hidden { display: none; }
+    .necessary-toggle input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--core); }
+    .necessary-toggle small { display: block; margin-top: 2px; font-weight: 400; color: var(--muted); }
     .status { font-size: 12px; opacity: .85; }
     #gate {
       position: fixed; inset: 0; z-index: 80;
@@ -267,7 +275,6 @@
   <header>
     <div>
       <h1>作業本身審查</h1>
-      <p class="desc">審查正文已與目前風險評估原型同步。既有標註保留，文字變更後請核對適用性。<a href="SYNC_POLICY.md" target="_blank" rel="noopener">同步說明與原文對照</a></p>
       <div class="meta">情境底下掛著對上的措施，勾刪掉；點句子開啟標記</div>
     </div>
     <div class="grow"></div>
@@ -312,6 +319,10 @@
       <h3>標記這條問題</h3>
       <div class="hint" id="note-meta"></div>
       <div class="note"><div class="q" id="note-quote"></div></div>
+      <label class="necessary-toggle hidden" id="note-necessary-wrap">
+        <input type="checkbox" id="note-necessary">
+        <span>指定為必要設施<small>只作用在這一則情境的這條措施，其他情境的同一句不會跟著改。</small></span>
+      </label>
       <div class="rev-h">標籤（可多選，至少一個）</div>
       <div class="tag-btns" id="note-tags"></div>
       <div class="rev-h">說明（必填，寫成句子）</div>
@@ -433,7 +444,7 @@
   }
 
   function emptyReview() {
-    return { coreSet: [], itemNotes: [], overallComment: "", unsuitableNotes: {}, droppedLinks: [], coreRevisions: [] };
+    return { coreSet: [], itemNotes: [], overallComment: "", unsuitableNotes: {}, droppedLinks: [], coreRevisions: [], necessaryMarks: [] };
   }
 
   function getReview(taskId) {
@@ -448,6 +459,9 @@
     r.droppedLinks = Array.isArray(r.droppedLinks) ? r.droppedLinks : [];
     r.coreRevisions = Array.isArray(r.coreRevisions)
       ? r.coreRevisions.filter((item) => item && item.groupName && item.hazardItem && item.from && item.to)
+      : [];
+    r.necessaryMarks = Array.isArray(r.necessaryMarks)
+      ? r.necessaryMarks.filter((item) => item && item.groupName && item.hazardItem && item.control && typeof item.on === "boolean")
       : [];
     return r;
   }
@@ -486,6 +500,7 @@
       || (r.itemNotes && r.itemNotes.length > 0)
       || (r.droppedLinks && r.droppedLinks.length > 0)
       || (r.coreRevisions && r.coreRevisions.length > 0)
+      || (r.necessaryMarks && r.necessaryMarks.length > 0)
       || String(r.overallComment || "").trim().length > 0
       || hasUnsuitable;
   }
@@ -689,7 +704,7 @@
     pane.innerHTML = `
       <h2>${escapeHtml(task.taskName)}</h2>
       <p class="desc">${escapeHtml(task.taskdescribe || "")}</p>
-      <p class="hint">每一則情境下面是它掛上的措施。必要設施可勾「刪掉」或按「修訂」改寫，都只動這一則。點句子會開啟標記。</p>
+      <p class="hint">每一則情境下面是它掛上的措施。點改善項目可標記問題，也可直接指定為必要設施，只作用在這一則。必要設施可勾「刪掉」或按「修訂」改寫。</p>
       <div class="list-title">引用背景（只供判斷泛用或製程綁定，不要據此建議拿掉模板）</div>
       <div class="chips">${citedHtml || '<span class="chip">未掛在草案模板</span>'}${more}</div>
       ${groups}`;
@@ -806,6 +821,27 @@
     persist();
   }
 
+  function necessaryMarkOf(review, groupName, hazardItem, controlText) {
+    return (review.necessaryMarks || []).find((item) =>
+      item.groupName === groupName && item.hazardItem === hazardItem && item.control === controlText
+    ) || null;
+  }
+
+  function isNecessaryControl(review, groupName, hazardItem, controlText, mapCore) {
+    const mark = necessaryMarkOf(review, groupName, hazardItem, controlText);
+    return mark ? mark.on : !!mapCore;
+  }
+
+  function setNecessaryMark(taskId, groupName, hazardItem, controlText, on, mapCore) {
+    const r = getReview(taskId);
+    const next = (r.necessaryMarks || []).filter((item) =>
+      !(item.groupName === groupName && item.hazardItem === hazardItem && item.control === controlText)
+    );
+    if (!!on !== !!mapCore) next.push({ groupName, hazardItem, control: controlText, on: !!on });
+    r.necessaryMarks = next;
+    persist();
+  }
+
   function mapRowsFor(task, group) {
     const byTask = scenarioLinks[task.taskName] || {};
     return byTask[group.groupName] || [];
@@ -896,20 +932,21 @@
       const controls = (block.controls || []).map((ctrl) => {
         const text = ctrl.text;
         const dropped = isDropped(review, group.groupName, block.text, text);
-        const revised = ctrl.core ? coreRevisionOf(review, group.groupName, block.text, text) : "";
+        const necessary = isNecessaryControl(review, group.groupName, block.text, text, ctrl.core);
+        const revised = necessary ? coreRevisionOf(review, group.groupName, block.text, text) : "";
         const shown = revised || text;
         const tag = laneOf(shown) || laneOf(text);
         const avoidIdx = (group.AvoidItems || []).indexOf(text);
-        const mark = ctrl.core ? '<span class="badge core">必要設施</span>' : "";
+        const mark = necessary ? '<span class="badge core">必要設施</span>' : "";
         const fromNote = revised ? `<span class="revised-from">原文：${escapeHtml(text)}</span>` : "";
-        const reviseBtn = ctrl.core
+        const reviseBtn = necessary
           ? `<button type="button" class="revise-btn" data-revise="1" data-group="${escapeHtml(group.groupName)}" data-hazard="${escapeHtml(block.text)}" data-from="${escapeHtml(text)}">修訂</button>`
           : "<span></span>";
         return `<li class="${dropped ? "dropped" : ""}">
           <label class="drop-check"><input type="checkbox" data-drop="1" data-group="${escapeHtml(group.groupName)}" data-hazard="${escapeHtml(block.text)}" data-control="${escapeHtml(text)}" ${dropped ? "checked" : ""}>刪掉</label>
           <span class="core-slot">${mark}</span>
           <span class="lane ${laneClass(tag)}">${escapeHtml(tag || "措施")}</span>
-          <span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${avoidIdx >= 0 ? avoidIdx : ""}" data-quote="${escapeHtml(shown)}">${escapeHtml(shown)}${fromNote}</span>
+          <span class="line-text" data-g="${gIdx}" data-field="AvoidItems" data-i="${avoidIdx >= 0 ? avoidIdx : ""}" data-hazard="${escapeHtml(block.text)}" data-control="${escapeHtml(text)}" data-map-core="${ctrl.core ? "1" : "0"}" data-quote="${escapeHtml(shown)}">${escapeHtml(shown)}${fromNote}</span>
           ${reviseBtn}
         </li>`;
       }).join("");
@@ -1059,10 +1096,19 @@
       groupName: group.groupName,
       field,
       index,
-      quote: el.hasAttribute("data-quote") ? el.getAttribute("data-quote") : quoteFrom(task, gIdx, field, index)
+      quote: el.hasAttribute("data-quote") ? el.getAttribute("data-quote") : quoteFrom(task, gIdx, field, index),
+      hazardItem: el.getAttribute("data-hazard") || "",
+      controlText: el.getAttribute("data-control") || "",
+      mapCore: el.getAttribute("data-map-core") === "1"
     };
     const existing = findNote(getReview(task.taskId), partial);
-    openNoteEditor(task, existing || partial, !!existing);
+    openNoteEditor(task, {
+      ...(existing || partial),
+      hazardItem: partial.hazardItem,
+      controlText: partial.controlText,
+      mapCore: partial.mapCore,
+      quote: partial.quote || (existing && existing.quote) || ""
+    }, !!existing);
   }
 
   function openNoteEditor(task, note, isEdit) {
@@ -1074,8 +1120,19 @@
       quote: note.quote || "",
       tags: [...(note.tags || [])],
       problem: note.problem || "",
+      hazardItem: note.hazardItem || "",
+      controlText: note.controlText || "",
+      mapCore: !!note.mapCore,
       isEdit
     };
+    const canNecessary = draftNote.field === "AvoidItems" && draftNote.hazardItem && draftNote.controlText;
+    const necessaryOn = canNecessary && isNecessaryControl(
+      getReview(task.taskId),
+      draftNote.groupName,
+      draftNote.hazardItem,
+      draftNote.controlText,
+      draftNote.mapCore
+    );
     const fieldLabel = fieldLabelOf(note.field);
     const loc = draftNote.index === null
       ? (draftNote.field === "severitylevel" ? "類型 S" : "無法對到既有句子（整組缺條）")
@@ -1084,6 +1141,10 @@
     $("note-quote").textContent = draftNote.quote || "（無對應原文）";
     $("note-problem").value = draftNote.problem;
     $("note-delete").classList.toggle("hidden", !isEdit);
+    const necessaryWrap = $("note-necessary-wrap");
+    const necessaryBox = $("note-necessary");
+    necessaryWrap.classList.toggle("hidden", !canNecessary);
+    necessaryBox.checked = necessaryOn;
     const tagBox = $("note-tags");
     tagBox.innerHTML = "";
     TAG_SET.forEach((t) => {
@@ -1181,6 +1242,22 @@
   function saveDraftNote() {
     if (!draftNote) return;
     const problem = $("note-problem").value.trim();
+    const canNecessary = draftNote.field === "AvoidItems" && draftNote.hazardItem && draftNote.controlText;
+    if (canNecessary) {
+      setNecessaryMark(
+        draftNote.taskId,
+        draftNote.groupName,
+        draftNote.hazardItem,
+        draftNote.controlText,
+        $("note-necessary").checked,
+        draftNote.mapCore
+      );
+    }
+    if (!draftNote.tags.length && !problem) {
+      closeModal();
+      renderAll();
+      return;
+    }
     if (!draftNote.tags.length) { alert("請至少選一個標籤。"); return; }
     if (!problem) { alert("請用句子寫出問題說明。"); return; }
     upsertNote(draftNote.taskId, { ...draftNote, problem });
@@ -1208,6 +1285,12 @@
           from: item.from,
           to: item.to
         })),
+        necessaryMarks: (review.necessaryMarks || []).map((item) => ({
+          groupName: item.groupName,
+          hazardItem: item.hazardItem,
+          control: item.control,
+          on: !!item.on
+        })),
         itemNotes: review.itemNotes.map((n) => ({
           groupName: n.groupName,
           field: n.field,
@@ -1231,7 +1314,7 @@
       nComplete: library.length - incomplete.length,
       incomplete,
       formatNotes: [
-        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處；droppedLinks 為某一則情境上被刪掉的措施；coreRevisions 為某一則情境上改寫過的必要設施（from 原文、to 修訂文）",
+        "coreSet + itemNotes 為逐條標記；overallComment 為綜合意見；unsuitableNotes 為各危害類型的不適當之處；droppedLinks 為某一則情境上被刪掉的措施；coreRevisions 為某一則情境上改寫過的必要設施（from 原文、to 修訂文）；necessaryMarks 為審查時對某一則情境的措施指定或取消必要設施（on 為真表示指定，為假表示取消原本的必要設施）",
         "severitylevel 為類型 S（各情境最高，不是加總）；hazardSeverities 為各情境 S（Map 對得到的沿用原始分，對不到的依表十補評）"
       ],
       tasks
