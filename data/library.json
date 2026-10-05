@@ -2,7 +2,7 @@
   "schema": "ra-task-judge-phase1-expert-library",
   "phase": 1,
   "edition": "prototype_snapshot",
-  "generatedAt": "2026-10-02T16:19:32.739Z",
+  "generatedAt": "2026-10-05T10:29:11Z",
   "sourceLibrary": "Fefe9487/TOIRA_prototype",
   "nTasks": 174,
   "nWritebackBatch": 170,
@@ -1326,11 +1326,11 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -2220,7 +2220,7 @@
           "核心理由": "樓層口反覆彎腰、扭轉裝卸，加上推車推拉，腰背和手腕是慢慢累出來的。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S5",
+            "S4",
             "S4",
             "S4",
             "S4",
@@ -2228,15 +2228,15 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S5",
+            "S4",
             "S4",
             "S4",
             "S4",
@@ -4052,26 +4052,26 @@
           "hazardSeverities": [
             "S5",
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4",
-            "S4"
+            "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "scenarioMaps",
-            "groupFallback",
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4",
-            "S4"
+            "S5"
           ]
         },
         {
@@ -4500,19 +4500,19 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ]
@@ -4713,8 +4713,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -5009,19 +5009,19 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ]
@@ -5654,19 +5654,19 @@
           "hazardSeverities": [
             "S5",
             "S5",
-            "S4",
+            "S5",
             "S5"
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
             "S5",
-            "S4",
+            "S5",
             "S5"
           ]
         },
@@ -6052,21 +6052,21 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S4",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S4",
             "S5",
             "S4"
@@ -7072,8 +7072,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
@@ -7489,8 +7489,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -7806,12 +7806,12 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -11936,19 +11936,19 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ]
@@ -13128,12 +13128,12 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -14141,7 +14141,7 @@
           "核心理由": "塑膠煙霧、粉塵及添加物可能造成慢性健康影響，但通常不是短時間內最常造成停工或就醫的傷害類型。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S5",
             "S5",
             "S4",
@@ -14153,19 +14153,19 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
+            "S5",
             "S5",
             "S5",
             "S4",
@@ -14534,8 +14534,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
@@ -15526,41 +15526,41 @@
           "核心理由": "反覆暴露或焊接燻煙可能造成職業病，但通常不是本次進入作業最先需處理的急性重傷危害。",
           "核心重點_existing": false,
           "hazardSeverities": [
-            "S4",
+            "S5",
             "S5",
             "S4",
             "S5",
             "S4",
             "S4",
             "S5",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
-            "S4",
+            "S5",
             "S5",
             "S4",
             "S5",
             "S4",
             "S4",
             "S5",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
             "S5",
             "S4"
           ]
@@ -16908,21 +16908,21 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S4",
             "S5",
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S4",
             "S5",
             "S5"
@@ -17587,17 +17587,17 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S4",
+            "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
-            "S4",
+            "S5",
             "S4"
           ]
         },
@@ -18377,11 +18377,11 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -18757,11 +18757,11 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
+            "S5",
             "S4",
             "S4",
             "S4",
-            "S4",
-            "S4",
+            "S5",
             "S4",
             "S5",
             "S4",
@@ -18769,25 +18769,25 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
+            "S5",
             "S5",
             "S4",
             "S4",
             "S4",
-            "S4",
-            "S4",
+            "S5",
             "S4",
             "S5",
             "S4",
@@ -19692,19 +19692,19 @@
             "S4",
             "S4",
             "S4",
-            "S5"
+            "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
             "S4",
             "S4",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -20243,8 +20243,8 @@
             "S5",
             "S5",
             "S4",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
             "S5",
             "S5",
             "S5",
@@ -20253,24 +20253,24 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
             "S5",
             "S4",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
             "S5",
             "S5",
             "S5",
@@ -20652,11 +20652,11 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
@@ -21933,20 +21933,20 @@
           "hazardSeverities": [
             "S5",
             "S5",
-            "S4",
-            "S4"
+            "S5",
+            "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
             "S5",
-            "S4",
-            "S4"
+            "S5",
+            "S5"
           ]
         },
         {
@@ -22265,18 +22265,18 @@
             "S4",
             "S4",
             "S4",
-            "S4",
+            "S5",
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -22285,7 +22285,7 @@
             "S4",
             "S4",
             "S4",
-            "S4",
+            "S5",
             "S5"
           ]
         },
@@ -23450,8 +23450,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -23823,8 +23823,8 @@
           "severitySources": [
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
@@ -27027,11 +27027,11 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -27256,21 +27256,21 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S5",
             "S4"
@@ -28373,10 +28373,10 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -28634,15 +28634,15 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S4",
             "S4",
             "S4",
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
@@ -28650,7 +28650,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S4",
             "S4",
             "S4",
@@ -29920,8 +29920,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -30282,8 +30282,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -30699,19 +30699,19 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ]
@@ -31116,9 +31116,9 @@
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -31296,23 +31296,23 @@
           "核心重點_existing": true,
           "hazardSeverities": [
             "S5",
-            "S4",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
+            "S5",
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
-            "S4",
-            "S4",
+            "S5",
+            "S5",
+            "S5",
             "S5"
           ]
         },
@@ -34389,9 +34389,9 @@
           "severitySources": [
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
@@ -35600,19 +35600,19 @@
           "核心重點_existing": true,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S4"
           ]
@@ -37913,9 +37913,9 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
@@ -39330,18 +39330,18 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
-            "S4"
+            "S5",
+            "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
-            "S4"
+            "S5",
+            "S5"
           ]
         }
       ]
@@ -40545,8 +40545,8 @@
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -42101,8 +42101,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -42754,9 +42754,9 @@
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -43217,9 +43217,9 @@
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -44377,19 +44377,19 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S5",
+            "S4",
             "S5",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
-            "S5",
+            "S4",
             "S5",
             "S4"
           ]
@@ -45540,8 +45540,8 @@
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
@@ -46821,14 +46821,14 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
@@ -47590,8 +47590,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
@@ -50376,8 +50376,8 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
@@ -51913,9 +51913,9 @@
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
             "scenarioMaps",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
@@ -52217,8 +52217,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
@@ -53170,8 +53170,8 @@
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
@@ -53977,8 +53977,8 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -54794,15 +54794,15 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S5",
             "S4",
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps",
@@ -54810,7 +54810,7 @@
           ],
           "sourceSeverities": [
             "S5",
-            "S4",
+            "S5",
             "S5",
             "S5",
             "S4",
@@ -55896,8 +55896,8 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -57008,21 +57008,21 @@
           "hazardSeverities": [
             "S4",
             "S4",
-            "S4",
+            "S5",
             "S5",
             "S5"
           ],
           "severitySources": [
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
             "S4",
-            "S4",
+            "S5",
             "S5",
             "S5"
           ]
@@ -57732,19 +57732,19 @@
             "S4",
             "S4",
             "S4",
-            "S5"
+            "S4"
           ],
           "severitySources": [
             "scenarioMaps",
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
             "S4",
             "S4",
-            "S5"
+            "S4"
           ]
         },
         {
@@ -58108,8 +58108,8 @@
             "S4"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
+            "scenarioMaps",
+            "scenarioMaps",
             "scenarioMaps",
             "scenarioMaps"
           ],
@@ -58742,11 +58742,11 @@
             "S5"
           ],
           "severitySources": [
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S5",
@@ -62093,24 +62093,24 @@
           "核心重點_existing": false,
           "hazardSeverities": [
             "S4",
-            "S4",
             "S5",
             "S5",
-            "S4"
+            "S5",
+            "S5"
           ],
           "severitySources": [
             "scenarioMaps",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback",
-            "groupFallback"
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps",
+            "scenarioMaps"
           ],
           "sourceSeverities": [
             "S4",
-            "S4",
             "S5",
             "S5",
-            "S4"
+            "S5",
+            "S5"
           ]
         }
       ]
@@ -63995,8 +63995,9 @@
       ]
     }
   ],
-  "sourceCommitBeforeEdit": "51de3b8ae571a2625881a03f0a1db5a3e756ffb4",
-  "sourceCommit": "3ef2e374fb6c3c8ecf3a93f2834587cb0949cb33",
-  "dataVersion": "20261002n",
-  "syncedOn": "2026-10-02"
+  "sourceCommitBeforeEdit": "d761bfab5617016a209c75691580850712c75da2",
+  "sourceCommit": "d761bfab5617016a209c75691580850712c75da2",
+  "dataVersion": "20261005h",
+  "syncedOn": "2026-10-05",
+  "sourceRepair": "SCENARIO_TEXT_REPAIR.json"
 }

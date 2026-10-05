@@ -1,12 +1,12 @@
 # 原型資料同步與控制措施短句整理
 
-日期：2026-10-05；資料版本：`20261005g`。
+日期：2026-10-05；資料版本：`20261005h`。
 來源提交：`f74f9a1` 的必要設施補正。
 
 ## 同步來源與範圍
 
 來源為Fefe9487/TOIRA_prototype，目標為Fefe9487/evluate_risk_assessment。
-標註主頁使用目前原型的作業描述、危害情境、措施、S與核心標記；174項作業、6,095則映射情境、1,400個危害組。情境圖的措施是作業庫編號，句子在 AvoidItems。
+標註主頁使用目前原型的作業描述、危害情境、措施、S與核心標記；174項作業、6,193則映射情境、1,400個危害組。情境圖的措施是作業庫編號，句子在 AvoidItems。
 原型tasksLibrary.json轉成data/library.json包裝格式；保留標註頁的taskId、題包、引用背景與專家審查進度。
 群組「核心重點」對應核心重點_existing；專家自行勾選的coreSet獨立保留。
 對得上情境原文者沿用scenarioMaps的S；對不上者沿用群組S並標明groupFallback，不重新補評。
@@ -109,3 +109,8 @@ CONTROL_REVIEW_QUEUE.md 從 85 筆減為 58 筆。拿掉的 27 筆，留下的�
 ## 20261005g
 
 情境圖措施改為作業庫編號，不再重複正文。一則只留 hazardId、hazardItem、severity、controlRefs、coreControlRefs。A1 對同一組 AvoidItems 第 1 句。text、role、originalText、sourceControlKey、unlinkedControls 已移除。對不上作業庫的 4,361 句已補進同一組。兩邊情境圖與 AvoidItems 一致。頁面資料版本 20261005g。情境 6,095 則，群組 1,400。舊的拆句追溯欄位不再留在現行檔。
+
+
+## 20261005h
+
+依歷史專業底稿補齊 60 組職業病情境；6,193 條危害逐字、依序對上作業庫。197 條的措施關係依歷史摘要與現有措施庫重建，109 條原句保留原 S 與措施。逐條 hazardSeverities、severitySources、sourceSeverities 同步情境圖，消除文字不合造成的 groupFallback。dataVersion 與頁面版本更新，專家分配、原版及專業版資料保留。44 條無適用既有核心標記，留空待確認。來源与逐條紀錄見 SCENARIO_TEXT_REPAIR.json；驗證與重建限制見 SCENARIO_TEXT_REPAIR.md。
