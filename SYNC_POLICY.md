@@ -1,12 +1,12 @@
 # 原型資料同步與控制措施短句整理
 
-日期：2026-10-05；資料版本：`20261005d`。
+日期：2026-10-05；資料版本：`20261005g`。
 來源提交：`f74f9a1` 的必要設施補正。
 
 ## 同步來源與範圍
 
 來源為Fefe9487/TOIRA_prototype，目標為Fefe9487/evluate_risk_assessment。
-標註主頁使用目前原型的作業描述、危害情境、措施、S與核心標記；174項作業、6,086則映射情境。
+標註主頁使用目前原型的作業描述、危害情境、措施、S與核心標記；174項作業、6,095則映射情境、1,400個危害組。情境圖的措施是作業庫編號，句子在 AvoidItems。
 原型tasksLibrary.json轉成data/library.json包裝格式；保留標註頁的taskId、題包、引用背景與專家審查進度。
 群組「核心重點」對應核心重點_existing；專家自行勾選的coreSet獨立保留。
 對得上情境原文者沿用scenarioMaps的S；對不上者沿用群組S並標明groupFallback，不重新補評。
@@ -97,3 +97,15 @@ CONTROL_REVIEW_QUEUE.md 從 85 筆減為 58 筆。拿掉的 27 筆，留下的�
 ## 20261005d
 
 情境圖新增、作業庫沒有的 500 筆措施已回寫同一組 AvoidItems。安全帽句補進 98 組物體飛落。標註庫與原型作業庫同步。頁面資料版本 20261005d。
+
+## 20261005e
+
+高壓爐操作作業的有害物接觸、感電補上情境圖。兩邊情境圖內容一致。這兩組的 hazardSeverities、sourceSeverities 改為情境圖的 S5，severitySources 改為 scenarioMaps。頁面資料版本 20261005e。情境 6,095 則，群組 1,400。
+
+## 20261005f
+
+情境圖移除頁面未讀的 pool、sourceControlId、sourcePartIndex。作業庫移除優先評估，31 組空白核心理由已補上。兩邊內容一致。頁面資料版本 20261005f。
+
+## 20261005g
+
+情境圖措施改為作業庫編號，不再重複正文。一則只留 hazardId、hazardItem、severity、controlRefs、coreControlRefs。A1 對同一組 AvoidItems 第 1 句。text、role、originalText、sourceControlKey、unlinkedControls 已移除。對不上作業庫的 4,361 句已補進同一組。兩邊情境圖與 AvoidItems 一致。頁面資料版本 20261005g。情境 6,095 則，群組 1,400。舊的拆句追溯欄位不再留在現行檔。

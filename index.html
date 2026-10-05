@@ -350,7 +350,7 @@
     </div>
   </div>
 <script>
-  const DATA_VER = "20261005d";
+  const DATA_VER = "20261005g";
   let TAG_SET = ["漏提", "空泛", "不符行業", "寫反", "跨類複製", "過長", "文風改良", "不適當"];
   const TAG_HELP = {
     "漏提": "該有的情境或對策沒寫",
@@ -847,7 +847,18 @@
     return byTask[group.groupName] || [];
   }
 
-  function indexScenarioMaps(doc) {
+  function avoidTextById(tasks, taskName, groupName, controlId) {
+    const task = (tasks || []).find((item) => item.taskName === taskName);
+    const group = task && (task.hazardGroups || []).find((item) => item.groupName === groupName);
+    const avoids = (group && group.AvoidItems) || [];
+    const match = /^A(\d+)$/.exec(String(controlId || "").trim());
+    if (!match) return "";
+    const idx = Number(match[1]) - 1;
+    if (idx < 0 || idx >= avoids.length) return "";
+    return String(avoids[idx] || "").trim();
+  }
+
+  function indexScenarioMaps(doc, tasks) {
     const byTask = {};
     const unlinked = {};
     (doc.maps || []).forEach((map) => {
@@ -857,11 +868,12 @@
       const rows = (map.hazardControlMap || []).map((row) => {
         const cores = new Set((row.coreControlRefs || []).map((id) => String(id || "").trim()).filter(Boolean));
         const controls = (row.controlRefs || []).map((ref) => {
-          if (!ref || typeof ref !== "object") return null;
-          const text = String(ref.text || "").trim();
+          if (!ref) return null;
+          const cid = typeof ref === "string" ? String(ref).trim() : String(ref.controlId || "").trim();
+          const inline = ref && typeof ref === "object" ? String(ref.text || "").trim() : "";
+          const text = inline || avoidTextById(tasks, taskName, groupName, cid);
           if (!text) return null;
-          const cid = String(ref.controlId || "").trim();
-          return { text, originalText: String(ref.originalText || ""), core: ref.role === "core" || cores.has(cid) };
+          return { text, originalText: String((ref && ref.originalText) || ""), core: (ref && ref.role === "core") || cores.has(cid) };
         }).filter(Boolean);
         return {
           hazardItem: String(row.hazardItem || "").trim(),
@@ -1518,10 +1530,10 @@
     if (!linkRes.ok) throw new Error("無法載入 scenarioMaps.json");
     const doc = await libRes.json();
     assignments = await asgRes.json();
-    const indexed = indexScenarioMaps(await linkRes.json());
+    allTasks = doc.tasks || [];
+    const indexed = indexScenarioMaps(await linkRes.json(), allTasks);
     scenarioLinks = indexed.byTask;
     unlinkedLinks = indexed.unlinked;
-    allTasks = doc.tasks || [];
     if (Array.isArray(doc.tagSet) && doc.tagSet.length) TAG_SET = doc.tagSet;
     if (!allTasks.length) throw new Error("作業庫是空的");
     const savedCode = normalizeCode(localStorage.getItem(CODE_KEY) || "");
